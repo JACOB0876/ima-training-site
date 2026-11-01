@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F4F3EE">
+<title>IMA 案例赛训练站</title>
+<style>
+:root{
+  --paper:#F4F3EE; --sheet:#FBFAF5; --ink:#12181B; --ink2:#2E3A3C;
+  --muted:#68746F; --rule:#D8D9D1; --rule-strong:#B9BCB2;
+  --green:#1D5C46; --green-deep:#143F30; --red:#B23A2B; --brass:#8E6F2E;
+  --wash:#E9EFE9; --radius:2px;
+  --sans:"Segoe UI","Microsoft YaHei UI","PingFang SC",system-ui,sans-serif;
+  --serif:Georgia,"Times New Roman","SimSun",serif;
+  --mono:"Cascadia Mono",Consolas,"Courier New",monospace;
+  --kai:"KaiTi","STKaiti","FangSong",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper);overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font:16.5px/1.8 var(--sans);
+  -webkit-font-smoothing:antialiased;touch-action:manipulation;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");}
+a{color:var(--green-deep);text-decoration:none;border-bottom:1px solid rgba(29,92,70,.28)}
+a:hover{border-bottom-color:var(--green-deep)}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:99}
+.skip:focus{left:12px;top:12px;border:0}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 26px}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:20;background:rgba(244,243,238,.94);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--rule-strong)}
+.head{max-width:1120px;margin:0 auto;padding:14px 26px;display:flex;align-items:center;gap:20px}
+.brand{font-weight:800;letter-spacing:-.02em;font-size:17px;line-height:1.2;color:var(--ink)}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.06em;margin-top:3px}
+nav{display:flex;gap:18px;margin-left:auto;flex-wrap:wrap}
+nav a{font-size:14.5px;color:var(--muted);border:0;padding:2px 0;border-bottom:1px solid transparent}
+nav a:hover{color:var(--ink);border-bottom-color:var(--rule-strong)}
+nav a.on{color:var(--ink);border-bottom-color:var(--green)}
+.prog{display:flex;gap:14px;align-items:baseline;font-size:12px;color:var(--muted);
+  border-left:1px solid var(--rule-strong);padding-left:16px;white-space:nowrap}
+.prog b{color:var(--ink);font-family:var(--mono);font-weight:600;font-size:13px}
+
+main{padding:46px 0 90px}
+h1{font-size:clamp(32px,4.4vw,54px);line-height:1.14;margin:0 0 18px;letter-spacing:-.035em;
+  font-weight:800;text-wrap:balance;max-width:16em}
+h2{font-size:25px;margin:48px 0 14px;letter-spacing:-.02em;font-weight:750;
+  padding-top:18px;border-top:1px solid var(--rule-strong);text-wrap:balance;position:relative}
+h3{font-size:16.5px;margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+h2,h3{scroll-margin-top:96px}
+.lab-h{font-size:18px;margin:0 0 8px;padding:0;border-top:0;letter-spacing:-.015em}
+.case-h{font-size:19px;margin:0 0 8px;padding:0;border-top:0;letter-spacing:-.015em}
+p{margin:0 0 12px;max-width:70ch}
+.lead{color:var(--ink2);font-size:18px;line-height:1.75;max-width:62ch}
+.doc-label{font-size:12.5px;letter-spacing:.08em;color:var(--muted);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;font-family:var(--mono)}
+.doc-label::after{content:"";flex:1;height:1px;background:var(--rule);max-width:120px}
+.kicker{font-size:12.5px;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;font-family:var(--mono)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:48px;align-items:start;margin-bottom:10px}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:28px}}
+.hero h1 em{font-style:normal;display:inline-block;white-space:nowrap;background:linear-gradient(var(--red),var(--red)) left bottom/100% 3px no-repeat;
+  padding-bottom:6px}
+.metrics{display:flex;gap:0;margin:30px 0 26px;border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong)}
+.metrics div{flex:1;padding:14px 18px 14px 0}
+.metrics div+div{border-left:1px solid var(--rule);padding-left:18px}
+.metrics b{display:block;font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.metrics span{font-size:12.5px;color:var(--muted)}
+
+/* case folder */
+.folder{border:1px solid var(--ink);background:var(--sheet);padding:0;position:relative}
+.folder-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;
+  border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
+.folder-body{padding:20px 20px 40px}
+.folder h3{font-size:15px;margin:0 0 10px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.folder ol{margin:0;padding-left:18px;font-size:14.5px;line-height:1.85}
+.folder ol li{margin-bottom:2px}
+.stamp{position:absolute;right:16px;bottom:-12px;background:var(--paper);transform:rotate(-6deg);border:1.5px solid rgba(178,58,43,.5);
+  color:rgba(178,58,43,.62);font-family:var(--mono);font-size:10px;letter-spacing:.14em;padding:4px 8px;pointer-events:none}
+
+/* ---------- generic blocks ---------- */
+.grid{display:grid;gap:0}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:980px){.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--radius);padding:20px 22px;
+  transition:border-color .18s ease,background-color .18s ease}
+.card:hover{border-color:var(--rule-strong)}
+a.card{display:block;border-bottom:1px solid var(--rule);color:var(--ink)}
+a.card:hover{border-color:var(--ink);text-decoration:none}
+.card h3{letter-spacing:-.01em}
+.tag{display:inline-block;font-size:11.5px;padding:2px 7px;background:var(--wash);color:var(--green-deep);
+  border:1px solid #CFDDD3;font-family:var(--mono);letter-spacing:.02em}
+.tag.gray{background:#EDECE6;border-color:var(--rule);color:var(--muted)}
+.quote{border-left:2px solid var(--green);background:transparent;padding:2px 0 2px 14px;
+  font-family:var(--kai);font-size:16.5px;line-height:1.8;color:var(--ink2)}
+.muted{color:var(--muted)}
+.small{font-size:14px;line-height:1.7}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.steps{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+.steps li{counter-increment:s;position:relative;padding-left:26px;margin:7px 0;font-size:14.5px}
+.steps li::before{content:counter(s) ".";position:absolute;left:0;top:0;color:var(--muted);font-family:var(--mono);font-size:13px}
+.flow{display:grid;gap:0;border-top:1px solid var(--rule-strong)}
+.flow .row{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start;background:transparent;
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:18px 4px}
+.flow .n{font-family:var(--mono);font-size:13px;color:var(--muted);padding-top:3px}
+.flow h3{margin-bottom:4px}
+.warn{border:1px solid #E2D3B4;background:#FBF6EA;color:#5F4713;padding:12px 14px;font-size:14px;border-radius:var(--radius)}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:14px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+th,td{padding:10px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.03em}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:13.5px}
+tr:last-child td{border-bottom:0}
+
+/* ---------- lab ---------- */
+.lab{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--radius);padding:24px;margin:0 0 18px}
+.lab h3{margin-bottom:4px;font-size:17px}
+.lab .sub{color:var(--muted);font-size:14px;margin-bottom:16px;max-width:70ch}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:820px){.split{grid-template-columns:1fr;gap:18px}}
+.ctrl{margin:14px 0}
+.ctrl label{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-bottom:6px}
+.ctrl label b{color:var(--ink);font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:22px;background:transparent;accent-color:var(--green)}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--rule-strong)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:var(--green);border:2px solid var(--paper);margin-top:-6px;box-shadow:0 0 0 1px var(--green)}
+input[type=range]::-moz-range-track{height:2px;background:var(--rule-strong)}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--green);border:2px solid var(--paper)}
+input[type=number],input[type=text]{width:100%;padding:8px 10px;border:1px solid var(--rule-strong);
+  border-radius:var(--radius);font:inherit;font-family:var(--mono);font-size:14px;background:var(--paper);color:var(--ink)}
+input[type=number]:focus,input[type=text]:focus{border-color:var(--green)}
+
+.out{background:var(--paper);border:1px solid var(--ink);border-radius:var(--radius);padding:18px 18px 16px;
+  font-variant-numeric:tabular-nums;position:relative}
+.out::before{content:"CALC";position:absolute;right:10px;top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--rule-strong)}
+.out .big{font-size:34px;font-weight:700;color:var(--ink);letter-spacing:-.02em;font-family:var(--mono);line-height:1.1}
+.out .big small{font-size:12px;font-weight:500;color:var(--muted);margin-left:5px;font-family:var(--sans)}
+.out .line{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:13px;color:var(--muted);
+  border-bottom:1px dotted var(--rule)}
+.out .line:last-child{border-bottom:0}
+.out .line b{color:var(--ink);font-family:var(--mono);font-weight:600;font-size:13.5px;text-align:right}
+.out table{margin:2px 0 4px;border-top:0}
+.out table th{font-size:11px}
+.out table td{border-color:var(--rule)}
+.hint{margin-top:14px;font-size:13.5px;color:var(--ink2);border-left:2px solid var(--brass);
+  padding:8px 12px;background:#F7F3E6;line-height:1.7}
+.kv{display:flex;border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);margin:26px 0}
+.kv div{flex:1;padding:14px 16px 14px 0;font-size:12px;color:var(--muted)}
+.kv div+div{border-left:1px solid var(--rule);padding-left:16px}
+.kv div b{display:block;color:var(--ink);font-family:var(--mono);font-size:24px;font-weight:600;line-height:1.3}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;border-radius:var(--radius);
+  padding:9px 16px;cursor:pointer;font:inherit;font-size:14px;color:var(--ink);margin:0 8px 8px 0;
+  transition:background-color .16s ease,color .16s ease,border-color .16s ease}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{background:var(--green-deep);border-color:var(--green-deep);color:#F6F5F0}
+.btn.primary:hover{background:var(--green);border-color:var(--green)}
+
+/* ---------- quiz ---------- */
+.quiz{border:0;border-top:1px solid var(--rule-strong);border-radius:0;padding:20px 0;margin:0;background:transparent}
+.quiz:last-of-type{border-bottom:1px solid var(--rule-strong)}
+.quiz p{margin:0 0 12px;font-weight:600;font-size:15.5px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--rule);background:var(--sheet);
+  border-radius:var(--radius);padding:9px 12px;margin:0 0 6px;cursor:pointer;font:inherit;font-size:14.5px;
+  transition:border-color .15s ease,background-color .15s ease}
+.opt:hover{border-color:var(--ink)}
+.opt.ok{background:#E7F0E8;border-color:#6FAF8B}
+.opt.no{background:#F7E9E6;border-color:#C98B7E}
+.exp{display:none;font-size:13.5px;color:var(--ink2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);line-height:1.7}
+.quiz.done .exp{display:block}
+.score{font-size:13px;color:var(--muted);margin-top:14px;font-family:var(--mono)}
+
+.check{display:flex;gap:9px;align-items:center;font-size:13.5px;color:var(--muted);margin-top:14px;cursor:pointer}
+.check input{accent-color:var(--green)}
+
+details{border:0;border-top:1px solid var(--rule);border-radius:0;background:transparent;padding:12px 0;margin:0}
+summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--green-deep);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ ";font-family:var(--mono);color:var(--muted)}
+details[open] summary::before{content:"− "}
+details[open] summary{margin-bottom:10px}
+
+.search{display:flex;gap:10px;margin:26px 0 8px}
+.search input{flex:1;min-width:0;height:44px;padding:0 14px;border:1px solid var(--rule-strong);
+  border-radius:var(--radius);background:var(--sheet);font-family:var(--sans);font-size:14.5px;color:var(--ink)}
+.search input::placeholder{color:var(--muted)}
+.search input:focus{border-color:var(--ink)}
+.badge{font-size:11px;padding:1px 6px;background:transparent;color:var(--muted);border:1px solid var(--rule);margin-left:8px;font-family:var(--mono);letter-spacing:.02em}
+.foot{margin-top:64px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--rule-strong);padding-top:16px;font-family:var(--mono)}
+.toc{background:var(--sheet);border:1px solid var(--rule);padding:14px 18px;font-size:14px}
+
+
+/* ---------- deep page ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 10px}
+.chip{border:1px solid var(--rule-strong);background:var(--sheet);padding:6px 12px;font-size:13px;
+  cursor:pointer;border-radius:var(--radius);color:var(--ink2);font-family:var(--sans)}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sup{border-top:1px solid var(--rule);padding:14px 0}
+.sup:last-of-type{border-bottom:1px solid var(--rule)}
+.sup summary{display:flex;gap:10px;align-items:baseline;font-weight:600;font-size:15.5px;flex-wrap:wrap}
+.sup .n{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:22px}
+.sup .cat{font-size:11px;border:1px solid var(--rule);padding:1px 6px;color:var(--muted);font-weight:500}
+.sup p{font-size:14px;line-height:1.75;margin:8px 0}
+.sup .k{color:var(--muted)}
+.checklist{display:grid;gap:6px;margin:12px 0 4px}
+.checklist label{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:var(--ink2);cursor:pointer}
+.checklist input{margin-top:5px;accent-color:var(--green)}
+
+
+/* ---------- glossary ---------- */
+.term{border-bottom:1px dotted var(--green);color:inherit;text-decoration:none;cursor:pointer}
+.term:hover{background:var(--mint);border-bottom-style:solid}
+.gl{border-top:1px solid var(--rule);padding:14px 0}
+.gl:last-of-type{border-bottom:1px solid var(--rule)}
+.gl .h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-weight:700;font-size:15.5px}
+.gl .abbr{font-family:var(--mono);font-size:11px;border:1px solid var(--rule);padding:1px 6px;color:var(--muted);font-weight:500}
+.gl .cat{font-size:11px;color:var(--muted)}
+.gl .def{font-size:14px;margin:6px 0 0;line-height:1.75}
+.gl .formula{font-family:var(--mono);font-size:12.5px;background:#F4F8F6;border-left:2px solid var(--green);
+  padding:6px 9px;margin:7px 0 0;white-space:pre-wrap}
+.gl .use{font-size:13px;color:var(--muted);margin:6px 0 0}
+.gl.hl{background:#FBF6EA}
+.gl.hl .h{color:var(--green-deep)}
+
+/* ---------- motion ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.hero > div > *{animation:rise .5s cubic-bezier(.22,.61,.36,1) both}
+.hero > div > *:nth-child(2){animation-delay:.05s}
+.hero > div > *:nth-child(3){animation-delay:.1s}
+.hero > div > *:nth-child(4){animation-delay:.15s}
+.hero > div > *:nth-child(5){animation-delay:.2s}
+.hero .folder{animation:rise .5s .12s cubic-bezier(.22,.61,.36,1) both}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ---------- responsive / print ---------- */
+@media(max-width:620px){
+  .hero h1{font-size:27px}
+  .hero h1 em{white-space:normal;display:inline}
+  .metrics div{min-width:50%}
+}
+@media(max-width:760px){
+  .head{gap:10px;padding:12px 18px;flex-wrap:wrap}
+  nav{gap:12px;width:100%;order:3;margin-left:0;padding-top:6px;border-top:1px solid var(--rule);
+    overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;padding-bottom:4px}
+  nav::-webkit-scrollbar{display:none}
+  .head>*{min-width:0}
+  .prog{border-left:0;padding-left:0;margin-left:auto}
+  main{padding:30px 0 60px}
+  h2{margin-top:40px}
+  .metrics{flex-wrap:wrap}
+  .metrics div{min-width:44%}
+}
+@media print{
+  header,.btn,.search{display:none!important}
+  body{background:#fff;font-size:11pt}
+  .card,.lab,.out{border-color:#999;break-inside:avoid}
+  a{color:#000;border:0}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="head">
+    <div class="brand">IMA 训练站<small>案例赛 · 队内训练</small></div>
+    <nav id="nav" aria-label="主导航"></nav>
+    <div class="prog"><span>模型 <b id="pn">0</b>/11</span><span>找错 <b id="qn">0</b>/10</span></div>
+  </div>
+</header>
+<a class="skip" href="#main">跳到正文</a>
+<main class="wrap" id="main" tabindex="-1"><div id="app"></div></main>
+
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+
+/* ================= 数据 ================= */
+var MODELS = [
+ {id:'dupont', seg:'拆解', name:'杜邦分析', en:'DuPont Analysis', 
+  analogy:'体检总分拆成三项：血压、血糖、体重——先知道该减哪一项。',
+  def:'ROE = 销售净利率 × 总资产周转率 × 权益乘数。把股东回报拆成"赚得厚、转得快、借得多"三件事。',
+  steps:['算出三个比率，并与目标或同行比较','找出最大缺口那一项','把缺口翻译成部门动作（涨价/降本/催收/借钱）'],
+  caseTitle:'第12届 · 清洁光伏 2021',
+  caseBody:'净利率 8.82% × 周转率 1.11 × 权益乘数 1.87 = 18.25%，董事会要求 20%，差 1.75 个百分点。只改一个变量：净利率要到 9.63%、周转率要到 1.21、乘数要到 2.04。案例里应收周转在恶化，所以先抓应收，不是先加杠杆。',
+  caseTable:[['净利率','8.82%','9.63%'],['周转率','1.11','1.21'],['权益乘数','1.87','2.04']],
+  output:'ROE 差 X 个点，主因是 Y 拖累 Z，所以先做 W。',
+  misuse:'只算不归因；用加杠杆把 ROE 冲上去（评委会问"借的钱不用还吗"）。'},
+
+ {id:'valuechain', seg:'拆解', name:'价值链', en:'Value Chain', 
+  analogy:'餐厅从买菜到洗碗，找出"最贵且最不值"的那一环。',
+  def:'把公司拆成研发→采购→生产→物流→营销→服务，每一环标"成本占比"和"价值贡献"。',
+  steps:['画出主活动链条','标出每环的成本占比与差异化贡献','锁定"高成本、低价值"的环节下手'],
+  caseTitle:'第12届 · 降本增效',
+  caseBody:'材料成本占产品成本 80% 以上，原材料里 80% 是铜材、塑料粒子、二极管。所以降本主战场是采购总成本，不是砍差旅。用 TCO 比较：报价低 5% 的供应商，总成本反而高 1,657 元/万平方米（43,987 vs 45,644）。',
+  caseTable:[['A 供应商','报价高','总成本 43,987'],['B 供应商','报价低 5%','总成本 45,644']],
+  output:'成本 80% 集中在 X 环节，降本主战场在这里。',
+  misuse:'画成教科书图，不标成本占比，也不落到具体环节。'},
+
+ {id:'pestel', seg:'外部', name:'PESTEL', en:'Macro Environment', 
+  analogy:'出门前看天气预报：决定今天穿什么、带不带伞，不决定你的人生。',
+  def:'政治、经济、社会、技术、环境、法律六个维度，看外部什么变了。',
+  steps:['六维各列 1—2 条事实','每条判"利好/利空"','只保留能连到收入、成本或折现率的那 2—3 条'],
+  caseTitle:'第15届 · 立达信 / 第14届 · 海尔 ESG',
+  caseBody:'欧盟关税清单里 LED 光源不在加征范围，但灯具和控制类在——出口毛利被削一层；Matter 1.0 统一口径，晚一步就从品牌退回代工。第14届则是 CSRD、ISSB、沪深北指引接连落地：合规成本上升，同时变成欧洲市场准入门槛。',
+  caseTable:[['关税','成本线','出口毛利下降'],['标准','收入线','话语权与代工命运'],['ESG 披露','门槛','合规成本 + 准入资格']],
+  output:'政策/技术变化 X → 影响收入或成本的 Y → 所以现在必须决策 Z。',
+  misuse:'写成新闻联播：每条都对，每条都没用。'},
+
+ {id:'lifecycle', seg:'外部', name:'行业生命周期', en:'Industry Life Cycle', 
+  analogy:'一条街的奶茶店：没人开→抢着开→打价格战→关店。',
+  def:'导入、成长、成熟、衰退四阶段；阶段决定该投、该抢、该守还是该退。',
+  steps:['定位行业处在哪个阶段','给出渗透率与增速（CAGR）','据此决定资源策略：投/抢/守/退'],
+  caseTitle:'第15届 · 照明 vs 智能照明',
+  caseBody:'LED 渗透率 76% 已见顶，价格战激烈——成熟期，守现金、降成本；智能照明渗透率 12%→38.7%→预计 60%，CAGR 21%——成长期，投研发、抢份额。同一家公司两个业务，两套资源策略。',
+  caseTable:[['传统照明','76% 渗透','现金牛'],['智能照明','CAGR 21%','增长引擎']],
+  output:'X 业务已到成熟期，是现金牛；Y 业务处在成长期，是增长引擎。',
+  misuse:'拿十年前的行业数据当现在；只说"前景好"不说阶段。'},
+
+ {id:'fiveforces', seg:'竞争力', name:'波特五力', en:'Five Forces', 
+  analogy:'美食街里你赚多少，不完全看你多努力，而看这五股力量。',
+  def:'现有竞争、潜在进入者、替代品、供应商议价、购买者议价。决定行业平均利润。',
+  steps:['五力逐一判强/中/弱','每力给一条证据（数据或事实）','落到"利润被谁拿走、毛利率会被压到多少"'],
+  caseTitle:'第12届 · 清洁光伏',
+  caseBody:'上游铜材、塑料粒子、二极管是大宗，价格公司说了不算——供应商议价强；下游是光伏组件大厂，集中度高、压价能力强；同行产品同质化。结果是被夹在中间，只能走总成本领先。',
+  caseTable:[['上游','强','材料涨价只能接受'],['下游','强','客户压价'],['同行','强','同质化价格战']],
+  output:'利润被上游/下游/同行拿走，我们处在中间层，只能走 Z。',
+  misuse:'每力都写"较强"，结论"竞争激烈"——等于没说。'},
+
+ {id:'vrio', seg:'竞争力', name:'VRIO', en:'Resource-Based View', 
+  analogy:'你有一把好刀，但别人也有、你也不会用、顾客还不认——都不算优势。',
+  def:'价值 Value、稀缺 Rarity、难模仿 Imitability、组织 Organization。四问全过才是真优势。',
+  steps:['逐条列出资源/能力','四问逐一判断','特别回答第四问：组织与考核能不能兑现'],
+  caseTitle:'第15届 · 立达信',
+  caseBody:'4,668 项授权知识产权、Zigbee 联盟 19 家董事会成员、Z-Wave 全球 11 家核心成员、首批 Matter 产品。前三关（V/R/I）都过；但公司仍按 ODM 代工方式考核，研发价值在报表上看不见——第四关（O）没过。',
+  caseTable:[['V 价值','过','技术决定产品力'],['R 稀缺','过','标准席位稀缺'],['I 难模仿','过','专利与生态'],['O 组织','未过','考核仍是代工逻辑']],
+  output:'我们在 X 上有优势，但组织没兑现，需要改考核。',
+  misuse:'把"有专利"直接当护城河；不回答第四问。'},
+
+ {id:'generic', seg:'竞争力', name:'通用战略', en:'Generic Strategy', 
+  analogy:'开店只有三种活法：最便宜、最特别、只服务一类人。',
+  def:'成本领先、差异化、聚焦。必须选一条，并解释为什么不选另外两条。',
+  steps:['选一条主战略','给 2—3 个支撑动作','说明为什么另外两条走不通'],
+  caseTitle:'第12届 / 第15届',
+  caseBody:'清洁光伏产品同质化、材料占成本 80%、研发投入仅 4.9%——只能成本领先，所以 TCO 是战略级工具。立达信从 ODM 成本领先，转向自有品牌 + 聚焦教育场景的差异化。',
+  caseTable:[['清洁光伏','成本领先','TCO、降本'],['立达信','差异化 + 聚焦','自有品牌、教育场景']],
+  output:'我们选成本领先，因为 X；不做差异化，因为 Y。',
+  misuse:'宣称"既要低成本又要差异化"，却不给条件（夹在中间）。'},
+
+ {id:'canvas', seg:'产品', name:'商业模式画布', en:'Business Model Canvas', 
+  analogy:'开店前的九件事清单：卖给谁、卖什么、怎么找、怎么留、钱怎么收……',
+  def:'客户细分、价值主张、渠道、客户关系、收入流、核心资源、关键活动、重要伙伴、成本结构。',
+  steps:['画"现状画布"','画"目标画布"','两图差异就是方案，并标出哪一格决定毛利'],
+  caseTitle:'第15届 · 三层收费',
+  caseBody:'现状：给欧美品牌做 ODM，一次性硬件收入，毛利 27%。目标：硬件入口 + SaaS 订阅 + 数据增值，毛利 27% / 65% / 80%。100 所学校：4.8 + 0.9 + 0.15 = 5.85 亿元，扣研发摊销 0.7 亿后净现金流转正。单校 585 万、边际贡献率 34.2%、固定成本 0.8 亿 → 保本 40 所。',
+  caseTable:[['硬件','4.8 亿','27%'],['SaaS','0.9 亿','65%'],['数据','0.15 亿','80%']],
+  output:'收入从 A 模式换成 B 模式，毛利结构从 X 变成 Y，保本点 Z。',
+  misuse:'九格贴满名词，不标"钱从哪来、毛利在哪"。'},
+
+ {id:'bcg', seg:'产品', name:'BCG 矩阵', en:'Growth-Share Matrix', 
+  analogy:'家里四个孩子：明星继续投、现金牛供血、问题设期限、瘦狗该卖就卖。',
+  def:'两轴：市场增长率 × 相对市场份额。四类：明星、现金牛、问题、瘦狗。',
+  steps:['给每个业务定位置','说明谁供血、谁花钱','给问题业务设期限与退出条件'],
+  caseTitle:'第15届 · 双主业',
+  caseBody:'照明 ODM 是现金牛（低增长、高份额）；IoT 硬件是问题业务（高增长、低份额）；智慧校园是明星（高增长、有份额）。用现金牛的钱把明星养大，问题业务设期限。',
+  caseTable:[['照明 ODM','现金牛','供血'],['IoT 硬件','问题','设期限'],['智慧校园','明星','加注']],
+  output:'资源给明星，现金牛供血，问题业务设期限。',
+  misuse:'没有份额数据硬套；四个格子全写成"明星"。'},
+
+ {id:'ansoff', seg:'产品', name:'安索夫矩阵', en:'Ansoff Matrix', 
+  analogy:'四种赚钱方式，风险从低到高：老客户买更多→老产品去新市场→给老客户新产品→全新。',
+  def:'市场渗透、市场开发、产品开发、多元化。',
+  steps:['把每个增长动作放进四格','标风险与回收期','排优先级，别四条全要'],
+  caseTitle:'第12届 · 智能接线盒',
+  caseBody:'智能接线盒属于产品开发（客户还是组件厂，产品是新的，投入 500 万研发，回收期 2—3 年）；东南亚属于市场开发。两条路资源需求不同，不能同时全上。',
+  caseTable:[['智能接线盒','产品开发','技术风险'],['东南亚','市场开发','渠道风险']],
+  output:'近期渗透保现金，中期产品开发换赛道，不做多元化。',
+  misuse:'四条路径全要，没有优先级。'},
+
+ {id:'bsc', seg:'决策', name:'平衡计分卡', en:'Balanced Scorecard', 
+  analogy:'导航仪：财务是目的地，另外三条是路（客户、流程、团队）。',
+  def:'财务、客户、内部流程、学习与成长四维，核心是因果链。',
+  steps:['每维定 2—3 个指标','画出因果链（学习→流程→客户→财务）','挂到责任部门与考核周期'],
+  caseTitle:'第15届 · 在线率',
+  caseBody:'设备在线率↑ → 服务使用率↑ → 续约率↑ → 客户终身价值↑ → 长期现金流↑。所以"在线率"要放进运维部 KPI。',
+  caseTable:[['财务','现金流、毛利'],['客户','续约率、NPS'],['流程','在线率、交付周期'],['成长','算法复用、认证']],
+  output:'把"设备在线率"设为运维部 KPI，因为它决定续约率与长期现金流。',
+  misuse:'四维各贴五个 KPI，没有因果链；指标不可测。'},
+
+ {id:'dcf', seg:'决策', name:'DCF 与临界值', en:'Discounted Cash Flow', 
+  analogy:'未来的钱要打折才算今天：明年的 100 块，今天只值 92.6 块。',
+  def:'把未来现金流按折现率折成今天，减去投资得到 NPV；再算"变量变到多少结论会翻转"。',
+  steps:['算边际贡献 → 扣运维/碳/折旧得 EBIT','交税后加回折旧 = 经营现金流','折现十年 + 残值 + 补贴','算差额与临界值（碳价、流失率）'],
+  caseTitle:'第16届 · 锂航能源',
+  caseBody:'A 2.4 亿 / B 3.9 亿。不含碳：45.24 vs 44.45（A 高 0.79）；碳 100 元：44.95 vs 44.34（A 高 0.61，优势被吃掉 22%）。临界碳价 448 元/吨；出口流失 4.6% 即归零；两个回收期都不到 0.6 年，不构成决策依据。',
+  caseTable:[['不含碳','45.24','44.45'],['含碳 100','44.95','44.34'],['差额','0.79','0.61']],
+  output:'结论 X，临界值 Y，触发条件 Z，建议按情景分档。',
+  misuse:'只报一个 NPV；不写假设；把沉没成本算进增量现金流。'}
+];
+
+var GLOSSARY = [
+ {id:'npv',t:'NPV',full:'净现值',cat:'投资',def:'把未来每一年的现金按折现率折成今天的价值，减去初始投资。大于 0 说明项目回报超过门槛。',f:'NPV = −C₀ + Σ CFt / (1+r)^t',use:'第16届：A 44.95 亿 vs B 44.34 亿。',link:1},
+ {id:'irr',t:'IRR',full:'内部收益率',cat:'投资',def:'让 NPV 刚好等于 0 的折现率，也就是项目自己能达到的年化回报率。',f:'NPV(IRR) = 0',use:'第13届门槛 IRR>14%。',link:1},
+ {id:'payback',t:'回收期',full:'静态回收期',cat:'投资',def:'不考虑时间价值，几年能把本金赚回来。适合快速筛，不适合比较长期项目。',f:'投资额 ÷ 年净现金流',use:'第16届两个方案都不到 0.6 年，指标失效。',link:1},
+ {id:'dpp',t:'DPP',full:'动态回收期',cat:'投资',def:'把每年现金流折现后再累计，看几年回本。比静态回收期严格。',f:'累计折现现金流 = 0 的年份',use:'第13届公司门槛 DPP<5 年。',link:1},
+ {id:'dcf',t:'DCF',full:'现金流折现法',cat:'投资',def:'先预测未来现金流，再按折现率折回今天，是 NPV 的计算框架。',f:'价值 = Σ CFt / (1+r)^t',use:'第16届两套测算都基于 DCF。',link:1},
+ {id:'eac',t:'EAC',full:'平均年成本（等额年金）',cat:'投资',def:'把不同寿命的方案拉平：把总成本折现后，平均摊到每一年。寿命不同不能直接比 NPV。',f:'EAC = 现金流出总现值 ÷ 年金系数',use:'第13届区域决赛核心考点：T1 项目 EAC 高于旧线。',link:1},
+ {id:'wacc',t:'WACC',full:'加权平均资本成本',cat:'投资',def:'公司融资的综合成本，通常拿来当折现率。股权成本与债务成本按比例加权。',f:'WACC = E/V×Re + D/V×Rd×(1−T)',use:'第16届按董事会要求取 8%。',link:1},
+ {id:'annuity',t:'年金系数',full:'(P/A, i, n)',cat:'投资',def:'每年 1 元、连续 n 年、按利率 i 折现，今天一共值多少。',f:'(P/A,8%,10) ≈ 6.7101',use:'第16届折现十年的乘数。',link:1},
+ {id:'discount',t:'折现',full:'Discounted',cat:'投资',def:'把未来的钱按利率换算成今天的价值——明年的 100 块，今天只值 92.6 块（8%）。',f:'PV = FV / (1+r)^n',use:'所有 DCF 计算的起点。',link:1},
+ {id:'incremental',t:'增量现金流',full:'Incremental Cash Flow',cat:'投资',def:'只算"选这个方案比选那个方案"多出来或少掉的现金，不算总额。沉没成本要剔除。',f:'ΔCF = CF_A − CF_B',use:'第16届 A 与 B 的差额 0.61 亿。',link:1},
+ {id:'sunk',t:'沉没成本',full:'Sunk Cost',cat:'投资',def:'已经花掉、无论选哪个方案都收不回的钱，决策时不应考虑。',use:'第13届分摊的 26 万元管理/研发/财务费用必须剔除。',link:1},
+ {id:'opportunity',t:'机会成本',full:'Opportunity Cost',cat:'投资',def:'选了 A 就放弃的 B 的收益，是真实成本，要进增量分析。',use:'第15届：0.8 亿投 IoT，就放弃了投照明渠道的收益。',link:1},
+ {id:'sensitivity',t:'敏感性',full:'敏感性分析',cat:'投资',def:'每次只动一个变量，看结果变多少；再把影响最大的几个排个序。',f:'±10% / ±20% → ΔNPV',use:'第12届原材料 ±20% → 净利 −66.79%。',link:1},
+ {id:'scenario',t:'情景',full:'情景分析',cat:'投资',def:'几个变量同时按一套逻辑变动，形成悲观/基准/乐观三套结果。',use:'第13届用蒙特卡洛给概率。',link:1},
+ {id:'montecarlo',t:'蒙特卡洛',full:'Monte Carlo',cat:'投资',def:'给不确定变量设定分布，随机模拟上万次，得到结果的概率分布。',f:'输出 P(NPV>0)、P(IRR>门槛)',use:'第13届 HZ 跑 1 万次：P(IRR≥14%)=62.22%。',link:1},
+ {id:'realoption',t:'实物期权',full:'Real Option',cat:'投资',def:'把"以后可以改主意"（延迟、扩张、放弃）算成价值。灵活性价值 = 有权 NPV − 无权 NPV。',use:'第15届：先投 50 校，保留扩张权。',link:1},
+ {id:'breakeven',t:'保本点',full:'盈亏平衡点',cat:'成本',def:'卖到多少量刚好不亏：固定成本被边际贡献覆盖的那个点。',f:'固定成本 ÷ 边际贡献率 ÷ 单价',use:'第15届保本 40 所学校。',link:1},
+ {id:'cm',t:'边际贡献',full:'Contribution Margin',cat:'成本',def:'卖一件产品，扣掉变动成本后剩下的钱，用来覆盖固定成本。',f:'CM = 收入 − 变动成本；CM率 = CM ÷ 收入',use:'第15届 CM 率 34.2%。',link:1},
+ {id:'dol',t:'DOL',full:'经营杠杆',cat:'成本',def:'固定成本越高，收入变动时利润波动越大。固定成本摊不薄，就是风险。',f:'DOL = 1 + 固定成本 ÷ 经营现金流',use:'第15届：放缓会让固定成本更难摊薄。',link:1},
+ {id:'tco',t:'TCO',full:'采购总成本',cat:'成本',def:'不只比报价，还算资金占用、质量损失、缺货、物流等隐性成本。',f:'TCO = 材料 + 供应链 + 资金 + 质量',use:'第12届达利报价低 5%，TCO 反而高 1,657 元/万㎡。',link:1},
+ {id:'abc',t:'ABC',full:'作业成本法',cat:'成本',def:'按活动分摊间接费用，而不是按工时或产量一刀切。',use:'第15届用 ABC 划定平台"自制/开放"边界。',link:1},
+ {id:'vave',t:'VA/VE',full:'价值分析 / 价值工程',cat:'成本',def:'在保证功能的前提下降低成本：删掉不必要的功能、减少零件种类与材料用量。',use:'第12届降本三手段之一（技术手段）。',link:1},
+ {id:'kraljic',t:'Kraljic',full:'卡拉杰克矩阵',cat:'成本',def:'按"采购金额 × 供应风险"把物料分四类：战略、杠杆、瓶颈、常规，不同类型不同策略。',use:'第12届供应商分级管理。',link:1},
+ {id:'eqq',t:'EOQ',full:'经济订货量',cat:'成本',def:'让"订货成本 + 持有成本"最小的单次订货数量。',f:'EOQ = √(2DS/H)',use:'第12届采购模型里用来定采购批量。',link:0},
+ {id:'stagegate',t:'阶段门',full:'Stage-Gate',cat:'成本',def:'把项目分成若干阶段，每阶段结束设一个 gate，达标才放款进入下一阶段。',use:'第15届 50→200→1000 校的三道门。',link:1},
+ {id:'dupont',t:'杜邦分析',full:'DuPont Analysis',cat:'财务',def:'把 ROE 拆成净利率×周转率×权益乘数，找出到底是哪一环拖后腿。',f:'ROE = 净利率 × 总资产周转率 × 权益乘数',use:'第12届 18.25% 差 20% 目标 1.75 个点。',link:1},
+ {id:'roe',t:'ROE',full:'净资产收益率',cat:'财务',def:'股东每投入 1 元，一年赚回多少。',f:'ROE = 净利润 ÷ 平均股东权益',use:'第15届 13.13%→15.91%→9.33%。',link:1},
+ {id:'roa',t:'ROA',full:'总资产收益率',cat:'财务',def:'公司用全部资产赚钱的效率。',f:'ROA = 净利润 ÷ 平均总资产',use:'第12届 9.74%，低于同行。',link:0},
+ {id:'gpm',t:'毛利率',full:'Gross Margin',cat:'财务',def:'收入扣掉直接成本后剩下的比例，反映产品本身赚不赚钱。',f:'(收入−营业成本) ÷ 收入',use:'第15届 22.8%→29.8%。',link:1},
+ {id:'npm',t:'净利率',full:'Net Margin',cat:'财务',def:'扣掉所有费用和税之后，每 100 元收入落袋多少。',f:'净利润 ÷ 收入',use:'第15届 4.7%→6.5%→4.7% 原地踏步。',link:1},
+ {id:'turnover',t:'总资产周转率',full:'Asset Turnover',cat:'财务',def:'一块钱资产，一年能做几块钱生意。',f:'收入 ÷ 平均总资产',use:'第15届从 1.33 降到 1.14。',link:1},
+ {id:'multiplier',t:'权益乘数',full:'Equity Multiplier',cat:'财务',def:'总资产是股东权益的几倍，反映杠杆高低。',f:'总资产 ÷ 股东权益',use:'第15届 2.12→1.83→1.75，主动降杠杆。',link:1},
+ {id:'debt',t:'资产负债率',full:'Debt Ratio',cat:'财务',def:'总资产里有多少是借来的。',f:'负债 ÷ 总资产',use:'第15届 41.41%，偿债压力不大。',link:0},
+ {id:'current',t:'流动比率',full:'Current Ratio',cat:'财务',def:'短期偿债能力：流动资产能不能覆盖流动负债。',f:'流动资产 ÷ 流动负债',use:'第15届 1.77，短期安全。',link:0},
+ {id:'quick',t:'速动比率',full:'Quick Ratio',cat:'财务',def:'更严格的短期偿债指标，把存货剔除。',f:'(流动资产−存货) ÷ 流动负债',use:'第15届 1.41。',link:0},
+ {id:'sgr',t:'SGR',full:'可持续增长率',cat:'财务',def:'不增发新股、不改变经营效率与财务政策时，销售最多能长多少。',f:'SGR = ROE × 留存率 ÷ (1 − ROE × 留存率)',use:'第12届 22.3% < 26% 目标。',link:1},
+ {id:'ebit',t:'EBIT',full:'息税前利润',cat:'财务',def:'不扣利息和所得税的利润，用来比较不同资本结构的项目。',f:'EBIT = 收入 − 成本费用',use:'第16届 EBIT 9.09 亿（A）。',link:1},
+ {id:'ebitda',t:'EBITDA',full:'息税折旧摊销前利润',cat:'财务',def:'再剔除折旧摊销，近似"经营现金能力"的粗略指标。',f:'EBITDA = EBIT + 折旧 + 摊销',use:'常用来做同行比较。',link:0},
+ {id:'ocf',t:'OCF',full:'经营现金流',cat:'财务',def:'经营活动真正产生的现金，比净利润更难修饰。',f:'OCF = 税后利润 + 折旧摊销 − 营运资本增加',use:'第16届 A 7.05 亿/年。',link:1},
+ {id:'nopat',t:'NOPAT',full:'税后经营利润',cat:'财务',def:'不考虑利息的税后利润，算自由现金流时用。',f:'NOPAT = EBIT × (1−税率)',use:'第16届 OCF = NOPAT + 折旧。',link:1},
+ {id:'fcf',t:'FCF',full:'自由现金流',cat:'财务',def:'公司真正能自由支配的现金，可以还债、分红或再投资。',f:'FCF = NOPAT + 折旧摊销 − 资本开支 − 营运资本增加',use:'DCF 的核心输入。',link:0},
+ {id:'taxshield',t:'税盾',full:'Tax Shield',cat:'财务',def:'折旧、利息、研发加计能在税前扣除，从而少交税，相当于政府分担了一部分成本。',f:'税盾 = 可扣除额 × 税率',use:'第13届折旧抵税；第16届碳成本抵税。',link:1},
+ {id:'losscf',t:'亏损结转',full:'Loss Carryforward',cat:'财务',def:'当年亏损可以抵以后年度的应纳税所得，通常 5 年，所以税盾不是当年兑现。',use:'第15届爬坡期亏损，实际税负低于 25%。',link:1},
+ {id:'capitalise',t:'资本化',full:'Capitalization',cat:'财务',def:'把支出记为资产、分期摊销，而不是一次性计入当期费用。',use:'第12届研发建议资本化；第15届平台研发可资本化。',link:1},
+ {id:'depreciation',t:'折旧',full:'Depreciation',cat:'财务',def:'把设备成本分摊到使用年限，不花现金但能抵税。基数要先扣残值。',f:'年折旧 = (原值 − 残值) ÷ 年限',use:'第13届 (700−35)/10 万。',link:1},
+ {id:'salvage',t:'残值',full:'Salvage Value',cat:'财务',def:'设备寿命结束时的剩余价值，计入最后一年的现金流入。',use:'第16届 A 1,200 万、B 1,950 万。',link:1},
+ {id:'comps',t:'Comps',full:'可比公司分析',cat:'投资',def:'找业务相近的公司，比毛利率、研发费率、ROIC，判断自己的假设是否合理。',use:'第12届快可电子、第15届欧普等 9 家。',link:1},
+ {id:'roic',t:'ROIC',full:'投入资本回报率',cat:'投资',def:'公司用投入的资本赚了多少，比 ROE 更能反映经营质量。',f:'ROIC = NOPAT ÷ 投入资本',use:'同行对比常用指标。',link:1},
+ {id:'pestel',t:'PESTEL',full:'宏观环境分析',cat:'战略',def:'政治、经济、社会、技术、环境、法律六维，只看能连到财务线的几条。',use:'第15届关税、Matter、去库存三条。',link:1},
+ {id:'fiveforces',t:'五力',full:'波特五力',cat:'战略',def:'现有竞争、新进入者、替代品、供应商议价、购买者议价，决定行业平均利润。',use:'第12届被上下游夹住。',link:1},
+ {id:'vrio',t:'VRIO',full:'资源能力分析',cat:'战略',def:'价值、稀缺、难模仿、组织四问，全过才是真优势；第四问最常被忽略。',use:'第15届技术过三关、组织没过。',link:1},
+ {id:'valuechain',t:'价值链',full:'Value Chain',cat:'战略',def:'把公司拆成研发→采购→生产→物流→营销→服务，找高成本低价值的环节。',use:'第12届采购占成本 80%。',link:1},
+ {id:'bcg',t:'BCG',full:'波士顿矩阵',cat:'战略',def:'按市场增长率与相对份额分四类：明星、现金牛、问题、瘦狗。',use:'第15届照明现金牛、IoT 问题业务。',link:1},
+ {id:'ansoff',t:'安索夫',full:'安索夫矩阵',cat:'战略',def:'现有/新产品 × 现有/新市场，四格：渗透、市场开发、产品开发、多元化。',use:'第12届智能接线盒=产品开发。',link:1},
+ {id:'canvas',t:'画布',full:'商业模式画布',cat:'战略',def:'九格描述一门生意：客户、价值、渠道、关系、收入、资源、活动、伙伴、成本。',use:'第15届现状 vs 三层收费两张画布。',link:1},
+ {id:'bsc',t:'BSC',full:'平衡计分卡',cat:'战略',def:'财务、客户、内部流程、学习成长四维，用因果链把战略落到部门 KPI。',use:'第15届在线率→续约率→现金流。',link:1},
+ {id:'generic',t:'通用战略',full:'波特通用战略',cat:'战略',def:'成本领先、差异化、聚焦，只能选一条，否则会被夹在中间。',use:'第15届照明成本领先、IoT 差异化+聚焦。',link:1},
+ {id:'esg',t:'ESG',full:'环境、社会、治理',cat:'ESG',def:'衡量企业非财务表现的框架，越来越影响融资成本与市场准入。',use:'第14届海尔 ESG 三部曲。',link:1},
+ {id:'scope',t:'范围1/2/3',full:'Scope 1/2/3',cat:'ESG',def:'范围 1 是直接排放，范围 2 是外购能源，范围 3 是供应链与使用端排放。',use:'第14届要求披露范围 3。',link:0},
+ {id:'lca',t:'LCA',full:'生命周期评价',cat:'ESG',def:'从原料到废弃，算产品全生命周期的环境影响。',use:'第14届产品碳足迹核算。',link:0},
+ {id:'carbonquota',t:'碳配额',full:'Carbon Allowance',cat:'ESG',def:'政府发给重点排放单位的排放许可，年底按实际排放清缴，缺口要买。',use:'第16届公司被纳入全国碳市场。',link:1},
+ {id:'freealloc',t:'免费配额',full:'Free Allocation',cat:'ESG',def:'配额中免费发放的比例，比例越高，企业实际承担的碳成本越低。',f:'净碳成本 = 排放 × (1−免费比例) × 碳价',use:'免费 80% 时临界碳价升到 2,240 元/吨。',link:1},
+ {id:'carbonprice',t:'碳价',full:'Carbon Price',cat:'ESG',def:'一吨二氧化碳的履约价格，直接进入营业成本。',use:'第16届按 100 元/吨测算。',link:1},
+ {id:'cbam',t:'CBAM',full:'碳边境调节机制',cat:'ESG',def:'欧盟对进口高碳产品征收的碳关税，按产品隐含排放与欧盟碳价差额计。',use:'第16届出口欧盟的隐性成本。',link:1},
+ {id:'icp',t:'ICP',full:'内部碳定价',cat:'ESG',def:'公司内部给碳排放定一个价格，用于投资筛选（影子价）或预算（履约价）。',use:'影子价常取履约价的 1.5—2 倍。',link:1},
+ {id:'greenpremium',t:'绿色溢价',full:'Green Premium',cat:'ESG',def:'为低碳产品多付的价格，或低碳资产带来的额外收益。',use:'第16届 B 方案的低排放价值。',link:1},
+ {id:'stranded',t:'搁浅资产',full:'Stranded Asset',cat:'ESG',def:'因政策或技术变化而提前贬值、无法收回投资的资产。',use:'高碳设备在碳价上涨后可能搁浅。',link:1},
+ {id:'msci',t:'MSCI',full:'ESG 评级机构',cat:'ESG',def:'国际主流 ESG 评级之一，评分影响被动资金配置与融资成本。',use:'第14届海尔连续四年提升。',link:0},
+ {id:'slb',t:'SLB',full:'可持续挂钩贷款',cat:'ESG',def:'利率与 ESG 指标挂钩的贷款，达标可降息，通常 10—30bp。',use:'第14届可量化的绿色融资优势。',link:0},
+ {id:'saas',t:'SaaS',full:'软件即服务',cat:'交易',def:'按年/按月收订阅费的软件模式，收入可预测、毛利高。',use:'第15届第二层收入，毛利 65%。',link:1},
+ {id:'arr',t:'ARR/MRR',full:'年度/月度经常性收入',cat:'交易',def:'订阅制里可重复发生的收入，是估值的关键指标。',use:'第15届 SaaS 0.9 亿/百校。',link:0},
+ {id:'clv',t:'CLV',full:'客户终身价值',cat:'交易',def:'一个客户在整个合作期内贡献的利润现值。',f:'CLV = ARPU × 毛利率 × 留存年限',use:'第15届续约率→CLV→现金流。',link:1},
+ {id:'cac',t:'CAC',full:'获客成本',cat:'交易',def:'获取一个新客户花的钱，CLV/CAC>3 才算健康。',use:'第15届评估场景复制性。',link:0},
+ {id:'platform',t:'双边平台',full:'Two-sided Platform',cat:'交易',def:'连接两类用户、靠网络效应增值的模式，一边越多，另一边越值钱。',use:'第15届教育 IoT OS 的飞轮。',link:1},
+ {id:'redline',t:'红线',full:'Red Line',cat:'决策',def:'不可越过的阈值，超过就触发预设动作（暂停、改方案、退出）。',use:'第15届 40% / 2,100 万 / 24 个月。',link:1},
+ {id:'critical',t:'临界值',full:'Threshold',cat:'决策',def:'让结论翻转的那个变量取值，比"有风险"有力得多。',use:'第16届临界碳价 448 元/吨。',link:1},
+ {id:'assumption',t:'假设表',full:'Assumption Sheet',cat:'决策',def:'把所有关键假设写在一页上：取值、来源、责任人、敏感度。',use:'第13届建模七动作之一。',link:1}
+];
+var SUPPORTS = [
+ {n:'06',cat:'增量与取舍',t:'增量分析：只比"A 与 B 的差"',
+  what:'决策看的是"选了 B，公司比选 A 多花多少、多赚多少"，不是两个方案的总额。',
+  how:'先算三条现金流（不投 / A / B），再做差；沉没成本与分摊费用剔除；差额折现。',
+  case:'第13届 ALB 项目分摊的 26 万元管理/研发/财务费用不随项目变动，必须剔除；第12届纸箱案，报价低 5% 的供应商 TCO 反而高 1,657 元/万㎡。',
+  out:'增量现金流显示，B 每年多花 X、少排 3.5 万吨，等价于每吨碳 Z 元。',
+  avoid:'拿两个方案的总成本直接相减，而口径并不一致。'},
+ {n:'07',cat:'增量与取舍',t:'Trade-off：把取舍摆到台面上',
+  what:'所有方案都是取舍，不存在"全都好"。评委看的是你敢不敢说出代价。',
+  how:'四列：得到什么、失去什么、可逆吗、触发条件；最后一句"我们愿意用 X 换 Y"。',
+  case:'第15届 固定成本 vs 规模；第14届 合规成本 vs 有限资源；第12届 低价 vs 质量（纸箱事件）。',
+  out:'我们用 0.61 亿现值，换 2027 年的市场准入——这笔钱买的是保险，不是收益。',
+  avoid:'只列优点；把代价藏在附录里。'},
+ {n:'08',cat:'边界与不确定',t:'边界性：什么条件下成立，什么时候失效',
+  what:'边界 = 红线值 + 触发动作；韧性 = 在红线前留一档缓冲。',
+  how:'找 3 个关键变量，各设绿/黄/红三档；红灯写动作（暂停、改方案、退出）；留 10—20% 预算或产能缓冲。',
+  case:'第15届江西财大四条红线：烧钱 ≤ 照明 OCF 的 40%、SaaS 收入 ≥ 2,100 万、回款率 ≥ 80%、回收期 ≤ 24 个月。',
+  out:'碳价超 448 元/吨、或出口订单流失 4.6%，方案翻盘——两条红线已配触发动作。',
+  avoid:'只写"存在风险"，不写阈值和动作。'},
+ {n:'09',cat:'边界与不确定',t:'敏感性：哪个假设一错就翻盘',
+  what:'不是把所有变量都动一遍，而是找"前三个"。',
+  how:'单变量 ±10/20% 看 NPV 变化 → 排序画龙卷风图 → 对前两名做组合情景。',
+  case:'第12届 HB：原材料 ±20% → 净利 −66.79%；第13届 HZ：价格敏感系数 6.92、产能利用率 1.41。',
+  out:'最脆弱的是售价与产能利用率，各动 10%，NPV 变化超过 30%。',
+  avoid:'做了十张敏感性表，却没有排序和结论。'},
+ {n:'10',cat:'边界与不确定',t:'可视化：图是给人做判断的',
+  what:'PowerBI / Python 是工具，不是论点。一张图只回答一个问题。',
+  how:'一页仪表盘（红绿灯 KPI）+ 一页分布图（龙卷风或蒙特卡洛）足够；答辩现场不跑代码。',
+  case:'22 份获奖作品里没人用 PowerBI：HN、XN 用项目库看板原型，HZ 用 Crystal Ball 跑 1 万次模拟。',
+  out:'这一页只回答一个问题：现在踩刹车还是踩油门。',
+  avoid:'炫技动图、五页大屏、现场跑代码。'},
+ {n:'11',cat:'金融与落地',t:'超越边界：还能嵌哪些工具',
+  what:'期权、套保、ABC、内部转移定价、EAA——选 1—2 个"能算钱"的，不是列清单。',
+  how:'先问它改变的是现金流、折现率还是残值，再算差额；算不出来就删。',
+  case:'第12届 HZ 用铜看涨期权锁价、HB 用塑料期货套保；第15届北师大用 ABC 划开放边界、内部技术许可定价。',
+  out:'套保把原材料波动从 ±20% 压到 ±5%，等价于 NPV 增加 X。',
+  avoid:'罗列工具箱，却不说它改了哪个数。'},
+ {n:'12',cat:'金融与落地',t:'实物期权：把"以后能改主意"算成钱',
+  what:'延迟、扩张、放弃三种期权；灵活性价值 = 有权方案 NPV − 无权方案 NPV。',
+  how:'画决策树，每节点给概率与投入；用风险中性概率折现；简化时用二叉树即可。',
+  case:'往届无人做实物期权：第12届只用商品期权套保，第13届 HD 用 IFRS 5 处理处置价值。',
+  out:'保留二期扩张权价值约 X 亿；不确定性超过阈值就先买期权再投资。',
+  avoid:'直接套 Black-Scholes 却不解释波动率与期限。'},
+ {n:'13',cat:'资产与路径',t:'Comps：同行是最好的参照系',
+  what:'3—5 家、3 个指标（毛利率、研发费率、ROIC）足够，重点是"低谷年"表现。',
+  how:'选业务结构、区域、规模相近的可比公司；取三年中位数；看最差一年判断韧性。',
+  case:'第12届 快可电子、通灵股份；第13届 君实生物、药明康德；第15届 欧普、佛山照明等 9 家。',
+  out:'同行低谷期毛利率仍有 X%，我们假设的 Y% 偏乐观。',
+  avoid:'做成券商研报，二十家公司的表格。'},
+ {n:'14',cat:'资产与路径',t:'增量资产与折旧摊销',
+  what:'有形（设备）与无形（软件、专利）都要进模型；折旧与摊销是税盾来源。',
+  how:'资产表写清取得成本、寿命、残值、方法；折旧基数先扣残值；无形资产按摊销年限。',
+  case:'第13届 ALB 设备 700 万、残值率 5%、期末收回 7 万；第15届研发资本化/费用化影响当年利润。',
+  out:'折旧基数扣残值后每年 228 万，税盾现值约 X。',
+  avoid:'用原值直接除以年限；忘记算税盾。'},
+ {n:'15',cat:'资产与路径',t:'Pathway 与爬坡效应',
+  what:'产能、渠道、团队都有爬坡曲线，第一年别按满产算。',
+  how:'画三条路径（保守/基准/激进）；每段设 gate 与指标；爬坡期单独做现金流。',
+  case:'第13届采浆 18.75 → 22.5 → 30 吨；第15届 50 → 200 → 1000 校；第12届 Stage-Gate。',
+  out:'第一年按 60% 利用率、第三年才满产，NPV 因此少 X。',
+  avoid:'第一年就按满产；路径没有 gate。'},
+ {n:'16',cat:'资产与路径',t:'准入门槛与机会成本',
+  what:'门槛是必须跨过的可量化线；机会成本是"放弃的最好选择"。',
+  how:'把门槛画在图上（NPV>0、DPP<5、IRR>14%）；机会成本进增量分析，不进总账。',
+  case:'第13届门槛 NPV>0 / DPP<5 / IRR>14%；第15届冷启动 10+ 应用、1,000 活跃校；第16届出口流失 4.6%。',
+  out:'跨过 4.6% 的流失线，A 的优势归零——这就是准入门槛的价格。',
+  avoid:'只写"要进入高端市场"，不给线。'},
+ {n:'17',cat:'资产与路径',t:'假设表：所有数字的家',
+  what:'假设表是团队唯一共识，也是答辩的护身符。',
+  how:'五类拆分：量、价、率、时点、政策；每行写来源、年份、责任人、敏感度。',
+  case:'第13届建模七动作要求基础数据表写责任部门；第15届附录二给出表 1/2/3。',
+  out:'12 个假设，3 个高敏感，全部有来源与责任人。',
+  avoid:'假设藏在模型里，PPT 上一个都不写。'},
+ {n:'18',cat:'资产与路径',t:'市场研究：增长率不能拍',
+  what:'增长必须挂到"行业 CAGR × 份额"或"渗透率 × 单价"。',
+  how:'三层：行业（CAGR、渗透率）→ 细分（份额、增速）→ 公司（产能、渠道）。',
+  case:'第12届光伏 CAGR 26%；第13届血浆市场约 430 亿；第15届智能照明 CAGR 21%、智能家居 21.4%。',
+  out:'行业 CAGR 21%，我们假设 15% 已是保守。',
+  avoid:'用十年前的报告；增长率没有推导过程。'},
+ {n:'19',cat:'资产与路径',t:'盈亏平衡点：卖到多少才不亏',
+  what:'保本点决定"最小可行规模"，比利润率更能指导决策。',
+  how:'固定成本 ÷ 边际贡献率 = 保本收入，再折算成台、所、吨。',
+  case:'第15届保本 40 所（单校 585 万、CM 34.2%、固定 0.8 亿）；第12届 XB 用 1/80 与 4.9% 对比。',
+  out:'保本 40 所，安全边际 60 所。',
+  avoid:'只给利润率，不给保本量。'},
+ {n:'20',cat:'边界与不确定',t:'不确定下给方向，不给唯一解',
+  what:'决策不是预测，是在不确定下选一个稳健动作。',
+  how:'三个情景 + 概率；输出 P(NPV>0)、P(IRR>门槛)；给"先做什么、后做什么"。',
+  case:'第13届 HZ 蒙特卡洛 P(IRR≥14%)=62.22%；第15届用阈值与领先指标。',
+  out:'NPV>0 的概率 62%，建议先投一期、保留二期。',
+  avoid:'给一个精确到小数点的 NPV 就结束。'},
+ {n:'21',cat:'金融与落地',t:'DCF：把未来折成今天',
+  what:'三张表串起来：利润表 → 现金流 → 折现。',
+  how:'EBIT → 税后 → 加回折旧 = OCF；年金系数折现；加残值与补贴；再算差额与临界值。',
+  case:'第16届 A 44.95 亿 vs B 44.34 亿（碳 100 元）；不含碳 45.24 / 44.45；差额 0.61 / 0.79 亿。',
+  out:'A 高 0.61 亿，但碳价涨到 448 元/吨时反超。',
+  avoid:'只报一个 NPV，不写假设。'},
+ {n:'22',cat:'碳与ESG',t:'碳配额当"或有负债"',
+  what:'配额缺口是企业欠的债：缺口 × 碳价 = 预计负债，进资产负债表与附注。',
+  how:'算缺口（实际排放 − 免费配额）；按履约价计量；披露政策与假设。',
+  case:'第14届只做到披露与项目覆盖，没有把碳成本进财务模型——这是空档。',
+  out:'2026 年配额缺口 3.5 万吨，预计负债 350 万元。',
+  avoid:'只写"关注碳风险"，不入账。'},
+ {n:'23',cat:'碳与ESG',t:'免费分配 vs 有偿购买',
+  what:'净碳成本 = 排放 × (1 − 免费比例) × 碳价；免费比例直接改变排序。',
+  how:'三档 80% / 50% / 0%；看 A/B 排序是否翻转；再算名义临界碳价。',
+  case:'第16届 A 排 5.8 万吨、B 排 2.3 万吨；免费比例越高，碳价越难翻转结论。',
+  out:'免费配额 80% 时，名义临界碳价要 2,240 元/吨，结论几乎不可能翻转。',
+  avoid:'只按"实际排放全额清缴"算。'},
+ {n:'24',cat:'碳与ESG',t:'内部碳定价（ICP）双轨',
+  what:'影子价格用于投资筛选，履约价格用于现金预算——两个价、两个用途。',
+  how:'影子价可取履约价的 1.5—2 倍；解释差异是政策风险溢价。',
+  case:'往届无先例；世界银行 2024 碳影子价格指南、WBCSD 2026 ICP 报告是现成依据。',
+  out:'用 200 元/吨影子价筛选，A 仍然更优，说明结论稳健。',
+  avoid:'把影子价直接当现金支出。'},
+ {n:'25',cat:'碳与ESG',t:'国产化与供应链安全',
+  what:'非财务维度也要能算：交付周期、备件保障、地缘风险、溢价。',
+  how:'四维打分 × 权重，折成"安全溢价 %"进成本；或做情景。',
+  case:'第12届教案提"进口材料国产替代"；第13届设备采购；第16届 B 为德国进口。',
+  out:'国产化把交付周期从 26 周降到 12 周，等价于安全溢价 3%。',
+  avoid:'只写"支持国产"，不给量化。'},
+ {n:'26',cat:'金融与落地',t:'税盾与亏损结转',
+  what:'爬坡期亏损时，税盾不是当年兑现，而是结转后兑现。',
+  how:'单独一张"亏损结转 5 年"表；算税盾现值；注意折旧与利息税盾的顺序。',
+  case:'第13届折旧抵税、所得税口径；爬坡期产能利用率低，很容易亏损。',
+  out:'前两年亏损结转，税盾现值 X，实际税负率 18% 而非 25%。',
+  avoid:'每年都按 25% 交税。'},
+ {n:'27',cat:'金融与落地',t:'决策仪表盘',
+  what:'一页看清该踩刹车还是油门：红绿灯 KPI + 阶段门 + 触发动作。',
+  how:'选 6—8 个指标，设绿/黄/红，红灯写动作与责任人。',
+  case:'HN、XN 用项目库看板原型；第15届四维 KPI。',
+  out:'利用率 < 75% 亮红灯，暂停扩产。',
+  avoid:'五页大屏、指标没有动作。'},
+ {n:'28',cat:'碳与ESG',t:'ESG 评级与绿色融资',
+  what:'评级能换成钱：评级提升 → 融资利差下降 → WACC 下降 → NPV 上升。',
+  how:'给 10—50bp 利差情景，算 ΔWACC 对 NPV 的影响；可持续挂钩贷款（SLB）利率与指标绑定。',
+  case:'第14届 MSCI / Wind 评级只做定性；可量化但往届没人做。',
+  out:'评级升一档，融资成本降 30bp，NPV 增加 X。',
+  avoid:'只说"提升 ESG 形象"。'},
+ {n:'29',cat:'碳与ESG',t:'碳价随机路径',
+  what:'把碳价当随机变量，输出 P10 / P50 / P90，而不是一个点。',
+  how:'三角分布或几何布朗运动；蒙特卡洛 1 万次；看两方案 NPV 分布与反超概率。',
+  case:'第13届 HZ 用 Crystal Ball 跑 1 万次；碳价路径往届没人做。',
+  out:'碳价 P90 为 260 元/吨时，B 反超概率 18%。',
+  avoid:'堆参数、不解释分布假设。'},
+ {n:'30',cat:'边界与不确定',t:'产能利用率与汇率',
+  what:'利用率是一等变量（决定单位固定成本）；汇率是二等变量（先看敞口）。',
+  how:'利用率做爬坡曲线 + 三档情景；汇率先算敞口（境外收入、进口料占比），再做 ±5/10% 弹性。',
+  case:'第13届实际 62% vs 预算 70%；第15届境外收入 88%；第12届进口铜与二极管。',
+  out:'利用率每低 10 个点，NPV 少 X；汇率 ±10%，净利变动 Y%。',
+  avoid:'把利用率当常数；对汇率做预测。'}
+];
+
+var CASES = [
+ {ed:'第12届', yr:'2022—2023', co:'清洁光伏（光伏接线盒）', seg:'杜邦 → 降本增效 → 战略采购',
+  q:['补全财务指标表、做杜邦分析，指出 2021 年异常及原因','测算 2022 可持续增长率，判断预算目标能否实现','分部门降本；研发两阶段与 500 万预算建议','操作性 vs 战略性采购；采购总成本四级拆解；三手段降本'],
+  key:'ROE 18.25% 差 20% 目标；毛利率 18.7%（或 18.33%）；TCO 差 1,657 元/万㎡',
+  take:'同一张表挖三层：算比率 → 做预算 → 拆到供应商。'},
+ {ed:'第13届', yr:'2023—2024', co:'PCI 血液制品', seg:'投前指标 → 重置性投资 → 投后管控',
+  q:['列举投资评价指标并点评现有 ROI/回收期','按五步建模，算至少 2 个新指标','寿命不同的重置性投资，用 EAC','定性因素如何反转定量结论','投管部三阶段管控 + IMA 能力框架'],
+  key:'投资 700 万、2,000 瓶/吨、320 元/瓶、14%；门槛 NPV>0、DPP<5、IRR>14%',
+  take:'先画评价机制闭环，再算数；定性必须给合成规则。'},
+ {ed:'第14届', yr:'2024—2025', co:'海尔智家 ESG', seg:'ESG 风险机遇 → 循环经济落地 → 对标施耐德',
+  q:['ESG 浪潮给家电业带来的风险与机遇','最关键三项风险、三项机遇及原因','ESG 项目如何覆盖议题、落地困难与解法','对标施耐德提优化建议','设计循环经济传播方案'],
+  key:'单位产值电耗 −17%、废料 −24%、水耗 −30%、气耗 −39%；2023 回收 674 万台；拆解产能 330 万台',
+  take:'ESG 必须落到科目：成本、折现率、残值三个入口。'},
+ {ed:'第15届', yr:'2025—2026', co:'立达信（照明 + IoT）', seg:'双主业诊断 → 技术变现 → 战略取舍',
+  q:['双业务盈利性与核心矛盾','两种商业模式的本质差异与运营冲突','研发投入与公司价值如何平衡','是否追加 0.8 亿研发、如何变现','是否放缓 IoT、管理会计如何支撑长期价值'],
+  key:'毛利率 22.8→26.1→29.8；净利率 4.7→6.5→4.7；三层收费 4.8/0.9/0.15 亿；保本 40 所',
+  take:'用硬件模式经营平台业务，是这题唯一的矛盾。'},
+ {ed:'第16届', yr:'2026—2027', co:'锂航能源（LFP 电池）', seg:'两套估值 → 差异解释 → AI 过程',
+  q:['剔除碳成本：两方案静态回收期与 10 年 NPV','按 100 元/吨把碳成本嵌入现金流，重算','对比两套结论差异','（新增）说明 AI 工具、提示词原文、人工复核节点与缺陷'],
+  key:'A 2.4 亿 vs B 3.9 亿；NPV 45.24/44.45 vs 44.95/44.34；临界碳价 448；出口流失 4.6%',
+  take:'排序不变、差距收窄 22%；真正的变量是市场准入。'}
+];
+
+var QUIZ = [
+ {q:'“我们建议加大研发投入，因为创新是企业发展的动力。”问题在哪？',opts:['缺投入产出的数字','没有引用行业报告','没有提风险','没有署名'],a:0,
+  exp:'口号不是论证。加 500 万研发，要么给 NPV/回收期，要么给毛利率改善几个点。'},
+ {q:'“寿命不同的两个方案，我们直接比较了 NPV。”错在哪？',opts:['NPV 不能用','寿命不同应改用 EAC/等额年成本','应该用 IRR','应该用回收期'],a:1,
+  exp:'第13届区域决赛核心考点：寿命不同不能直接比 NPV，要用平均年成本把寿命拉平。'},
+ {q:'“碳价上涨会带来风险，我们应关注 ESG。”缺了什么？',opts:['缺具体的碳价区间与影响金额','缺 ESG 定义','缺公司简介','缺参考文献'],a:0,
+  exp:'正确说法是"碳价超过 448 元/吨 B 才反超，当前 100 元"——临界值思维。'},
+ {q:'杜邦里，只允许改一个变量把 ROE 从 18.25% 拉到 20%，案例公司最该动哪个？',opts:['净利率','总资产周转率','权益乘数','都行，随便选'],a:1,
+  exp:'三个方案理论都能到 20%，但案例中应收周转在恶化，提周转率最可行、副作用最小；加杠杆只是把风险推给未来。'},
+ {q:'采购总成本（TCO）里，哪一项最容易被漏掉，却常常决定结论？',opts:['材料报价','运费','资金占用与质量损失等隐性成本','包装费'],a:2,
+  exp:'隐性成本（资金占用、质量损失、缺货）不货币化，就会得出"报价低=成本低"的错误结论。'},
+ {q:'“我们的设备有 4,668 项专利，所以有竞争优势。”这句话漏了 VRIO 的哪一关？',opts:['V 价值','R 稀缺','I 难模仿','O 组织'],a:3,
+  exp:'专利多不等于能兑现；如果考核体系仍按代工逻辑，研发价值在报表上看不见，组织这一关就没过。'},
+ {q:'第16届案例里，为什么说"回收期不构成决策依据"？',opts:['回收期算不出来','两个方案回收期都不到 0.6 年，区分度为零','回收期不考虑税','回收期只适用于服务业'],a:1,
+  exp:'设备投资相对整线收入太小，两个方案都极快回本，指标无法区分优劣；真正区别在 10 年 NPV 与合规风险。'},
+ {q:'“碳价要涨到 448 元/吨 B 才反超”，这个 448 是怎么来的？',opts:['拍脑袋估的','用差额除以"每年多排的碳×税后×年金系数"','查行业报告','平均碳价'],a:1,
+  exp:'差额 0.61 亿 ÷（3.5 万吨 × 0.75 × 6.71）≈ 448 元/吨。临界值 = 差额 ÷ 敏感度，这是通用算法。'},
+ {q:'ESG 要进入财务模型，最不该做的是？',opts:['把碳成本计入营业成本','把绿色融资利差计入折现率','单独做一页"ESG 理念"讲价值观','把搁浅资产减值计入残值'],a:2,
+  exp:'评委要的是科目和数字；单独讲理念的页面拿不到分，还占篇幅。'},
+ {q:'一份 deck 里放 6 个模型，通常会出什么问题？',opts:['显得专业','每个模型都没有数据支撑，被追问就崩','评委会加分','没有影响'],a:1,
+  exp:'模型多但每个都不落数字，是往届最常见的减分项；3—4 个足矣，每个都要有判断、数字、动作。'}
+];
+
+var ROLES = [
+ {k:'A', name:'队长 / 总编', duty:'守住一句话矛盾与 18 页主线', sign:'标题、页序、结论页、Q&A 答案', out:'01_矛盾与结论.md、05_页面清单.md、06_QA卡.md'},
+ {k:'B', name:'模型手', duty:'所有数字的唯一来源', sign:'数字口径、假设取值、模型版本', out:'02_假设表.xlsx、03_模型.xlsx'},
+ {k:'C', name:'政策与证据', duty:'碳市场、欧盟法规、补贴、出口与竞品', sign:'事实与引用（无来源不上页）', out:'04_证据卡.md、07_AI记录.md'},
+ {k:'D', name:'表达手', duty:'页面、图表、英文、演练', sign:'视觉规范、英文措辞、时长', out:'18 页视觉稿、英文版、演练录像'}
+];
+
+var DAYS = [
+ ['T-14','破题会：一句话矛盾 + 三个子问题 + 结论页草稿','A 主持，全员'],
+ ['T-13','模型骨架（空表+公式）；政策清单 10 条；视觉规范','B / C / D'],
+ ['T-12','假设表 v1（12 行，每行写来源与责任人）','B + C 结对'],
+ ['T-11','两套测算结果 + 差额；18 条标题清单','B / A'],
+ ['T-10','数字门：B 讲 20 分钟，全员挑错 ≥10 条','全员'],
+ ['T-9','政策证据卡（碳市场、免费配额、2027 欧盟、补贴）','C'],
+ ['T-8—7','各 owner 写页（B 4—11，C 12/17/18，A 2/3/10/13/14/16，D 1/15+视觉）','全员'],
+ ['T-6','初稿合并（18 页齐全，可丑）','D 合，A 审'],
+ ['T-5','内审找错：按扣分点逐页挑 ≥20 条','D 主持'],
+ ['T-4','修订 + 英文版 v1','全员 / D'],
+ ['T-3','数字锁（B 签字）+ 标题锁（A 签字）','A + B'],
+ ['T-2','演练 1（中文计时）+ 演练 2（英文）','D 计时'],
+ ['T-1','演练 3（模拟提问 15 问）+ 定稿','A 主持'],
+ ['T-0','提交 / 上场','全员']
+];
+
+var SEGMENTS = [
+ {n:'01', id:'s1', title:'问题拆解', q:'公司到底哪里不对？', models:['dupont','valuechain'], q3:['哪个指标最差？','差多少？','谁负责？'], out:'一句诊断'},
+ {n:'02', id:'s2', title:'外部环境', q:'为什么"现在"必须决策？', models:['pestel','lifecycle'], q3:['什么变了？','影响哪条财务线？','所以现在必须做什么？'], out:'一条趋势'},
+ {n:'03', id:'s3', title:'竞争力', q:'凭什么赢、利润被谁拿走？', models:['fiveforces','vrio','generic'], q3:['利润被谁拿走？','我们的优势是真的吗？','选哪条战略？'], out:'一条战略'},
+ {n:'04', id:'s4', title:'产品与市场', q:'怎么换赚钱方式、增长从哪来？', models:['canvas','bcg','ansoff'], q3:['钱从哪来？','增长从哪来？','资源给谁？'], out:'一个模式'},
+ {n:'05', id:'s5', title:'战略决策', q:'投不投、怎么落地？', models:['bsc','dcf'], q3:['结论是什么？','临界值多少？','谁负责落地？'], out:'一个数字 + 一条建议'}
+];
+
+/* ================= 状态 ================= */
+var store = {
+  get:function(){ try{ return JSON.parse(localStorage.getItem('ima_progress')||'{}'); }catch(e){ return {}; } },
+  set:function(o){ try{ localStorage.setItem('ima_progress', JSON.stringify(o)); }catch(e){} }
+};
+var done = store.get();
+done.models = done.models || {}; done.quiz = done.quiz || {};
+function refreshProg(){
+  var m = Object.keys(done.models).length;
+  var q = Object.keys(done.quiz).length;
+  $('pn').textContent = m; $('qn').textContent = q;
+}
+
+/* ================= 页面 ================= */
+function pageHome(){
+  return '' +
+  '<section class="hero">' +
+    '<div>' +
+      '<div class="doc-label">第 16 届 · 校内赛 / 区域赛</div>' +
+      '<h1>先判断题型，再选模型<br><em>最后落到一个数字</em></h1>' +
+      '<p class="lead">这里不是模型百科。五个问题、十一个模型、五届真题，每个模型都配一道真实赛题和一次可以动手的演算。</p>' +
+      '<div class="metrics">' +
+        '<div><b>5</b><span>段主线</span></div>' +
+        '<div><b>11</b><span>个模型</span></div>' +
+        '<div><b>5</b><span>届真题</span></div>' +
+        '<div><b>5</b><span>个交互</span></div>' +
+      '</div>' +
+      '<p><a class="btn primary" href="#/storyline">从五段主线开始</a><a class="btn" href="#/lab">去实验室</a><a class="btn" href="#/quiz">做 10 道找错</a></p>' +
+    '</div>' +
+    '<div class="folder">' +
+      '<div class="folder-head"><span>CASE FILE</span><span>No. 16</span></div>' +
+      '<div class="folder-body">' +
+        '<div class="stamp">第 16 届</div>' +
+        '<h3>今天只记三句话</h3>' +
+        '<ol>' +
+          '<li>一场比赛最多用 3—4 个模型。</li>' +
+          '<li>模型必须落到数字，否则是装饰。</li>' +
+          '<li>数字必须变成临界值——涨到多少会翻盘。</li>' +
+        '</ol>' +
+      '</div>' +
+    '</div>' +
+  '</section>' +
+
+  '<h2>五段主线，一眼看完</h2>' +
+  '<div class="flow">' + SEGMENTS.map(function(s){
+    return '<div class="row"><div class="n">'+s.n+'</div><div><h3>'+s.title+' <span class="tag gray">'+s.models.length+' 个模型</span></h3>'+
+      '<p class="small muted" style="margin:2px 0 6px">'+s.q+'</p>'+
+      '<p class="small" style="margin:0">必答：' + s.q3.join(' / ') + ' → 产出：<b>'+s.out+'</b></p></div></div>';
+  }).join('') + '</div>' +
+
+  '<h2>内容索引</h2>' +
+  '<div class="grid g3">' +
+    '<a class="card" href="#/models"><h3>模型库</h3><p class="small">11 个模型：类比、步骤、案例数字、结论句式、常见误用。</p></a>' +
+    '<a class="card" href="#/cases"><h3>案例库</h3><p class="small">第 12—16 届：题目、关键数、这场比赛该学什么。</p></a>' +
+    '<a class="card" href="#/lab"><h3>实验室</h3><p class="small">杜邦、TCO、保本点、碳价临界、DCF 八步，全部可拖可改。</p></a>' +
+    '<a class="card" href="#/quiz"><h3>找错题库</h3><p class="small">10 道真实减分句，选完立刻看解析。</p></a>' +
+    '<a class="card" href="#/deep"><h3>深水区 · 25 项工具</h3><p class="small">增量、边界、期权、Comps、碳配额、税盾——哪条该用、案例里怎么用。</p></a>' +
+    '<a class="card" href="#/team"><h3>四人分工</h3><p class="small">角色、签字权、14 天排期、六张接口物。</p></a>' +
+    '<a class="card" href="#/cheat"><h3>速查页</h3><p class="small">十一句结论句式、术语人话表、五段模板。</p></a>' +
+  '</div>' +
+  '<div class="foot">内容来源：IMA 第 12—15 届案例与 22 份获奖作品分析、第 16 届新案例测算。仅队内学习使用，案例原文不对外传播。</div>';
+}
+
+function pageStoryline(){
+  return '<div class="doc-label">五段主线</div><h1>五段主线</h1>' +
+  '<p class="lead">拿到任何一道案例题，先判断它在问哪一段。判断对了，模型是自然长出来的；判断错了，模型越多越乱。</p>' +
+  SEGMENTS.map(function(s){
+    return '<h2>'+s.n+' · '+s.title+'</h2>' +
+      '<p class="muted">这段在问：'+s.q+'</p>' +
+      '<table><tr><th>必答三问</th><th>用哪几个模型</th><th>产出</th></tr><tr><td>'+s.q3.join('<br>')+'</td><td>'+
+      s.models.map(function(id){ var m = MODELS.filter(function(x){return x.id===id;})[0];
+        return '<a href="#/models">'+m.name+'</a>'; }).join('<br>') +
+      '</td><td><b>'+s.out+'</b></td></tr></table>';
+  }).join('') +
+  '<h2>选型速查</h2>' +
+  '<table><tr><th>题目在问</th><th>用这个</th><th>配套</th></tr>' +
+  '<tr><td>公司哪里不对</td><td>杜邦</td><td>价值链</td></tr>' +
+  '<tr><td>行业能不能进、利润被谁拿走</td><td>五力</td><td>PESTEL</td></tr>' +
+  '<tr><td>凭什么赢</td><td>VRIO</td><td>通用战略</td></tr>' +
+  '<tr><td>怎么换赚钱方式</td><td>商业模式画布</td><td>BCG</td></tr>' +
+  '<tr><td>增长从哪来</td><td>安索夫</td><td>生命周期</td></tr>' +
+  '<tr><td>投不投、怎么落地</td><td>DCF + 临界值</td><td>BSC</td></tr></table>' +
+  '<div class="warn">⚠️ 上限规则：一场比赛最多 3—4 个模型。每多一个模型，就多要一组数据和一条结论，否则就是负债。</div>';
+}
+
+function pageModels(){
+  var segs = ['拆解','外部','竞争力','产品','决策'];
+  return '<div class="doc-label">模型库 · 11 个</div><h1>十一个模型</h1>' +
+  '<p class="lead">每个模型都按同一格式写：打个比方 → 怎么用 → 案例里怎么算 → 一句话结论 → 常见误用。点开卡片看细节。</p>' +
+  '<div class="search"><input id="q" placeholder="搜索：杜邦 / 碳价 / 采购 / 画布…" oninput="window.__filterModels(this.value)"></div>' +
+  '<div id="mlist">' + segs.map(function(seg){
+    var list = MODELS.filter(function(m){return m.seg===seg;});
+    return '<h2>'+seg+'</h2><div class="grid '+(list.length>=3?'g3':'g2')+'" data-seg="'+seg+'">' + list.map(function(m){
+      return '<div class="card" data-name="'+m.name+m.en+seg+'"><h3>'+m.name+'<span class="badge">'+m.en+'</span></h3>' +
+        '<p class="small muted" style="margin:2px 0 8px">'+m.analogy+'</p>' +
+        '<p class="small">'+m.def+'</p>' +
+        '<details><summary>怎么用 · 案例 · 结论句式</summary>' +
+          '<ol class="steps">'+m.steps.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ol>' +
+          '<p class="small"><b>案例：'+m.caseTitle+'</b><br>'+m.caseBody+'</p>' +
+          (m.caseTable? '<table><tr><th>项</th><th>方案</th><th>数</th></tr>' + m.caseTable.map(function(r){
+            return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="r">'+r[2]+'</td></tr>';}).join('')+'</table>' : '') +
+          '<p class="quote small">结论句式：'+m.output+'</p>' +
+          '<p class="small" style="color:#8a4b0f"><b>常见误用：</b>'+m.misuse+'</p>' +
+        '</details>' +
+        '<label class="check"><input type="checkbox" data-model="'+m.id+'" '+(done.models[m.id]?'checked':'')+'> 我学会了这个模型</label>' +
+      '</div>';
+    }).join('') + '</div>';
+  }).join('') + '</div>';
+}
+
+function pageCases(){
+  return '<div class="doc-label">案例库 · 第 12—16 届</div><h1>五届真题</h1>' +
+  '<p class="lead">看案例别只看题目，看三件事：它在问哪一段、关键数字是什么、获奖作品赢在哪。</p>' +
+  CASES.map(function(c){
+    return '<div class="card" style="margin:12px 0">' +
+      '<h2 class="case-h">'+c.ed+' · '+c.yr+' <span class="tag">'+c.co+'</span></h2>' +
+      '<p class="small muted" style="margin:4px 0 8px">三轮主线：'+c.seg+'</p>' +
+      '<p class="small"><b>题目都在问：</b></p><ol class="steps">'+c.q.map(function(q){return '<li>'+q+'</li>';}).join('')+'</ol>' +
+      '<p class="small"><b>必须记住的数：</b>'+c.key+'</p>' +
+      '<p class="quote small">这场比赛该学的是：'+c.take+'</p>' +
+    '</div>';
+  }).join('') +
+  '<div class="warn">第 16 届是本届新题，其余四届可用于练手。案例原文仅队内使用，请勿外传。</div>';
+}
+
+/* ---------- 实验室 ---------- */
+function pageLab(){
+  return '<div class="doc-label">实验室 · 5 个交互</div><h1>五个可以动手的实验</h1>' +
+  '<p class="lead">拨一下、改一个数，看结论怎么变。每个实验下面都写着一句话：这个交互教会你什么。</p>' +
+
+  /* 杜邦 */
+  '<div class="lab"><h2 class="lab-h">① 杜邦分解</h2><p class="sub">第12届清洁光伏：净利率 8.82%、周转率 1.11、乘数 1.87 → ROE 18.25%，目标 20%。</p>' +
+   '<div class="split"><div>' +
+    '<div class="ctrl"><label>销售净利率 <b id="d1">8.8%</b></label><input id="p1" type="range" aria-label="销售净利率" min="2" max="20" step="0.1" value="8.8"></div>' +
+    '<div class="ctrl"><label>总资产周转率 <b id="d2">1.11</b></label><input id="p2" type="range" aria-label="总资产周转率" min="0.5" max="2.5" step="0.01" value="1.11"></div>' +
+    '<div class="ctrl"><label>权益乘数 <b id="d3">1.87</b></label><input id="p3" type="range" aria-label="权益乘数" min="1" max="3.5" step="0.01" value="1.87"></div>' +
+    '<div class="hint" id="dh">拖动滑杆试试。</div></div>' +
+    '<div class="out"><div class="line"><span>ROE</span><span class="big" id="roe">18.3<small>%</small></span></div>' +
+     '<div class="line"><span>目标</span><b>20.00%</b></div><div class="line"><span>缺口</span><b id="gap">—</b></div>' +
+     '<div class="line"><span>只改一个变量时最有效</span><b id="lever">—</b></div></div></div>' +
+   '<p class="small muted">交互说明：三个变量都能把 ROE 拉到 20%，但含义完全不同——先找短板，再谈努力。</p></div>' +
+
+  /* TCO */
+  '<div class="lab"><h2 class="lab-h">② 采购总成本 TCO</h2><p class="sub">报价低 5% 的供应商，总成本反而更高？标准账期 60 天，资金成本 8%，返工按 3 倍。</p>' +
+   '<div class="split"><div>' +
+    '<div class="ctrl"><label>A 单价 <b id="a1v">100</b></label><input id="a1" type="range" aria-label="A 供应商单价" min="80" max="120" value="100"></div>' +
+    '<div class="ctrl"><label>A 账期（天）<b id="a2v">60</b></label><input id="a2" type="range" aria-label="A 供应商账期" min="0" max="120" step="5" value="60"></div>' +
+    '<div class="ctrl"><label>A 不良率 <b id="a3v">1.0%</b></label><input id="a3" type="range" aria-label="A 供应商不良率" min="0" max="10" step="0.1" value="1"></div>' +
+    '<div class="ctrl"><label>B 单价 <b id="b1v">95</b></label><input id="b1" type="range" aria-label="B 供应商单价" min="70" max="120" value="95"></div>' +
+    '<div class="ctrl"><label>B 账期（天）<b id="b2v">30</b></label><input id="b2" type="range" aria-label="B 供应商账期" min="0" max="120" step="5" value="30"></div>' +
+    '<div class="ctrl"><label>B 不良率 <b id="b3v">6.0%</b></label><input id="b3" type="range" aria-label="B 供应商不良率" min="0" max="10" step="0.1" value="6"></div>' +
+    '<div class="hint" id="th">—</div></div>' +
+    '<div class="out"><table><tr><th>科目</th><th class="r">A</th><th class="r">B</th></tr>' +
+     '<tr><td>材料</td><td class="r" id="t1a">100.0</td><td class="r" id="t1b">95.0</td></tr>' +
+     '<tr><td>资金成本</td><td class="r" id="t2a">0.0</td><td class="r" id="t2b">0.6</td></tr>' +
+     '<tr><td>质量成本</td><td class="r" id="t3a">3.0</td><td class="r" id="t3b">17.1</td></tr>' +
+     '<tr><td><b>总成本</b></td><td class="r" id="t4a">103.0</td><td class="r" id="t4b">112.7</td></tr></table>' +
+     '<div class="line"><span>结论</span><b id="tv">—</b></div></div></div></div>' +
+
+  /* 保本 */
+  '<div class="lab"><h2 class="lab-h">③ 保本点与安全边际</h2><p class="sub">第15届：单校年收入 585 万，边际贡献率 34.2%，固定成本 0.8 亿（研发摊销）。</p>' +
+   '<div class="split"><div><div class="ctrl"><label>学校数 <b id="s1v">100 所</b></label><input id="s1" type="range" aria-label="覆盖学校数" min="0" max="200" value="100"></div>' +
+   '<div class="hint" id="bh">—</div></div>' +
+   '<div class="out"><div class="line"><span>收入</span><b id="rev">—</b></div><div class="line"><span>变动成本</span><b id="vc">—</b></div>' +
+   '<div class="line"><span>利润</span><span class="big" id="profit">—</span></div><div class="line"><span>保本</span><b>40 所</b></div></div></div></div>' +
+
+  /* 碳价 */
+  '<div class="lab"><h2 class="lab-h">④ 碳价临界点</h2><p class="sub">A 初始 NPV 12,000 万、年排 12 万吨；B 初始 7,800 万、年排 5 万吨；8%，10 年。</p>' +
+   '<div class="split"><div><div class="ctrl"><label>碳价 <b id="c1v">60 元/吨</b></label><input id="c1" type="range" aria-label="碳价" min="0" max="300" step="5" value="60"></div>' +
+   '<div id="chart"></div><div class="hint" id="ch">—</div></div>' +
+   '<div class="out"><div class="line"><span>碳价</span><b id="cp">—</b></div><div class="line"><span>A NPV</span><b id="na">—</b></div>' +
+   '<div class="line"><span>B NPV</span><b id="nb">—</b></div><div class="line"><span>谁更优</span><b id="win">—</b></div>' +
+   '<div class="line"><span>临界碳价</span><b>89 元/吨</b></div></div></div></div>' +
+
+  /* DCF */
+  '<div class="lab"><h2 class="lab-h">⑤ DCF 八步：第16届 A/B 设备</h2><p class="sub">改任意一个数，看 NPV 和临界碳价怎么变。默认值就是案例数据。</p>' +
+   '<div class="split"><div>' +
+    '<div class="ctrl"><label>年收入（亿元）</label><input class="num" id="d_rev" aria-label="年营业收入（亿元）" type="number" value="95" step="1"></div>' +
+    '<div class="ctrl"><label>变动成本率</label><input class="num" id="d_vcr" aria-label="变动成本率" type="number" value="0.9" step="0.01"></div>' +
+    '<div class="ctrl"><label>折现率</label><input class="num" id="d_r" aria-label="折现率" type="number" value="0.08" step="0.01"></div>' +
+    '<div class="ctrl"><label>所得税率</label><input class="num" id="d_t" aria-label="所得税率" type="number" value="0.25" step="0.01"></div>' +
+    '<div class="ctrl"><label>碳价（元/吨）</label><input class="num" id="d_p" aria-label="碳价（元每吨）" type="number" value="100" step="10"></div>' +
+    '<div class="ctrl"><label>A 投资 / 运维 / 残值 / 排放（亿·亿·亿·万吨）</label>' +
+      '<input class="num" id="d_a" aria-label="方案 A 投资（亿元）" type="number" value="2.4" step="0.1" style="width:23%;margin-right:2%">' +
+      '<input class="num" id="d_a2" aria-label="方案 A 年运维（亿元）" type="number" value="0.12" step="0.01" style="width:23%;margin-right:2%">' +
+      '<input class="num" id="d_a3" aria-label="方案 A 残值（亿元）" type="number" value="0.12" step="0.01" style="width:23%;margin-right:2%">' +
+      '<input class="num" id="d_a4" aria-label="方案 A 年排放（万吨）" type="number" value="5.8" step="0.1" style="width:23%"></div>' +
+    '<div class="ctrl"><label>B 投资 / 运维 / 残值 / 排放（亿·亿·亿·万吨）</label>' +
+      '<input class="num" id="d_b" aria-label="方案 B 投资（亿元）" type="number" value="3.9" step="0.1" style="width:23%;margin-right:2%">' +
+      '<input class="num" id="d_b2" aria-label="方案 B 年运维（亿元）" type="number" value="0.07" step="0.01" style="width:23%;margin-right:2%">' +
+      '<input class="num" id="d_b3" aria-label="方案 B 残值（亿元）" type="number" value="0.195" step="0.01" style="width:23%;margin-right:2%">' +
+      '<input class="num" id="d_b4" aria-label="方案 B 年排放（万吨）" type="number" value="2.3" step="0.1" style="width:23%"></div>' +
+    '<div class="ctrl"><label>B 补贴（亿元）</label><input class="num" id="d_sub" aria-label="方案 B 补贴（亿元）" type="number" value="0.2" step="0.05"></div>' +
+    '<button class="btn primary" id="d_run">重新计算</button>' +
+   '</div>' +
+   '<div class="out"><div class="line"><span>A 经营现金流</span><b id="dc_a">—</b></div><div class="line"><span>B 经营现金流</span><b id="dc_b">—</b></div>' +
+    '<div class="line"><span>A 10 年 NPV</span><b id="dc_na">—</b></div><div class="line"><span>B 10 年 NPV</span><b id="dc_nb">—</b></div>' +
+    '<div class="line"><span>差额 A−B</span><b id="dc_d">—</b></div>' +
+    '<div class="line"><span>A 回收期</span><b id="dc_pa">—</b></div><div class="line"><span>B 回收期</span><b id="dc_pb">—</b></div>' +
+    '<div class="line"><span>临界碳价</span><b id="dc_be">—</b></div>' +
+    '<div class="line"><span>出口流失临界</span><b id="dc_exp">—</b></div></div></div>' +
+   '<p class="small muted">算法：贡献 9.5 亿 → 扣运维/碳/折旧得 EBIT → 税后加回折旧 → 折现 10 年（年金 6.7101）→ 加残值与补贴。临界碳价用二分法求 A−B=0。</p></div>';
+}
+
+/* ---------- 找错 ---------- */
+function pageQuiz(){
+  return '<div class="doc-label">找错 · 10 句</div><h1>十道找错题</h1>' +
+  '<p class="lead">下面每一句都来自真实作品。选出你认为最该扣分的那一项，点一下就出解析。</p>' +
+  '<div id="qz"></div><div class="hint" id="score" aria-live="polite">已答 0 / 10</div>';
+}
+
+/* ---------- 团队 ---------- */
+function pageTeam(){
+  return '<div class="doc-label">四人分工</div><h1>四人小队怎么排</h1>' +
+  '<p class="lead">分工不是把活切开，是把"谁和谁在哪交接"说清楚。主责之外，六张接口物决定会不会返工。</p>' +
+  '<table><tr><th>角色</th><th>一句话职责</th><th>只有他能定稿</th></tr>' +
+  ROLES.map(function(r){ return '<tr><td><b>'+r.k+' '+r.name+'</b></td><td>'+r.duty+'</td><td>'+r.sign+'</td></tr>'; }).join('') +
+  '</table>' +
+  '<h2>14 天排期</h2>' +
+  '<table><tr><th>时间</th><th>交付物</th><th>谁</th></tr>' +
+  DAYS.map(function(d){ return '<tr><td>'+d[0]+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td></tr>'; }).join('') +
+  '</table>' +
+  '<h2>六张接口物</h2>' +
+  '<table><tr><th>接口</th><th>谁 ↔ 谁</th><th>交接物</th></tr>' +
+  '<tr><td>假设与数据</td><td>B ↔ C</td><td>02_假设表.xlsx（每行写来源/责任人）</td></tr>' +
+  '<tr><td>矛盾与页面</td><td>A ↔ B</td><td>01_矛盾与结论.md</td></tr>' +
+  '<tr><td>标题与呈现</td><td>A ↔ D</td><td>05_页面清单.md（18 条标题）</td></tr>' +
+  '<tr><td>引用与脚注</td><td>C ↔ D</td><td>04_证据卡.md</td></tr>' +
+  '<tr><td>图表与数字</td><td>B ↔ D</td><td>图表数据源表</td></tr>' +
+  '<tr><td>答辩口径</td><td>全员</td><td>06_QA卡.md（20 问 + 兜底人）</td></tr></table>' +
+  '<div class="warn">事故前兆，看到就喊停：三个人同时改一页；同一个指标出现两个值；有人开始"先把页面做出来数字后补"。</div>';
+}
+
+/* ---------- 速查 ---------- */
+function pageCheat(){
+  var outs = MODELS.map(function(m){ return [m.name, m.output]; });
+  var gl = [['NPV','未来现金折算到今天，减去投资剩多少'],['IRR','项目自己能达到的年化回报率'],['回收期','几年赚回本金'],
+   ['年金系数','每年 1 元、连续 n 年、按利率折现，今天值多少'],['折旧','设备花费分摊到每年（不花现金，但抵税）'],
+   ['税盾','折旧和利息能少交税，等于政府分担一部分'],['边际贡献','卖一件产品扣掉变动成本后剩下的钱'],
+   ['保本点','卖到多少量刚好不亏'],['临界值','某个变量变到多少，结论会翻转'],['WACC','融资综合成本，通常当折现率']];
+  return '<div class="doc-label">速查</div><h1>速查页</h1>' +
+  '<h2>十一句结论句式</h2><table><tr><th>模型</th><th>可以直接抄进 PPT 的一句话</th></tr>' +
+  outs.map(function(o){ return '<tr><td>'+o[0]+'</td><td>'+o[1]+'</td></tr>'; }).join('') + '</table>' +
+  '<h2>术语人话表</h2><table><tr><th>术语</th><th>一句话</th></tr>' +
+  gl.map(function(g){ return '<tr><td>'+g[0]+'</td><td>'+g[1]+'</td></tr>'; }).join('') + '</table>' +
+  '<h2>五段模板</h2><table><tr><th>段</th><th>必答三问</th><th>产出</th></tr>' +
+  SEGMENTS.map(function(s){ return '<tr><td>'+s.title+'</td><td>'+s.q3.join(' / ')+'</td><td>'+s.out+'</td></tr>'; }).join('') + '</table>' +
+  '<h2>三个不要</h2><div class="grid g3">' +
+   '<div class="card"><h3>不要堆模型</h3><p class="small">一场比赛 3—4 个；每多一个，就多一组数据和一条结论。</p></div>' +
+   '<div class="card"><h3>不要只画图</h3><p class="small">每个模型必须落到一个可复算的数字。</p></div>' +
+   '<div class="card"><h3>不要让模型打架</h3><p class="small">五力说行业不赚钱、BCG 说这是明星，必须解释清楚。</p></div>' +
+  '</div>';
+}
+
+function pageDeep(){
+  var cats = ['全部','增量与取舍','边界与不确定','资产与路径','碳与ESG','金融与落地'];
+  return '<div class="doc-label">进阶 · 25 项支持工具</div>' +
+    '<h1>深水区：哪些工具该用，哪些是负担</h1>' +
+    '<p class="lead">这 25 项不是清单，是"什么时候掏哪一把"。每一条都配了往届案例里的真实证据——用不上就删，用得上就要算出一个数。</p>' +
+    '<div class="chips">' + cats.map(function(c,i){
+      return '<button class="chip' + (i===0?' on':'') + '" data-cat="' + c + '" onclick="window.__filterSup(this)">' + c + '</button>';
+    }).join('') + '</div>' +
+    '<div id="sups">' + SUPPORTS.map(function(s){
+      return '<details class="sup" data-cat="' + s.cat + '"><summary>' +
+        '<span class="n">' + s.n + '</span><span>' + s.t + '</span><span class="cat">' + s.cat + '</span>' +
+        '</summary>' +
+        '<p><b>是什么：</b>' + s.what + '</p>' +
+        '<p><b>怎么用：</b>' + s.how + '</p>' +
+        '<p class="k"><b>案例证据：</b>' + s.case + '</p>' +
+        '<p class="quote">结论句：' + s.out + '</p>' +
+        '<p class="k"><b>别用错：</b>' + s.avoid + '</p>' +
+        '</details>';
+    }).join('') + '</div>' +
+
+    '<h2>小实验：免费配额越高，碳价越难翻盘</h2>' +
+    '<p class="muted">第16届数据：A 投资 2.4 亿、年排 5.8 万吨；B 投资 3.9 亿、年排 2.3 万吨。净碳成本 = 排放 × (1 − 免费比例) × 碳价。</p>' +
+    '<div class="lab"><div class="split"><div>' +
+      '<div class="ctrl"><label>免费配额覆盖比例 <b id="f1v">50%</b></label><input id="f1" type="range" min="0" max="100" step="5" value="50" aria-label="免费配额覆盖比例"></div>' +
+      '<div class="ctrl"><label>碳价 <b id="f2v">100 元/吨</b></label><input id="f2" type="range" min="0" max="500" step="5" value="100" aria-label="碳价"></div>' +
+      '<div class="hint" id="f3h">—</div></div>' +
+      '<div class="out"><div class="line"><span>净碳成本 A</span><b id="f4a">—</b></div>' +
+      '<div class="line"><span>净碳成本 B</span><b id="f4b">—</b></div>' +
+      '<div class="line"><span>NPV A</span><b id="f5a">—</b></div>' +
+      '<div class="line"><span>NPV B</span><b id="f5b">—</b></div>' +
+      '<div class="line"><span>谁更优</span><b id="f6">—</b></div>' +
+      '<div class="line"><span>名义临界碳价</span><b id="f7">—</b></div></div></div></div>' +
+
+    '<h2>队伍自查：这 12 件事做了几件</h2>' +
+    '<div class="checklist" id="ck">' +
+      ['三种现金流（不投/A/B）都算过','沉没成本与分摊费用已剔除','写了三条红线与触发动作','敏感性有排序，不是平铺',
+       '增长率挂到了行业 CAGR 或渗透率','算了保本量与安全边际','资产表写了寿命/残值/折旧方法','有亏损结转与税盾',
+       '碳成本区分了免费配额与有偿购买','算了临界值（碳价/流失率/利用率）','有一页决策仪表盘','每个方案都写了代价与可逆性']
+      .map(function(t,i){ return '<label><input type="checkbox" data-ck="'+i+'"> <span>'+t+'</span></label>'; }).join('') +
+    '</div>' +
+    '<div class="hint" id="cks">已勾 0 / 12</div>';
+}
+function initDeep(){
+  window.__filterSup = function(btn){
+    document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('on'); });
+    btn.classList.add('on');
+    var cat = btn.dataset.cat;
+    document.querySelectorAll('#sups .sup').forEach(function(s){
+      s.style.display = (cat==='全部' || s.dataset.cat===cat) ? '' : 'none';
+    });
+  };
+  var f1 = $('f1'), f2 = $('f2');
+  if(!f1) return;
+  var AF = 6.7101;
+  function calc(){
+    var f = +f1.value/100, p = +f2.value;
+    var a = 12000 - 12*p*(1-f)*AF;
+    var b = 7800 - 5*p*(1-f)*AF;
+    $('f1v').textContent = Math.round(f*100) + '%';
+    $('f2v').textContent = p + ' 元/吨';
+    $('f4a').textContent = (12*p*(1-f)).toFixed(1) + ' 万元/年';
+    $('f4b').textContent = (5*p*(1-f)).toFixed(1) + ' 万元/年';
+    $('f5a').textContent = Math.round(a).toLocaleString() + ' 万';
+    $('f5b').textContent = Math.round(b).toLocaleString() + ' 万';
+    var w = a>=b ? 'A' : 'B';
+    $('f6').textContent = w + ' 方案';
+    $('f6').style.color = w==='A' ? '#1D5C46' : '#8E6F2E';
+    var be = f < 1 ? Math.round(448/(1-f)) : Infinity;
+    $('f7').textContent = isFinite(be) ? be.toLocaleString() + ' 元/吨' : '不会翻转';
+    $('f3h').textContent = f>=0.8
+      ? '免费配额 80% 时，名义碳价要涨到 ' + (be===Infinity?'无穷':be.toLocaleString()) + ' 元/吨才翻转——结论几乎锁死。'
+      : '免费比例越低，碳成本越真；试着把比例拖到 0%，再看临界值回到 448。';
+  }
+  f1.addEventListener('input', calc); f2.addEventListener('input', calc); calc();
+  var cks = $('ck');
+  if(cks){
+    cks.addEventListener('change', function(){
+      var n = cks.querySelectorAll('input:checked').length;
+      $('cks').textContent = '已勾 ' + n + ' / 12' + (n>=9 ? ' · 可以去写 deck 了。' : ' · 还差 ' + (12-n) + ' 项。');
+    });
+  }
+}
+
+function pageGlossary(q){
+  var focus = (q && q.indexOf('t=')===0) ? q.slice(2) : '';
+  var cats = ['全部','财务','投资','成本','战略','ESG','交易','决策'];
+  return '<div class="doc-label">词典 · ' + GLOSSARY.length + ' 个名词</div>' +
+    '<h1>名词解释区</h1>' +
+    '<p class="lead">正文里的虚线名词都可以点，一跳到这里。也可以直接搜：缩写、中文、公式都认。</p>' +
+    (focus ? '<div class="hint"><b>正在查看：' + (GLOSSARY.filter(function(g){return g.id===focus;})[0]||{t:focus,full:''}).t + ' ' + (GLOSSARY.filter(function(g){return g.id===focus;})[0]||{full:''}).full + '</b><br><a href="#/glossary">← 返回全部名词</a></div>' : '') +
+    '<div class="search"><input id="gq" placeholder="搜索：NPV / 碳配额 / 保本点 / 税盾…" aria-label="搜索名词" oninput="window.__filterGloss(this.value)"></div>' +
+    '<div class="chips">' + cats.map(function(c,i){
+      return '<button class="chip' + (i===0?' on':'') + '" data-cat="' + c + '" onclick="window.__filterGlossCat(this)">' + c + '</button>';
+    }).join('') + '</div>' +
+    '<div id="glist">' + (focus ? GLOSSARY.filter(function(g){return g.id===focus;}) : GLOSSARY).map(function(g){
+      return '<div class="gl" id="' + g.id + '" data-cat="' + g.cat + '" data-k="' + (g.t + g.full + g.def).toLowerCase() + '">' +
+        '<div class="h">' + g.t + '<span class="abbr">' + g.full + '</span><span class="cat">' + g.cat + '</span></div>' +
+        '<p class="def">' + g.def + '</p>' +
+        (g.f ? '<div class="formula">' + g.f + '</div>' : '') +
+        (g.use ? '<p class="use">在这套案例里：' + g.use + '</p>' : '') +
+      '</div>';
+    }).join('') + '</div>';
+}
+function initGlossary(){
+  window.__filterGloss = function(q){
+    q = (q||'').trim().toLowerCase();
+    var cat = (document.querySelector('.chips .chip.on') || {}).dataset ? document.querySelector('.chips .chip.on').dataset.cat : '全部';
+    document.querySelectorAll('#glist .gl').forEach(function(el){
+      var okCat = (cat==='全部' || el.dataset.cat===cat);
+      var okQ = (!q || el.dataset.k.indexOf(q)>=0);
+      el.style.display = (okCat && okQ) ? '' : 'none';
+    });
+  };
+  window.__filterGlossCat = function(btn){
+    document.querySelectorAll('.chips .chip').forEach(function(c){ c.classList.remove('on'); });
+    btn.classList.add('on');
+    var q = (document.getElementById('gq')||{}).value || '';
+    window.__filterGloss(q);
+  };
+}
+function linkTerms(root){
+  var terms = GLOSSARY.filter(function(g){ return g.link; })
+    .map(function(g){ return {g:g, key:g.t}; })
+    .sort(function(a,b){ return b.key.length - a.key.length; });
+  var used = {};
+  var MAX = 45;
+  var skipTags = {A:1,SCRIPT:1,STYLE:1,INPUT:1,BUTTON:1,LABEL:1,SUMMARY:1,NAV:1,TEXTAREA:1,H1:1,H2:1,H3:1,SELECT:1};
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  var nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(function(node){
+    if(Object.keys(used).length >= MAX) return;
+    var parent = node.parentElement;
+    if(!parent || skipTags[parent.tagName]) return;
+    if(parent.closest('a, .lab, .chips, .search, label, button, nav, .term')) return;
+    var txt = node.nodeValue;
+    if(!txt || txt.length < 2) return;
+    var esc = function(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+    var out = '', i = 0, changed = false;
+    while(i < txt.length){
+      var hit = null;
+      for(var k=0;k<terms.length;k++){
+        var t = terms[k].key;
+        if(!used[t] && txt.substr(i, t.length) === t){
+          hit = terms[k]; break;
+        }
+      }
+      if(hit){
+        out += '<a class="term" href="#/glossary/t/' + hit.g.id + '" title="查看解释：' + hit.g.full + '">' + esc(txt.substr(i, hit.key.length)) + '</a>';
+        used[hit.key] = 1; i += hit.key.length; changed = true;
+      } else {
+        out += esc(txt.charAt(i)); i++;
+      }
+    }
+    if(changed){
+      var span = document.createElement('span');
+      span.innerHTML = out;
+      node.parentNode.replaceChild(span, node);
+    }
+  });
+}
+
+/* ================= 路由 ================= */
+var PAGES = {
+  '': {title:'首页', fn:pageHome},
+  'storyline': {title:'五段主线', fn:pageStoryline},
+  'models': {title:'模型库', fn:pageModels},
+  'cases': {title:'案例库', fn:pageCases},
+  'lab': {title:'实验室', fn:pageLab},
+  'quiz': {title:'找错', fn:pageQuiz},
+  'team': {title:'分工', fn:pageTeam},
+  'deep': {title:'深水区', fn:pageDeep},
+  'glossary': {title:'词典', fn:pageGlossary},
+  'cheat': {title:'速查', fn:pageCheat}
+};
+var NAV = [['','首页'],['storyline','主线'],['models','模型'],['cases','案例'],['lab','实验室'],['quiz','找错'],['deep','深水'],['glossary','词典'],['team','分工'],['cheat','速查']];
+
+function renderNav(route){
+  $('nav').innerHTML = NAV.map(function(n){
+    return '<a href="#/'+n[0]+'" class="'+(route===n[0]?'on':'')+'">'+n[1]+'</a>';
+  }).join('');
+}
+function route(){
+  var raw = (location.hash||'').replace(/^#\/?/,'');
+  var q = '';
+  var parts = raw.split('/');
+  if(parts[0]==='glossary' && parts[1]==='t' && parts[2]){ q = 't=' + parts[2]; raw = 'glossary'; }
+  var seg = raw.split('?');
+  var h = seg[0] || '';
+  if(seg[1]) q = seg[1];
+  var p = PAGES[h] || PAGES[''];
+  $('app').innerHTML = p.fn(q);
+  renderNav(h);
+  document.title = p.title + ' · IMA 训练站';
+  window.scrollTo(0,0);
+  if(h==='lab') initLab();
+  if(h==='quiz') initQuiz();
+  if(h==='deep') initDeep();
+  if(h==='models') bindModels();
+  if(h==='glossary'){
+    initGlossary();
+  } else {
+    linkTerms($('app'));
+  }
+  refreshProg();
+}
+
+/* ================= 交互：杜邦 ================= */
+function initDupont(){
+  var fn = function(){
+    var n = +$('p1').value, t = +$('p2').value, e = +$('p3').value;
+    var roe = n*t*e;
+    $('d1').textContent = n.toFixed(1)+'%'; $('d2').textContent = t.toFixed(2); $('d3').textContent = e.toFixed(2);
+    $('roe').innerHTML = roe.toFixed(1)+'<small>%</small>';
+    var gap = roe-20;
+    $('gap').textContent = (gap>=0?'超出 ':'缺口 ')+Math.abs(gap).toFixed(1)+' 个百分点';
+    $('gap').style.color = gap>=0?'#1D5C46':'#B23A2B';
+    var c = [{k:'净利率',d:20/(t*e)-n},{k:'周转率',d:20/(n*e)-t},{k:'权益乘数',d:20/(n*t)-e}]
+      .sort(function(a,b){return Math.abs(a.d)-Math.abs(b.d);});
+    $('lever').textContent = c[0].k;
+    $('dh').textContent = gap>=0 ? '已经过线。但靠加杠杆冲上去的 ROE，和靠周转率冲上去的，质量完全不同。'
+      : '只动一个变量的话，最容易够到 20% 的是「'+c[0].k+'」——先找短板，再谈努力。';
+  };
+  ['p1','p2','p3'].forEach(function(id){ $(id).addEventListener('input',fn); });
+  fn();
+}
+/* ================= 交互：TCO ================= */
+function initTco(){
+  var STD=60, RATE=0.08, RW=3;
+  function one(side){
+    var p = +$(side+'1').value, d = +$(side+'2').value, q = +$(side+'3').value/100;
+    return {p:p,d:d,q:q,cap:p*Math.max(0,STD-d)/365*RATE,qc:p*q*RW};
+  }
+  var fn = function(){
+    var A = one('a'), B = one('b');
+    $('a1v').textContent=A.p; $('a2v').textContent=A.d; $('a3v').textContent=(A.q*100).toFixed(1)+'%';
+    $('b1v').textContent=B.p; $('b2v').textContent=B.d; $('b3v').textContent=(B.q*100).toFixed(1)+'%';
+    var ta = A.p+A.cap+A.qc, tb = B.p+B.cap+B.qc;
+    var f = function(id,v){ $(id).textContent = v.toFixed(1); };
+    f('t1a',A.p); f('t2a',A.cap); f('t3a',A.qc); f('t4a',ta);
+    f('t1b',B.p); f('t2b',B.cap); f('t3b',B.qc); f('t4b',tb);
+    $('t4a').style.color = ta<=tb?'#1D5C46':'#B23A2B';
+    $('t4b').style.color = tb<ta?'#1D5C46':'#B23A2B';
+    var cheaper = A.p<B.p?'A':'B', win = ta<=tb?'A':'B';
+    $('tv').textContent = win+' 总成本更低';
+    $('th').textContent = cheaper===win ? '这次"报价低"和"总成本低"是同一个人——把 B 的不良率调到 6% 以上看看。'
+      : '报价更低的是 '+cheaper+'，但总成本更低的是 '+win+'。这就是不要比单价的原因。';
+  };
+  ['a1','a2','a3','b1','b2','b3'].forEach(function(id){ $(id).addEventListener('input',fn); });
+  fn();
+}
+/* ================= 交互：保本 ================= */
+function initBep(){
+  var fn = function(){
+    var n = +$('s1').value, price=585, cm=0.342, fixed=8000;
+    var rev=n*price, profit=rev*cm-fixed;
+    $('s1v').textContent = n+' 所';
+    $('rev').textContent = (rev/10000).toFixed(2)+' 亿';
+    $('vc').textContent = (rev*(1-cm)/10000).toFixed(2)+' 亿';
+    $('profit').innerHTML = (profit/10000).toFixed(2)+'<small>亿</small>';
+    $('profit').style.color = profit>=0?'#12181B':'#B23A2B';
+    $('bh').textContent = profit>=0 ? '安全边际：还能少 '+(n-40)+' 所才到保本。'
+      : '还差 '+(40-n)+' 所才到保本——这就是"投到多少所"的答案。';
+  };
+  $('s1').addEventListener('input',fn); fn();
+}
+/* ================= 交互：碳价 ================= */
+function initCarbon(){
+  var AF=6.7101;
+  function na(p){ return 12000-12*p*AF; }
+  function nb(p){ return 7800-5*p*AF; }
+  function draw(p){
+    var W=460,H=170,pad=24,maxV=14000,minV=-12000;
+    var x=function(v){return pad+v/300*(W-pad*2);}, y=function(v){return H-pad-(v-minV)/(maxV-minV)*(H-pad*2);};
+    var pts=function(f){var a=[];for(var q=0;q<=300;q+=5){a.push(x(q)+','+y(f(q)));}return a.join(' ');};
+    var g='';
+    [0,4000,8000,12000].forEach(function(v){ g+='<line x1="'+pad+'" x2="'+(W-pad)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#e2e8e4"/>'; });
+    var sx=x(89.4), sy=y(na(89.4));
+    $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:170px">'+g+
+      '<polyline fill="none" stroke="#15803d" stroke-width="2.5" points="'+pts(na)+'"/>'+
+      '<polyline fill="none" stroke="#1d4ed8" stroke-width="2.5" points="'+pts(nb)+'"/>'+
+      '<circle cx="'+sx+'" cy="'+sy+'" r="5" fill="#fff" stroke="#b45309" stroke-width="2"/>'+
+      '<line x1="'+x(p)+'" x2="'+x(p)+'" y1="'+pad+'" y2="'+(H-pad)+'" stroke="#cbd5e1" stroke-dasharray="4 4"/>'+
+      '</svg>';
+  }
+  var fn = function(){
+    var p = +$('c1').value, a = na(p), b = nb(p);
+    $('c1v').textContent = p+' 元/吨'; $('cp').textContent = p+' 元/吨';
+    $('na').textContent = Math.round(a).toLocaleString()+' 万';
+    $('nb').textContent = Math.round(b).toLocaleString()+' 万';
+    var w = a>=b?'A':'B';
+    $('win').textContent = w+' 方案'; $('win').style.color = w==='A'?'#1D5C46':'#8E6F2E';
+    $('ch').textContent = w==='A' ? '还在临界点（89 元/吨）左侧：A 初始回报高，扛得住现在的碳价。'
+      : '越过临界点（89 元/吨）：B 的低排放开始反超。';
+    draw(p);
+  };
+  $('c1').addEventListener('input',fn); fn();
+}
+/* ================= 交互：DCF ================= */
+function initDcf(){
+  function parseInputs(){
+    return {
+      rev:+$('d_rev').value, vcr:+$('d_vcr').value, r:+$('d_r').value,
+      tax:+$('d_t').value, p:+$('d_p').value,
+      A:{capex:+$('d_a').value, om:+$('d_a2').value, salv:+$('d_a3').value, emis:+$('d_a4').value},
+      B:{capex:+$('d_b').value, om:+$('d_b2').value, salv:+$('d_b3').value, emis:+$('d_b4').value, sub:+$('d_sub').value}
+    };
+  }
+  function npv(cfg, o, p){
+    var cm = cfg.rev*(1-cfg.vcr), n=10;
+    var dep = (o.capex-o.salv)/n;
+    var carbon = o.emis*1e4*p/1e8;
+    var ebit = cm-o.om-carbon-dep;
+    var ocf = ebit*(1-cfg.tax)+dep;
+    var af = (1-Math.pow(1+cfg.r,-n))/cfg.r;
+    var sub = o.sub? o.sub/(1+cfg.r):0;
+    var _npv = -o.capex + ocf*af + o.salv/Math.pow(1+cfg.r,n) + sub;
+    return {ocf:ocf, npv:_npv};
+  }
+  function run(){
+    var cfg = parseInputs();
+    var a0 = npv(cfg,cfg.A,0), b0 = npv(cfg,cfg.B,0);
+    var a1 = npv(cfg,cfg.A,cfg.p), b1 = npv(cfg,cfg.B,cfg.p);
+    $('dc_a').textContent = a1.ocf.toFixed(4)+' 亿';
+    $('dc_b').textContent = b1.ocf.toFixed(4)+' 亿';
+    $('dc_na').textContent = a1.npv.toFixed(2)+' 亿';
+    $('dc_nb').textContent = b1.npv.toFixed(2)+' 亿';
+    var d = a1.npv-b1.npv;
+    $('dc_d').textContent = (d>=0?'+':'')+d.toFixed(2)+' 亿';
+    $('dc_pa').textContent = (cfg.A.capex/a1.ocf).toFixed(2)+' 年';
+    $('dc_pb').textContent = (cfg.B.capex/b1.ocf).toFixed(2)+' 年';
+    // 二分法求临界碳价
+    var lo=0, hi=2000;
+    for(var i=0;i<80;i++){
+      var mid=(lo+hi)/2;
+      var diff = npv(cfg,cfg.A,mid).npv-npv(cfg,cfg.B,mid).npv;
+      if(diff>0) lo=mid; else hi=mid;
+    }
+    $('dc_be').textContent = Math.round((lo+hi)/2)+' 元/吨';
+    // 出口流失临界
+    var af = (1-Math.pow(1+cfg.r,-10))/cfg.r;
+    var expRev = cfg.rev*0.28, contrib = expRev*(1-cfg.vcr)*(1-cfg.tax)*af;
+    var gap = Math.max(0,d);
+    $('dc_exp').textContent = contrib>0 ? (gap/contrib*100).toFixed(1)+'%' : '—';
+  }
+  $('d_run').addEventListener('click',run);
+  ['d_rev','d_vcr','d_r','d_t','d_p','d_a','d_a2','d_a3','d_a4','d_b','d_b2','d_b3','d_b4','d_sub']
+    .forEach(function(id){ $(id).addEventListener('change',run); });
+  run();
+}
+
+function initLab(){
+  try{ initDupont(); }catch(e){ console.error('dupont',e); }
+  try{ initTco(); }catch(e){ console.error('tco',e); }
+  try{ initBep(); }catch(e){ console.error('bep',e); }
+  try{ initCarbon(); }catch(e){ console.error('carbon',e); }
+  try{ initDcf(); }catch(e){ console.error('dcf',e); }
+}
+
+/* ================= 模型筛选 ================= */
+function bindModels(){
+  document.querySelectorAll('input[data-model]').forEach(function(cb){
+    cb.addEventListener('change',function(){
+      if(cb.checked) done.models[cb.dataset.model]=1; else delete done.models[cb.dataset.model];
+      store.set(done); refreshProg();
+    });
+  });
+}
+window.__filterModels = function(q){
+  q = (q||'').trim().toLowerCase();
+  document.querySelectorAll('#mlist [data-name]').forEach(function(card){
+    card.style.display = (!q || card.dataset.name.toLowerCase().indexOf(q)>=0) ? '' : 'none';
+  });
+};
+
+/* ================= 找错 ================= */
+function initQuiz(){
+  var box = $('qz');
+  box.innerHTML = QUIZ.map(function(item,i){
+    var opts = item.opts.map(function(o,j){
+      return '<button class="opt" data-q="'+i+'" data-o="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';
+    }).join('');
+    return '<div class="quiz" data-i="'+i+'"><p>'+(i+1)+'. '+item.q+'</p>'+opts+'<div class="exp">'+item.exp+'</div></div>';
+  }).join('');
+  box.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var wrap = btn.closest('.quiz'), qi = +btn.dataset.q;
+      if(wrap.classList.contains('done')) return;
+      wrap.classList.add('done');
+      wrap.querySelectorAll('.opt').forEach(function(b){
+        if(+b.dataset.o===QUIZ[qi].a) b.classList.add('ok');
+        else if(b===btn) b.classList.add('no');
+      });
+      done.quiz[qi]=1; store.set(done);
+      var n = Object.keys(done.quiz).length;
+      $('score').textContent = '已答 '+n+' / '+QUIZ.length + (n===QUIZ.length?' · 全对的话，你已经能挑出往届作品一半的毛病了。':' · 继续。');
+      refreshProg();
+    });
+  });
+  var n = Object.keys(done.quiz).length;
+  $('score').textContent = '已答 '+n+' / '+QUIZ.length;
+}
+
+/* ================= 启动 ================= */
+window.addEventListener('hashchange',route);
+route();
+})();
+</script>
+</body>
+</html>
