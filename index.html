@@ -276,13 +276,14 @@ details[open] summary{margin-bottom:10px}
   <div class="head">
     <div class="brand">IMA 训练站<small>案例学习 · 个人练习</small></div>
     <nav id="nav" aria-label="主导航"></nav>
-    <div class="prog"><span>已学习 <b id="pn">0</b>/11</span><span>已练习 <b id="qn">0</b>/10</span></div>
+    <div class="prog"><span>已学习 <b id="pn">0</b>/12</span><span>已练习 <b id="qn">0</b>/10</span></div>
   </div>
 </header>
 <a class="skip" href="#main">跳到正文</a>
 <main class="wrap" id="main" tabindex="-1"><div id="app"></div></main>
 
 <script src="./finance.js"></script>
+<script src="./basics-data.js"></script>
 <script>
 (function(){
 'use strict';
@@ -741,7 +742,7 @@ function pageHome(){
     '<div>' +
       '<div class="doc-label">第 16 届 · 校内赛 / 区域赛</div>' +
       '<h1>先判断题型，再选模型<br><em>最后落到一个数字</em></h1>' +
-      '<p class="lead">这里不是模型百科。五个问题、十一个模型、五届真题，每个模型都配一道真实赛题和一次可以动手的演算。</p>' +
+      '<p class="lead">这里不是模型百科。五个问题、十二个模型、五届真题，每个模型都配一道真实赛题和一次可以动手的演算。</p>' +
       '<div class="metrics">' +
         '<div><b>5</b><span>段主线</span></div>' +
         '<div><b>11</b><span>个模型</span></div>' +
@@ -773,7 +774,7 @@ function pageHome(){
 
   '<h2>内容索引</h2>' +
   '<div class="grid g3">' +
-    '<a class="card" href="#/models"><h3>模型库</h3><p class="small">11 个模型：类比、步骤、案例数字、结论句式、常见误用。</p></a>' +
+    '<a class="card" href="#/models"><h3>模型库</h3><p class="small">12 个模型：类比、步骤、案例数字、结论句式、常见误用。</p></a>' +
     '<a class="card" href="#/cases"><h3>案例库</h3><p class="small">第 12—16 届：题目、关键数、这场比赛该学什么。</p></a>' +
     '<a class="card" href="#/lab"><h3>实验室</h3><p class="small">杜邦、TCO、保本点、碳价临界、DCF 八步，全部可拖可改。</p></a>' +
     '<a class="card" href="#/quiz"><h3>找错题库</h3><p class="small">10 道真实减分句，选完立刻看解析。</p></a>' +
@@ -808,7 +809,7 @@ function pageStoryline(){
 
 function pageModels(){
   var segs = ['拆解','外部','竞争力','产品','决策'];
-  return '<div class="doc-label">模型库 · 11 个</div><h1>十一个模型</h1>' +
+  return '<div class="doc-label">模型库 · 12 个</div><h1>十二个模型</h1>' +
   '<p class="lead">每个模型都按同一格式写：打个比方 → 怎么用 → 案例里怎么算 → 一句话结论 → 常见误用。点开卡片看细节。</p>' +
   '<div class="search"><input id="q" aria-label="搜索模型" placeholder="搜索：杜邦 / 碳价 / 采购 / 画布…" oninput="window.__filterModels(this.value)"></div>' +
   '<div id="mlist">' + segs.map(function(seg){
@@ -1379,7 +1380,7 @@ function initQuiz(){
 }
 
 /* Added inside the original closure; retained library functions stay intact. */
-var revision='2026-11-02.1';
+var revision='2026-11-02.2';
 var savedScenario=done.dcf||null;
 ['learning','notes','answers','ai'].forEach(function(key){if(!done[key]||typeof done[key]!=='object'||Array.isArray(done[key]))done[key]={};});
 var saveFailure=false;
@@ -1435,6 +1436,31 @@ refreshProg=function(){$('pn').textContent=Object.keys(done.models).length;$('qn
 route=function(){var raw=(location.hash||'').replace(/^#\/?/,''),q='',parts=raw.split('/');if(parts[0]==='glossary'&&parts[1]==='t'&&parts[2]){q='t='+parts[2];raw='glossary';}var seg=raw.split('?'),h=seg[0]||'';if(seg[1])q=seg[1];var page=PAGES[h]||PAGES[''];$('app').innerHTML=page.fn(q);renderNav(h);document.title=page.title+' · IMA 训练站';window.scrollTo(0,0);if(h==='lab'){initDupont();initTco();initBep();initCarbon();bindDcfNew();}if(h==='quiz')initQuizNew();if(h==='deep')initDeep();if(h==='models')bindModels();if(h==='glossary')initGlossary();else if(!['','plan','training','ai','lab'].includes(h))linkTerms($('app'));bindPersonal();document.querySelectorAll('table').forEach(function(table){if(!table.closest('.table-scroll')){var wrap=document.createElement('div');wrap.className='table-scroll';wrap.tabIndex=0;wrap.setAttribute('aria-label','表格，小屏可横向滚动');table.parentNode.insertBefore(wrap,table);wrap.appendChild(table);}});document.querySelectorAll('h1')[0]?.setAttribute('tabindex','-1');document.querySelector('h1')?.focus({preventScroll:true});refreshProg();};
 var initialFilterModels=window.__filterModels;window.__filterModels=function(q){initialFilterModels(q);emptySearch('mlist','[data-name]');};
 function emptySearch(id,selector){var list=$(id);if(!list)return;var cards=Array.from(list.querySelectorAll(selector));var old=list.querySelector('.empty-search');if(old)old.remove();if(cards.length&&!cards.some(function(el){return el.style.display!=='none';})){var p=document.createElement('p');p.className='empty-search';p.setAttribute('role','status');p.textContent='没有找到匹配内容。请换一个词，或清空搜索条件。';list.appendChild(p);}}
+
+/* Principles before formulas; no assessment or team management. */
+function foundationUrl(id){return '#/basics?topic='+encodeURIComponent(id);}
+function renderFoundations(q){
+ var data=IMABasics,params=new URLSearchParams(q||''),item=data.find(function(x){return x.id===params.get('topic');});
+ if(!item)return '<div class="route-intro"><h1>先理解问题，<br>再认识概念。</h1><p class="lead">从一家校园咖啡店出发，读懂企业为什么需要财务与战略。每节先讲原理和用途，公式放在最后，想看时再展开。</p></div><p class="foundation-guide">不必一次读完。建议先读 <a href="'+foundationUrl('cash')+'">利润与现金流</a> → <a href="'+foundationUrl('time')+'">时间价值</a> → <a href="'+foundationUrl('npv')+'">NPV</a>，再看 <a href="'+foundationUrl('strategy')+'">战略与取舍</a>。例子均为教学情景，不是比赛案例给定数据。</p>'+[['finance','财务：钱怎么进出，投资怎样判断'],['strategy','战略：服务谁，凭什么，如何兑现']].map(function(group){return '<section><h2>'+group[1]+'</h2><ol class="concept-index">'+data.filter(function(x){return x.group===group[0];}).map(function(x){return '<li><a href="'+foundationUrl(x.id)+'"><strong>'+safeText(x.title)+'</strong><span>'+safeText(x.term)+'</span></a></li>';}).join('')+'</ol></section>';}).join('');
+ var category=data.filter(function(x){return x.group===item.group;}),pos=category.indexOf(item);
+ var money=item.id==='time'?'<section class="intuition-lab"><h2>先感受：等得更久，会发生什么？</h2><p>比较今天100元与未来110元。保持未来金额不变，改变等待时间和比较基准。</p><label class="field" for="intuition-years">等待年数 <output id="intuition-years-label">1年</output><input id="intuition-years" type="range" min="1" max="5" step="1" value="1"></label><label class="field" for="intuition-rate">假设的年回报基准 <output id="intuition-rate-label">10%</output><input id="intuition-rate" type="range" min="0" max="20" step="1" value="10"></label><div class="time-rows"><p>现在：<b>100元</b></p><p>未来：<b>110元</b></p></div><p id="intuition-result" role="status" aria-live="polite"></p><p class="small-label">仅改变说明用的假设，不代表任何投资保证能获得这个收益。</p></section>':'';
+ return '<article class="concept-article"><a href="#/basics">← 返回从零理解</a><div class="route-intro"><h1>'+safeText(item.title)+'</h1><p class="lead">这一节理解：'+safeText(item.term)+'</p></div><section><h2>先遇到一个问题</h2><p>'+safeText(item.problem)+'</p></section><section><h2>原理：为什么需要这个概念</h2><p>'+safeText(item.principle)+'</p></section><section class="concept-example"><h2>放进咖啡店，走一遍</h2><p>'+safeText(item.example)+'</p></section>'+money+'<section><h2>用途：它能帮你作什么判断</h2><p>'+safeText(item.use)+'</p></section><section><h2>边界：它不能替你判断什么</h2><p>'+safeText(item.limit)+'</p></section><section><h2>回到本届案例</h2><p>'+safeText(item.case)+'</p></section><section class="concept-think"><h2>停一下，用自己的话解释</h2><p>'+safeText(item.think)+'</p><details><summary>看看一种解释</summary><p>'+safeText(item.answer)+'</p></details><p class="small-label">这是帮助理解的自我思考，不计分、不记录测评结果。</p></section><details class="formula-last"><summary>理解以后，再看公式或使用步骤</summary><p>'+safeText(item.formula)+'</p></details><aside class="related-reading"><p>还想弄清楚：</p>'+item.related.map(function(id){var other=data.find(function(x){return x.id===id;});return other?'<a href="'+foundationUrl(id)+'">'+safeText(other.term)+'</a>':'';}).join(' · ')+'</aside><div class="concept-pagination">'+(pos>0?'<a href="'+foundationUrl(category[pos-1].id)+'">← 上一节</a>':'<a href="#/basics">返回目录</a>')+(pos<category.length-1?'<a href="'+foundationUrl(category[pos+1].id)+'">下一节：'+safeText(category[pos+1].term)+' →</a>':'<a href="#/plan">回到学习路线 →</a>')+'</div><p class="source-note">本页为本站教学解释，咖啡店数字均为简化示例。比赛必答要求请以 <a href="https://casecompetition.imachina.org.cn/details/104.html" target="_blank" rel="noopener noreferrer">官方案例</a>为准。</p></article>';
+}
+function bindFoundations(){var years=$('intuition-years'),rate=$('intuition-rate');if(!years||!rate)return;function update(){var n=Number(years.value),r=Number(rate.value)/100,present=110/Math.pow(1+r,n),future=100*Math.pow(1+r,n);$('intuition-years-label').textContent=n+'年';$('intuition-rate-label').textContent=rate.value+'%';$('intuition-result').textContent='按这个基准，今天100元到'+n+'年后应达到约'+future.toFixed(2)+'元。因此，'+n+'年后的110元折回今天相当于约'+present.toFixed(2)+'元。'+(Math.abs(present-100)<.005?'两者在这个比较基准下相当。':present>100?'未来110元的现值高于今天100元。':'未来110元的现值低于今天100元。');}years.addEventListener('input',update);rate.addEventListener('input',update);update();}
+PAGES.basics={title:'从零理解',fn:renderFoundations};
+var foundationHome=PAGES[''].fn;
+PAGES[''].fn=function(){var markup=foundationHome();var hero='<div class="start-layout"><div class="route-intro"><h1>先弄懂为什么，<br>再动手算。</h1><p class="lead">零会计基础也可以开始。先借一家校园咖啡店，理解钱、投资与经营选择，再把原理用到本届案例里。</p><div class="button-row"><a class="btn primary" href="'+foundationUrl('business')+'">从财务第一课开始</a><a class="btn" href="'+foundationUrl('strategy')+'">先理解战略是什么</a></div><p class="small-label">一次只读一节：问题 → 原理 → 例子 → 用途 → 边界。公式在最后，按需展开。</p></div><aside class="today-note"><h2>先能解释，再说会用</h2><p>利润与现金流为什么不同？未来的钱为什么要折回今天？有好设备为什么不一定有优势？</p><p>先把这些问题说清楚，再打开计算器。无需先背完术语。</p><a href="#/basics">查看全部基础课程 →</a></aside></div><h2>学懂以后，再完成本届三件事</h2>';return markup.replace(/<div class="start-layout">[\s\S]*?<h2>先抓住本届三件事<\/h2>/,hero);};
+LESSONS.splice(0,0,{id:'principles',title:'先理解财务和战略为什么存在',time:'分次阅读，每次一节',why:'先理解收入、利润、现金流，再看等待的代价、NPV与战略取舍。每节都从问题和例子出发。',out:'能用自己的话说明概念解决什么问题、何时有用、哪里容易误用。',route:'basics',action:'从零理解原理与用途'});
+var basicLesson=LESSONS.find(function(x){return x.id==='basics';});Object.assign(basicLesson,{title:'把原理接到本届问题',time:'按需要回看，不要求一次学完',why:'读懂利润与现金流、时间价值、NPV、回收期、折旧和税务的关系；遇到战略问题再选对应视角。',out:'能解释本届每项输入为什么进入模型，哪些只是明确列出的假设。',route:'basics',action:'回看基础课程'});
+var termTopics={npv:'npv',irr:'npv',dcf:'npv',payback:'payback',depreciation:'depreciation',taxshield:'tax',carbon:'carbon',sensitivity:'carbon',incremental:'incremental',opportunity:'incremental',sunk:'incremental',dupont:'diagnosis',valuechain:'diagnosis',pestel:'environment',fiveforces:'environment',vrio:'resources',generic:'strategy',canvas:'businessmodel',ansoff:'businessmodel',bcg:'portfolio',lifecycle:'portfolio',bsc:'execution'};
+var foundationGlossary=PAGES.glossary.fn;
+PAGES.glossary.fn=function(q){var focus=new URLSearchParams(q||'').get('t'),target=termTopics[focus];return '<div class="foundation-guide">词典适合快速查意思。'+(target?'<a href="'+foundationUrl(target)+'">先看这个概念的原理、用途与例子 →</a>':'<a href="#/basics">如果定义仍然抽象，从基础课程开始 →</a>')+'</div>'+foundationGlossary(q);};
+var foundationModels=PAGES.models.fn;
+PAGES.models.fn=function(){var markup=foundationModels();MODELS.forEach(function(m){var id=termTopics[m.id],needle='<span class="badge">'+m.en+'</span></h3>';if(id)markup=markup.replace(needle,needle+'<p class="model-source"><a href="'+foundationUrl(id)+'">先理解：它解决什么问题，什么时候用 →</a></p>');});return markup;};
+var baseLibrary=PAGES.library.fn;PAGES.library.fn=function(){return '<p class="foundation-guide">还没理解概念？<a href="#/basics">先读原理与用途，再查模型步骤 →</a></p>'+baseLibrary();};
+var baseCalc=PAGES.lab.fn;PAGES.lab.fn=function(){return '<p class="foundation-guide">不清楚为什么这样算？先读 <a href="'+foundationUrl('cash')+'">现金流</a>、<a href="'+foundationUrl('time')+'">折现</a> 和 <a href="'+foundationUrl('npv')+'">NPV</a>，再回来看结果。</p>'+baseCalc();};
+NAV.splice(1,0,['basics','从零理解']);
+var foundationRoute=route;route=function(){foundationRoute();if((location.hash||'').startsWith('#/basics'))bindFoundations();};
 
 /* ================= 启动 ================= */
 window.addEventListener('hashchange',route);
