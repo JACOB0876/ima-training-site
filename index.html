@@ -349,6 +349,17 @@ h1[tabindex="-1"]:focus,h1[tabindex="-1"]:focus-visible{outline:none}
 .scenario .card{padding:14px 16px}
 .scenario h3{font-size:14px;margin:0 0 6px}
 .scenario p{font-size:13px;margin:0;line-height:1.7}
+
+/* 中等宽度：导航单独一行，避免挤在标题旁边换行 */
+@media(max-width:1100px){
+  .head{flex-wrap:wrap;row-gap:8px}
+  .brand{white-space:nowrap}
+  nav{order:3;width:100%;margin-left:0;gap:16px;flex-wrap:nowrap;overflow-x:auto;
+    padding-top:8px;border-top:1px solid var(--rule);scrollbar-width:none}
+  nav a{white-space:nowrap}
+  nav::-webkit-scrollbar{display:none}
+  .prog{margin-left:auto}
+}
 </style>
 <link rel="stylesheet" href="./upgrade.css">
 </head>
