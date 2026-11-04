@@ -1966,6 +1966,26 @@ window.addEventListener('hashchange',route);
 route();
 })();
 </script>
+
+<script>
+(function(){
+ if(!/[?&]debug=1/.test(location.search+location.hash)) return;
+ setTimeout(function(){
+  var r=[],sels=['main','.wrap','#app','.path-list','.path-list>li','h1','.route-intro'];
+  sels.forEach(function(s){
+   var e=document.querySelector(s);
+   if(!e) return;
+   var b=e.getBoundingClientRect(),c=getComputedStyle(e);
+   r.push(s+' w='+Math.round(b.width)+' x='+Math.round(b.x)+' disp='+c.display+' pos='+c.position+' float='+c.float+' cols='+c.columnCount+' fs='+c.fontSize);
+  });
+  r.push('innerWidth='+innerWidth+' dpr='+(window.devicePixelRatio||1)+' sheets='+document.styleSheets.length);
+  var d=document.createElement('pre');
+  d.style.cssText='position:fixed;left:8px;bottom:8px;z-index:99999;background:#fffbe6;border:1px solid #b23a2b;padding:8px;font:11px/1.5 monospace;white-space:pre-wrap;max-width:92vw;color:#12181B';
+  d.textContent=r.join('\n');
+  document.body.appendChild(d);
+ },900);
+})();
+</script>
 </body>
 </html>
 
