@@ -360,6 +360,12 @@ h1[tabindex="-1"]:focus,h1[tabindex="-1"]:focus-visible{outline:none}
   nav::-webkit-scrollbar{display:none}
   .prog{margin-left:auto}
 }
+
+/* 兜底：任何宽度下正文容器都必须占满，避免被父级压成窄条 */
+main,.wrap,#app{display:block;width:100%;max-width:100%;min-width:0}
+#app>*{max-width:100%;min-width:0}
+ol.path-list{width:100%}
+.path-list>li{min-width:0}
 </style>
 <link rel="stylesheet" href="./upgrade.css">
 </head>
