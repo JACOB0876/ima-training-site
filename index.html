@@ -2,6 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=42bc6b57-f64d-4b04-acdc-fc2c3a5f48a6
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F4F3EE">
@@ -268,6 +271,84 @@ details[open] summary{margin-bottom:10px}
   a{color:#000;border:0}
   h2{break-after:avoid}
 }
+
+/* ---------- 学习路线 & 计算器说明书 ---------- */
+.start-layout{display:grid;grid-template-columns:1.35fr .65fr;gap:30px;align-items:start}
+@media(max-width:880px){.start-layout{grid-template-columns:1fr}}
+.route-intro h1{font-size:clamp(28px,3.6vw,42px);line-height:1.16;letter-spacing:-.03em;margin:0 0 14px;text-wrap:balance;border:0;padding:0}
+.route-intro .lead{max-width:58ch}
+.button-row{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}
+.today-note{border:1px solid var(--ink);background:var(--sheet);padding:18px 20px}
+.today-note h2{font-size:14px;margin:0 0 8px;border:0;padding:0;letter-spacing:0}
+.today-note p{font-size:14px;margin:0 0 10px;line-height:1.7}
+.today-note a{font-size:13.5px}
+.small-label{font-size:12.5px;color:var(--muted);font-family:var(--mono)}
+.library-links{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.library-links a{border:1px solid var(--rule-strong);padding:6px 12px;font-size:13.5px;border-radius:2px;color:var(--ink2)}
+.library-links a:hover{border-color:var(--ink);color:var(--ink)}
+.path-list{list-style:none;counter-reset:step;padding:0;margin:10px 0}
+.path-list>li{counter-increment:step;position:relative;padding:18px 0 18px 48px;border-top:1px solid var(--rule)}
+.path-list>li:last-child{border-bottom:1px solid var(--rule)}
+.path-list>li::before{content:counter(step,decimal-leading-zero);position:absolute;left:0;top:20px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.path-list h3{margin:0 0 5px;font-size:16.5px}
+.path-list p{margin:0 0 6px;font-size:14px}
+.task-check{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--muted);margin-top:11px;cursor:pointer}
+.task-check input{margin-top:4px;accent-color:var(--green)}
+.field{display:block;font-size:14px;margin:16px 0}
+.field textarea{width:100%;min-height:90px;margin-top:6px;padding:10px 12px;border:1px solid var(--rule-strong);border-radius:2px;background:var(--sheet);font:inherit;font-size:14px;line-height:1.7;color:var(--ink);resize:vertical}
+.field textarea:focus{border-color:var(--green)}
+.training-item{background:var(--sheet);border:1px solid var(--rule);padding:18px 20px;margin:14px 0}
+.training-item h2{font-size:16px;margin:0 0 6px;border:0;padding:0}
+.source-note{font-size:12px;color:var(--muted);border-top:1px solid var(--rule);margin-top:22px;padding-top:10px;line-height:1.8}
+
+/* DCF 计算器 */
+.dcf-set{border:1px solid var(--rule);background:var(--sheet);padding:14px 16px 16px;margin:14px 0;border-radius:2px}
+.dcf-set legend{font-size:12.5px;color:var(--muted);padding:0 6px;letter-spacing:.02em}
+.dcf-config{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px 18px}
+.dcf-config label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+.dcf-config input[type=number]{width:100%;padding:7px 9px;border:1px solid var(--rule-strong);border-radius:2px;
+  background:var(--paper);font-family:var(--mono);font-size:13.5px;color:var(--ink)}
+.dcf-config input[type=number]:focus{border-color:var(--green)}
+.dcf-note{font-size:12.5px;color:var(--muted);line-height:1.8}
+.result-summary{border:1px solid var(--ink);background:var(--sheet);padding:16px 18px;margin:16px 0}
+.result-summary table{margin:6px 0}
+.table-scroll{overflow-x:auto}
+.error-box:empty{display:none}
+.error-box{border-left:3px solid var(--red);background:#FBF1EF;padding:10px 12px;font-size:13px;margin:12px 0}
+
+/* 说明书 */
+.lab-guide{border:1px solid var(--ink);background:var(--sheet);padding:20px 22px;margin:18px 0 24px}
+.lab-guide h2{font-size:16px;margin:0 0 8px;border:0;padding:0}
+.lab-guide h3{font-size:14px;margin:14px 0 6px}
+.lab-guide ol,.lab-guide ul{margin:8px 0 10px;padding-left:20px;font-size:14px;line-height:1.85}
+.lab-guide table{margin:8px 0 6px}
+.lab-guide .tip{font-size:12.5px;color:var(--muted);border-top:1px solid var(--rule);margin-top:12px;padding-top:10px}
+h1[tabindex="-1"]:focus,h1[tabindex="-1"]:focus-visible{outline:none}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+
+/* ---------- B 计划：模型地图 / 工具矩阵 / 价值链 / 假设工作台 ---------- */
+.hub-links{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 6px}
+.hub-links a{border:1px solid var(--rule-strong);background:var(--sheet);padding:10px 14px;border-radius:2px;font-size:14px}
+.hub-links a:hover{border-color:var(--ink)}
+.map-flow{display:grid;gap:0;margin:14px 0;border-top:1px solid var(--ink)}
+.map-step{display:grid;grid-template-columns:64px 1fr 220px;gap:16px;padding:14px 4px;border-bottom:1px solid var(--rule);align-items:start}
+@media(max-width:820px){.map-step{grid-template-columns:48px 1fr}}
+.map-step .no{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.map-step h3{margin:0 0 4px;font-size:15.5px}
+.map-step .io{font-size:12.5px;color:var(--muted);line-height:1.7}
+.map-step .io b{color:var(--ink)}
+.tool-tag{display:inline-block;font-size:11px;padding:1px 7px;border:1px solid var(--rule);color:var(--muted);border-radius:2px;margin-right:6px}
+.tool-tag.active{background:var(--wash);border-color:#CFDDD3;color:var(--green-deep)}
+.tool-tag.passive{background:#F3EFE6;border-color:#E2D3B4;color:#7C5A16}
+.assume-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px 18px;margin:12px 0}
+.assume-grid label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted)}
+.assume-grid select,.assume-grid input{padding:7px 9px;border:1px solid var(--rule-strong);border-radius:2px;background:var(--paper);font:inherit;font-size:13.5px}
+.scenario{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:820px){.scenario{grid-template-columns:1fr}}
+.scenario .card{padding:14px 16px}
+.scenario h3{font-size:14px;margin:0 0 6px}
+.scenario p{font-size:13px;margin:0;line-height:1.7}
 </style>
 <link rel="stylesheet" href="./upgrade.css">
 </head>
@@ -1139,6 +1220,118 @@ function linkTerms(root){
 }
 
 /* ================= 路由 ================= */
+
+/* ================= 学习路线第 3 步：往届拆解与本届辅助 ================= */
+function pageCase15(){
+  return '<div class="doc-label">案例拆解 · 第 15 届</div>' +
+  '<div class="route-intro"><h1>第 15 届：立达信的三轮题，怎么拆</h1>' +
+  '<p class="lead">这一页不背答案，给你一套“拿到一家公司，从哪儿下手”的顺序。看完再去看第 16 届的题目，速度会不一样。</p>' +
+  '<div class="button-row"><a class="btn primary" href="#/case16">接着看第 16 届题目辅助</a><a class="btn" href="#/cases">回案例库</a></div></div>' +
+
+  '<h2>一句话矛盾</h2>' +
+  '<p class="quote">“毛利率从 22.8% 一路升到 29.8%，净利率却停在 4.7%——照明的现金，在给物联网交学费。”</p>' +
+  '<p>这句话同时解释三件事：收入结构在变好（IoT 占比升）、利润没变好（费用吞噬）、必须做决策（现金牛还能供血多久）。</p>' +
+
+  '<h2>先记住这 8 个数</h2>' +
+  '<div class="table-scroll"><table><tr><th>指标</th><th class="n">数值</th><th>为什么重要</th></tr>' +
+  '<tr><td>照明收入占比</td><td class="n">71.95% → 66.86% → 61.70%</td><td>现金牛在缩，但仍是基本盘</td></tr>' +
+  '<tr><td>IoT 收入占比</td><td class="n">23.46% → 27.81% → 27.86%</td><td>三年只涨 4.4 个点，第二曲线没起来</td></tr>' +
+  '<tr><td>毛利率</td><td class="n">22.8% → 26.1% → 29.8%</td><td>产品结构与供应链在改善</td></tr>' +
+  '<tr><td>净利率</td><td class="n">4.7% → 6.5% → 4.7%</td><td>毛利全被费用吃掉——核心异常</td></tr>' +
+  '<tr><td>ROE</td><td class="n">13.13% → 15.91% → 9.33%</td><td>股东回报掉了一半</td></tr>' +
+  '<tr><td>境外收入占比</td><td class="n">86.07% → 87.71% → 88.13%</td><td>汇率与关税是硬约束</td></tr>' +
+  '<tr><td>三层收费（100 校）</td><td class="n">4.8 + 0.9 + 0.15 = 5.85 亿元</td><td>商业模式的全部想象空间</td></tr>' +
+  '<tr><td>保本学校数</td><td class="n">40 所</td><td>把“要不要做”变成“做多少”</td></tr></table></div>' +
+
+  '<h2>用五段主线走一遍</h2>' +
+  '<div class="table-scroll"><table><tr><th>段</th><th>关键判断</th><th>落到的数字</th></tr>' +
+  '<tr><td>问题拆解</td><td>毛利涨 7 个点、费用率也涨 7 个点，净利率原地</td><td>ROE 9.33%，周转率 1.33→1.14</td></tr>' +
+  '<tr><td>外部环境</td><td>关税削毛利、Matter 削话语权、去库存削周转</td><td>境外收入 88%</td></tr>' +
+  '<tr><td>竞争力</td><td>技术过 VRI 三关，组织没过第四关</td><td>4,668 项知识产权</td></tr>' +
+  '<tr><td>产品市场</td><td>从“硬件一次性”换成“硬件 + 订阅 + 数据”</td><td>毛利 27/65/80，加权 34.2%</td></tr>' +
+  '<tr><td>战略决策</td><td>不是放缓，是按门放款</td><td>NPV 2.99 亿；保本 40 所；红线 40%/2,100 万/24 月</td></tr></table></div>' +
+
+  '<h2>三支决赛队怎么讲同一道题</h2>' +
+  '<div class="training-item"><h2>东北财经大学 · Pioneer</h2>' +
+  '<p class="small-label">31 页 · 主张“不应放缓”</p>' +
+  '<p><b>结构：</b>结论先行（第 4 页整页一个“NO”），再按财务分析、可持续与竞争力、商业模式、管理会计体系四块展开。</p>' +
+  '<p><b>亮点：</b>把 4.16 亿研发中 55% 当作固定成本，用经营杠杆 DOL 说明“放缓反而更危险”——三份作品里唯一把战略问题翻译成会计语言的。</p>' +
+  '<p><b>可借鉴：</b>一句会计公式顶十页战略口号。</p></div>' +
+  '<div class="training-item"><h2>北京师范大学 · Say Yes</h2>' +
+  '<p class="small-label">37 页 · 主张“不放缓，但优化节奏”</p>' +
+  '<p><b>结构：</b>案例概览 → 战略分析 → 战略选择 → 战略执行 → 战略控制；第 5 页把四位高管的立场画成一张“看到什么—怕什么—主张什么”的对照图。</p>' +
+  '<p><b>亮点：</b>指出根本矛盾是“用硬件销售模式经营平台型业务”，并提出教育 IoT OS 与双边平台飞轮。</p>' +
+  '<p><b>可借鉴：</b>先把案例里的争论变成可评判的辩论，再给方案。</p></div>' +
+  '<div class="training-item"><h2>江西财经大学 · Go straight forward</h2>' +
+  '<p class="small-label">27 页 · 主张“继续，但放缓盲目扩张”</p>' +
+  '<p><b>结构：</b>战略判断 → 财务分析 → 商业模式与投资 → 风险与执行。</p>' +
+  '<p><b>亮点：</b>NPV 2.99 亿、CVP 算出保本 40 所、四条红线，把“要不要继续投”变成“投到多少所才安全”。</p>' +
+  '<p><b>可借鉴：</b>把“是否”变成“多少”，评委立刻能判断可行性。</p></div>' +
+
+  '<h2>三份作品的共同套路（可直接抄）</h2>' +
+  '<ol class="steps">' +
+  '<li><b>结论先行</b>：前 5 页亮明立场，再展开论证。</li>' +
+  '<li><b>先立一句矛盾</b>：固定成本 vs 规模 / 硬件模式 vs 平台业务 / 现金流与投入失衡。</li>' +
+  '<li><b>用透案例数字</b>：0.8 亿、100 校、5.85 亿、27/65/80 反复出现，而不是堆外部数据。</li>' +
+  '<li><b>管理会计必须落到责任</b>：SBU 责任中心、内部转移定价、里程碑拨款、阶段门。</li>' +
+  '<li><b>收尾回答“资本市场听得懂吗”</b>：IRR>WACC、P/E→P/S、三个领先指标。</li></ol>' +
+
+  '<div class="hint"><b>本步练习：</b>用 30 分钟，按“矛盾—五段—三个数—一条建议”写一页纸。写完再翻到第 16 届，你会发现自己看题的速度变了。<br><a href="#/case16">第 16 届题目辅助分析</a></div>' +
+
+  '<div class="source-note">数据来源：第 15 届案例原文与附录一至七；三支队伍的结构与数字来自公开获奖作品文本。标注“作品口径”的数字不是官方答案。</div>';
+}
+
+function pageCase16(){
+  return '<div class="doc-label">题目辅助 · 第 16 届</div>' +
+  '<div class="route-intro"><h1>第 16 届三问：算法、陷阱与交付物</h1>' +
+  '<p class="lead">先把题读懂，再动手算。这一页只做三件事：拆问题、给算法、列陷阱。</p>' +
+  '<div class="button-row"><a class="btn" href="#/case15">回第 15 届拆解</a><a class="btn primary" href="#/lab">去计算实验室</a></div></div>' +
+
+  '<h2>三问在问什么</h2>' +
+  '<div class="table-scroll"><table><tr><th style="width:8%">问</th><th>题目要求</th><th>真正考的能力</th></tr>' +
+  '<tr><td>1</td><td>两套独立估值：先剔除碳成本，算 A/B 的静态回收期与十年 NPV；再按 100 元/吨把碳成本作为年固定现金流出嵌入，重算同样指标。</td><td>DCF 建模、折旧与税盾、增量口径</td></tr>' +
+  '<tr><td>2</td><td>直观对比两套结论，说明加入碳成本后传统口径的结论发生了什么变化。</td><td>解释差异，而不是报两个数</td></tr>' +
+  '<tr><td>3</td><td>记录 AI 辅助过程：工具、提示词原文、人工复核节点、AI 的缺陷。</td><td>可复核性，不是“用了 AI”</td></tr></table></div>' +
+
+  '<h2>给定参数（先抄进假设表）</h2>' +
+  '<div class="table-scroll"><table><tr><th>项目</th><th class="n">A 传统</th><th class="n">B 节能</th><th>说明</th></tr>' +
+  '<tr><td>初始投资</td><td class="n">2.4 亿元</td><td class="n">3.9 亿元</td><td>B 可申请 2,000 万补贴</td></tr>' +
+  '<tr><td>年运维成本</td><td class="n">1,200 万元</td><td class="n">700 万元</td><td>固定现金支出</td></tr>' +
+  '<tr><td>10 年末残值</td><td class="n">1,200 万元</td><td class="n">1,950 万元</td><td>折旧基数要先扣残值</td></tr>' +
+  '<tr><td>年碳排放</td><td class="n">5.8 万吨</td><td class="n">2.3 万吨</td><td>碳价 100 元/吨</td></tr>' +
+  '<tr><td colspan="4">共同假设：满产年收入 95 亿元；变动成本率 90%；折现率 8%；所得税 25%；寿命 10 年。</td></tr></table></div>' +
+
+  '<h2>算法路径</h2>' +
+  '<ol class="steps">' +
+  '<li><b>年边际贡献</b>：95 ×（1 − 90%）= 9.5 亿元。</li>' +
+  '<li><b>年折旧</b>：A（2.4 − 0.12）÷ 10 = 0.228 亿；B（3.9 − 0.195）÷ 10 = 0.3705 亿。</li>' +
+  '<li><b>年碳成本</b>：排放 × 100 元/吨。A 0.058 亿；B 0.023 亿。</li>' +
+  '<li><b>EBIT</b> = 边际贡献 − 运维 − 碳成本 − 折旧。</li>' +
+  '<li><b>经营现金流 OCF</b> = EBIT ×（1−25%）+ 折旧。</li>' +
+  '<li><b>NPV</b> = −投资 + OCF × 年金系数 + 残值折现 + 补贴折现。</li>' +
+  '<li><b>回收期</b> = 投资 ÷ OCF（两方案都远小于 1 年，不能用来区分）。</li></ol>' +
+
+  '<h2>四个最容易扣分的点</h2>' +
+  '<div class="table-scroll"><table><tr><th style="width:26%">陷阱</th><th>正确做法</th></tr>' +
+  '<tr><td>折旧基数没扣残值</td><td>A 用（2.4−0.12）/10，不是 0.24</td></tr>' +
+  '<tr><td>碳成本忘了抵税</td><td>碳成本是经营成本，EBIT 下降，税也少交</td></tr>' +
+  '<tr><td>补贴时点不写</td><td>放 t=0 还是 t=1 必须写明；影响约 0.015 亿</td></tr>' +
+  '<tr><td>拿回收期做决策</td><td>两方案都不到 0.6 年，指标失效——主动说出来是加分点</td></tr></table></div>' +
+
+  '<h2>两个临界值（高分动作）</h2>' +
+  '<div class="table-scroll"><table><tr><th>临界值</th><th class="n">结果</th><th>怎么讲</th></tr>' +
+  '<tr><td>碳价临界</td><td class="n">约 448 元/吨</td><td>碳价涨到 4.5 倍，B 才在纯财务上反超</td></tr>' +
+  '<tr><td>出口流失临界</td><td class="n">约 4.6%</td><td>A 只要丢掉 4.6% 的出口订单，优势就归零</td></tr></table></div>' +
+  '<p class="quote">结论句：排序不变、差距收窄 22%；真正的决策变量不是碳价，是 2027 年的市场准入。</p>' +
+
+  '<h2>第 3 问怎么交</h2>' +
+  '<p>六个字段一个都不能空：工具与模型、提示词原文、AI 关键输出、人工复核节点、发现的问题与修正、仍存在的局限。</p>' +
+  '<p>最容易得分的是“AI 初稿 vs 人工修正”的对照表。<a href="#/ai">打开 AI 使用记录</a></p>' +
+
+  '<div class="hint"><b>提交前清单：</b>四张结果表（A/B × 含碳/不含碳）有了吗？假设表写了吗？临界值算了吗？提示词是原文吗？四个都“是”，再去做找错练习。</div>' +
+  '<div class="source-note">参数来自第 16 届案例原文；演算采用教学假设（补贴第 1 年到账、残值等于账面、碳成本可税前扣除），不是官方参考答案。</div>';
+}
+
 var PAGES = {
   '': {title:'首页', fn:pageHome},
   'storyline': {title:'五段主线', fn:pageStoryline},
@@ -1149,6 +1342,11 @@ var PAGES = {
   'team': {title:'分工', fn:pageTeam},
   'deep': {title:'深水区', fn:pageDeep},
   'glossary': {title:'词典', fn:pageGlossary},
+  'plan': {title:'学习路线', fn:pagePlan},
+  'training': {title:'项目训练', fn:pageTraining},
+  'ai': {title:'AI 记录', fn:pageAi},
+  'case15': {title:'第15届拆解', fn:pageCase15},
+  'case16': {title:'第16届辅助', fn:pageCase16},
   'cheat': {title:'速查', fn:pageCheat}
 };
 var NAV = [['','首页'],['storyline','主线'],['models','模型'],['cases','案例'],['lab','实验室'],['quiz','找错'],['deep','深水'],['glossary','词典'],['team','分工'],['cheat','速查']];
@@ -1398,13 +1596,39 @@ var LESSONS=[
  {id:'explain',title:'把结果讲成决策建议',time:'1—2 小时',why:'先讲测算变化，再讲成立条件与尚未量化的因素。页数、语言和时长以学校要求为准。',out:'简短汇报＋一次计时演练；每个数字能回到计算依据。',route:'quiz',action:'做找错练习'}
 ];
 function nextLesson(){return LESSONS.find(function(l){return !done.learning[l.id];})||LESSONS[LESSONS.length-1];}
-function pageHomeNew(){var next=nextLesson();return '<div class="start-layout"><div class="route-intro"><h1>把案例读懂，<br>把每一步算清楚。</h1><p class="lead">第十六届 IMA 案例赛学习手册。围绕设备投资、碳成本和 AI 复核，从基础概念走到一份能解释的决策建议。</p><div class="button-row"><a class="btn primary" href="#/plan">'+(Object.keys(done.learning).length?'继续我的学习计划':'从学习路线开始')+'</a><a class="btn" href="#/lab">打开本届计算器</a></div><p class="small-label">不要求先学完整套财务管理。先完成本届任务，再按需查模型。</p></div><aside class="today-note"><h2>下一步：'+next.title+'</h2><p>'+next.why+'</p><p><b>交付物</b><br>'+next.out+'</p><a href="#/'+next.route+'">'+next.action+' →</a></aside></div><h2>先抓住本届三件事</h2><ol><li>计算 A/B 在无碳、含碳两套口径下的回收期与十年 NPV。</li><li>对比结果差异，说明假设和结论成立的条件。</li><li>展示真实 AI 辅助过程，以及人工如何检查和修正。</li></ol>'+sourceNote()+'<h2>工具与资料，按需查阅</h2><div class="library-links"><a href="#/storyline">问题拆解主线</a><a href="#/models">模型库</a><a href="#/cases">历届案例</a><a href="#/glossary">名词解释</a><a href="#/quiz">找错练习</a><a href="#/deep">进阶选读</a><a href="#/cheat">表达速查</a></div><p class="small-label">模型帮助回答问题；不是所有问题都需要量化。不能可靠量化的因素，说明依据、影响路径和不确定性。</p>'+localFooter();}
+function pageHomeNew(){var next=nextLesson();return '<div class="start-layout"><div class="route-intro"><h1>把案例读懂，<br>把每一步算清楚。</h1><p class="lead">第十六届 IMA 案例赛学习手册。围绕设备投资、碳成本和 AI 复核，从基础概念走到一份能解释的决策建议。</p><div class="button-row"><a class="btn primary" href="#/plan">'+(Object.keys(done.learning).length?'继续我的学习计划':'从学习路线开始')+'</a><a class="btn" href="#/lab">打开本届计算器</a></div><p class="small-label">不要求先学完整套财务管理。先完成本届任务，再按需查模型。</p></div><aside class="today-note"><h2>下一步：'+next.title+'</h2><p>'+next.why+'</p><p><b>交付物</b><br>'+next.out+'</p><a href="#/'+next.route+'">'+next.action+' →</a></aside></div><h2>先抓住本届三件事</h2><ol><li>计算 A/B 在无碳、含碳两套口径下的回收期与十年 NPV。</li><li>对比结果差异，说明假设和结论成立的条件。</li><li>展示真实 AI 辅助过程，以及人工如何检查和修正。</li></ol>'+sourceNote()+'<h2>工具与资料，按需查阅</h2><div class="library-links"><a href="#/storyline">问题拆解主线</a><a href="#/models">模型库</a><a href="#/cases">历届案例</a><a href="#/glossary">名词解释</a><a href="#/quiz">找错练习</a><a href="#/deep">进阶选读</a><a href="#/cheat">表达速查</a><a href="#/playbook">补充资料：市场·模型·工具</a></div><p class="small-label">模型帮助回答问题；不是所有问题都需要量化。不能可靠量化的因素，说明依据、影响路径和不确定性。</p>'+localFooter();}
 function pagePlan(){return '<div class="route-intro"><h1>按自己的节奏，完成本届训练。</h1><p class="lead">两周先完成第一版；若有三到四周，把余下时间用于复核、修改与演练。这是学习建议，不是赛事规定。</p></div><ol class="path-list">'+LESSONS.map(function(l){return '<li><div><h3>'+l.title+'</h3><p class="small-label">'+l.time+'</p><p>'+l.why+'</p><p><b>完成后留下：</b>'+l.out+'</p><a class="btn" href="#/'+l.route+'">'+l.action+'</a><label class="task-check"><input type="checkbox" data-learning="'+l.id+'" '+(done.learning[l.id]?'checked':'')+'>我已完成这一步，并保留了对应成果</label></div></li>';}).join('')+'</ol>'+localFooter();}
 function pageTraining(){return '<div class="route-intro"><h1>在真实工作情景里，练习分析。</h1><p class="lead">优先选择能补当前短板的任务。Forage 内部任务和提交要求以平台为准；以下成果是本站建议增加的备赛练习。</p></div><article class="training-item"><h2>BCG · Climate & Sustainability</h2><p class="small-label">官网预计 3—4 小时 · 免费、自主进度 · 公开信息核对于 2026-11-02</p><p>为模拟客户 FastCars 分析减排问题。公开任务包括理解排放范围、用 Excel 计算排放基线，并训练数据分析、风险识别和战略建议。</p><p><b>建议练习：</b>先说明基线代表什么、单位如何换算，再解释一项减排措施怎样影响经营判断。它不能替代本届设备投资的十年现金流测算。</p><p><b>留下的成果：</b>一张排放基线表＋一页“问题—证据—建议”。</p><p>'+external('https://www.theforage.com/simulations/bcg/climate-sustainability-irs7','前往 Forage 开始 BCG 项目')+'</p><label class="field">我的成果或复盘<textarea data-note="bcg" placeholder="记录成果链接、遇到的问题，以及哪些方法可迁移到本届案例。">'+safeText(done.notes.bcg||'')+'</textarea></label><label class="task-check"><input type="checkbox" data-learning="bcg" '+(done.learning.bcg?'checked':'')+'>我已完成所选任务，并复盘成果</label></article><article class="training-item"><h2>PwC US · Management Consulting</h2><p class="small-label">官网预计 4—5 小时 · 免费、自主进度 · 公开信息核对于 2026-11-02</p><p>练习企业信息摘要、资料收集与分析、基础财务报表和建模，并将发现整理成管理层能够理解的表达。</p><p><b>建议练习：</b>先完成公司摘要，区分事实与判断；再选择与当前进度相关的建模和展示任务。先自己尝试，再对照平台示例。</p><p><b>留下的成果：</b>一页公司摘要＋可解释的基础模型或三页决策汇报。</p><p>'+external('https://www.theforage.com/simulations/pwc-us/management-consulting-gwcm','前往 Forage 开始 PwC 项目')+'</p><label class="field">我的成果或复盘<textarea data-note="pwc" placeholder="记录成果链接、模型假设和参考答案给你的启发。">'+safeText(done.notes.pwc||'')+'</textarea></label><label class="task-check"><input type="checkbox" data-learning="pwc" '+(done.learning.pwc?'checked':'')+'>我已完成所选任务，并复盘成果</label></article><p class="source-note">这里不会读取你的 Forage 账号或自动同步完成状态。勾选与笔记仅记录你自己的学习过程。官网时长不含阅读英文、补基础和复盘所需的额外时间。</p>'+localFooter();}
 function pageAi(){var fields=[['tool','工具与模型','例如：工具名、模型版本、使用日期'],['prompt','实际提交的提示词原文','原样粘贴实际使用的提示词；多轮对话可按顺序记录。'],['output','AI 输出的关键内容','保留关键公式、假设和结论，或记录你保存的完整对话文件位置。'],['review','人工复核节点与方法','例如：单位、年份、税后现金流、补贴时点、折现区间；写清如何独立检查。'],['changes','发现的问题与实际修正','AI 哪里出错？你怎样发现？最终改成什么？没有发现错误时也如实记录。'],['limits','仍存在的局限','哪些内容未获证实，哪些假设需要指导老师确认？']];return '<div class="route-intro"><h1>记录 AI 如何参与，也记录你如何判断。</h1><p class="lead">保存真实发生的过程。这里提供记录结构，不替你虚构提示词、检查过程或结论。</p></div>'+fields.map(function(f){return '<label class="field">'+f[1]+'<textarea data-ai="'+f[0]+'" placeholder="'+f[2]+'">'+safeText(done.ai[f[0]]||'')+'</textarea></label>';}).join('')+'<div class="button-row"><button class="btn primary" id="download-ai">下载 AI 记录（Markdown）</button></div>'+sourceNote()+localFooter();}
 function numberField(id,label,value,step){return '<label class="field" for="'+id+'">'+label+'<input id="'+id+'" class="num" type="number" required step="'+(step||'any')+'" value="'+safeText(value)+'"></label>';}
 var baseLab=pageLab;
-function pageLabNew(){var raw=baseLab(),cut=raw.indexOf('<div class="lab"><h2 class="lab-h">⑤');var intro='<div class="route-intro"><h1>先算清本届，再按需做实验。</h1><p class="lead">本届计算器把无碳与含碳两套结果放在一起。默认值取自案例；折旧、补贴时点及税务处理采用下列教学假设，可检查、可调整。</p></div>';var cfg=savedScenario||IMAFinance.defaults();if(IMAFinance.validate(cfg).length)cfg=IMAFinance.defaults();return intro+'<section class="lab" id="dcf-section"><h2>第十六届 · 两套估值对照</h2><p class="dcf-note">金额统一为亿元，排放为万吨/年；率用小数输入，例如 0.08 表示 8%。计算器用于复核思路，最终作品仍须说明口径并人工审核。</p><fieldset class="dcf-set"><legend>共同参数</legend><div class="dcf-config">'+numberField('d_rev','年营业收入（亿元）',cfg.rev,1)+numberField('d_vcr','变动成本率（0—1）',cfg.vcr,.01)+numberField('d_r','折现率（0—1）',cfg.r,.01)+numberField('d_t','所得税率（0—1）',cfg.tax,.01)+numberField('d_p','碳价（元/吨）',cfg.p,10)+numberField('d_n','设备寿命（年）',cfg.n,1)+'</div></fieldset>'+['A','B'].map(function(side){var o=cfg[side],prefix=side==='A'?'d_a':'d_b';return '<fieldset class="dcf-set"><legend>方案 '+side+'</legend><div class="dcf-config">'+numberField(prefix,'初始投资（亿元）',o.capex,.1)+numberField(prefix+'2','年运维（亿元/年）',o.om,.01)+numberField(prefix+'3','期末残值（亿元）',o.salv,.01)+numberField(prefix+'4','年排放（万吨/年）',o.emis,.1)+(side==='B'?numberField('d_sub','补贴（亿元）',o.sub,.05)+numberField('d_subyear','补贴到账年份（0—期末）',cfg.subYear,1):'')+'</div></fieldset>';}).join('')+'<div class="button-row"><button class="btn primary" id="d_run">更新测算</button><button class="btn" id="d_reset">恢复案例参数</button></div><div id="dcf-errors" class="error-box" role="alert"></div><div id="dcf-results" aria-live="polite"></div><details open><summary>先看假设，再使用数字</summary><ul class="dcf-note"><li><b>案例给定：</b>收入、变动成本率、税率、设备参数、基准折现率、十年期限与固定碳价；依据见官方题目。</li><li><b>本站假设：</b>各年经营规模相同，现金流年末发生；按“投资减残值”直线折旧；税务账面残值与回收残值相同；暂不单列营运资本和额外资本开支。</li><li><b>补贴：</b>默认第1年到账，默认作为不另计所得税的现金流入，不冲减折旧基础；并非题目明确的税务结论。改变时点会影响结果。</li><li><b>所得税：</b>运维和碳成本均按可税前扣除处理，负应税利润的税收收益假设可即时利用。若实际不满足，需要修改模型。</li><li><b>回收期：</b>按模型全部未折现净现金流累计，跨年时作线性插值；含补贴及期末回收款。无法在寿命内收回时明确提示。</li><li><b>决策边界：</b>给定收入属于整条产线，本实验沿用这一案例口径。若作设备增量比较，应另列差额现金流，避免把整线收入误认为某台设备独立创造的收益。</li><li>不额外虚构节能收入，也不把碳减排量自动当作电费节省。市场准入等未可靠量化的因素单独讨论。</li></ul></details>'+sourceNote()+'</section><details><summary>其他练习：杜邦、采购总成本、保本与简化碳价实验</summary><p class="source-note">以下为教学示例，帮助理解变量关系；不是本届给定数据或官方参考答案。简化碳价实验不另计所得税。</p>'+raw.slice(raw.indexOf('<div class="lab">'),cut)+'</details>'+localFooter();}
+function pageLabNew(){var raw=baseLab(),cut=raw.indexOf('<div class="lab"><h2 class="lab-h">⑤');var intro='<div class="route-intro"><h1>先算清本届，再按需做实验。</h1><p class="lead">本届计算器把无碳与含碳两套结果放在一起。默认值取自案例；折旧、补贴时点及税务处理采用下列教学假设，可检查、可调整。</p></div>'+labGuide();var cfg=savedScenario||IMAFinance.defaults();if(IMAFinance.validate(cfg).length)cfg=IMAFinance.defaults();return intro+'<section class="lab" id="dcf-section"><h2>第十六届 · 两套估值对照</h2><p class="dcf-note">金额统一为亿元，排放为万吨/年；率用小数输入，例如 0.08 表示 8%。计算器用于复核思路，最终作品仍须说明口径并人工审核。</p><fieldset class="dcf-set"><legend>共同参数</legend><div class="dcf-config">'+numberField('d_rev','年营业收入（亿元）',cfg.rev,1)+numberField('d_vcr','变动成本率（0—1）',cfg.vcr,.01)+numberField('d_r','折现率（0—1）',cfg.r,.01)+numberField('d_t','所得税率（0—1）',cfg.tax,.01)+numberField('d_p','碳价（元/吨）',cfg.p,10)+numberField('d_n','设备寿命（年）',cfg.n,1)+'</div></fieldset>'+['A','B'].map(function(side){var o=cfg[side],prefix=side==='A'?'d_a':'d_b';return '<fieldset class="dcf-set"><legend>方案 '+side+'</legend><div class="dcf-config">'+numberField(prefix,'初始投资（亿元）',o.capex,.1)+numberField(prefix+'2','年运维（亿元/年）',o.om,.01)+numberField(prefix+'3','期末残值（亿元）',o.salv,.01)+numberField(prefix+'4','年排放（万吨/年）',o.emis,.1)+(side==='B'?numberField('d_sub','补贴（亿元）',o.sub,.05)+numberField('d_subyear','补贴到账年份（0—期末）',cfg.subYear,1):'')+'</div></fieldset>';}).join('')+'<div class="button-row"><button class="btn primary" id="d_run">更新测算</button><button class="btn" id="d_reset">恢复案例参数</button></div><div id="dcf-errors" class="error-box" role="alert"></div><div id="dcf-results" aria-live="polite"></div><details open><summary>先看假设，再使用数字</summary><ul class="dcf-note"><li><b>案例给定：</b>收入、变动成本率、税率、设备参数、基准折现率、十年期限与固定碳价；依据见官方题目。</li><li><b>本站假设：</b>各年经营规模相同，现金流年末发生；按“投资减残值”直线折旧；税务账面残值与回收残值相同；暂不单列营运资本和额外资本开支。</li><li><b>补贴：</b>默认第1年到账，默认作为不另计所得税的现金流入，不冲减折旧基础；并非题目明确的税务结论。改变时点会影响结果。</li><li><b>所得税：</b>运维和碳成本均按可税前扣除处理，负应税利润的税收收益假设可即时利用。若实际不满足，需要修改模型。</li><li><b>回收期：</b>按模型全部未折现净现金流累计，跨年时作线性插值；含补贴及期末回收款。无法在寿命内收回时明确提示。</li><li><b>决策边界：</b>给定收入属于整条产线，本实验沿用这一案例口径。若作设备增量比较，应另列差额现金流，避免把整线收入误认为某台设备独立创造的收益。</li><li>不额外虚构节能收入，也不把碳减排量自动当作电费节省。市场准入等未可靠量化的因素单独讨论。</li></ul></details>'+sourceNote()+'</section><details><summary>其他练习：杜邦、采购总成本、保本与简化碳价实验</summary><p class="source-note">以下为教学示例，帮助理解变量关系；不是本届给定数据或官方参考答案。简化碳价实验不另计所得税。</p>'+raw.slice(raw.indexOf('<div class="lab">'),cut)+'</details>'+localFooter();}
+
+function labGuide(){
+  return '<div class="lab-guide">' +
+  '<h2>使用说明：这个计算器在算什么</h2>' +
+  '<p>它把第 16 届第一问做成了一个可以改参数的模型：同一套设备参数，同时算出 <b>无碳</b>与<b>含碳</b>两套结果，方便你回答“加入碳成本后结论变没变、为什么变”。</p>' +
+  '<h3>三步用法</h3>' +
+  '<ol>' +
+  '<li><b>先核对参数</b>：默认值就是案例数据。先看一遍“共同参数”和 A/B 两组，确认单位（亿元、万吨/年、元/吨、率用小数）。</li>' +
+  '<li><b>只改一个变量</b>：例如只把碳价从 100 改成 300，点“更新测算”，看哪几个结果变了。</li>' +
+  '<li><b>读结论</b>：先看两套口径下谁的 NPV 更高，再看差额与回收期；最后看临界值——碳价涨到多少结论会翻转。</li></ol>' +
+  '<h3>参数怎么填</h3>' +
+  '<div class="table-scroll"><table><tr><th style="width:30%">参数</th><th>说明</th></tr>' +
+  '<tr><td>年营业收入 / 变动成本率</td><td>来自案例；边际贡献 = 收入 ×（1 − 变动成本率）</td></tr>' +
+  '<tr><td>折现率 / 所得税率 / 寿命</td><td>案例给定；率用小数，如 0.08</td></tr>' +
+  '<tr><td>碳价</td><td>案例给定 100 元/吨；改成 0 等于“剔除碳成本”</td></tr>' +
+  '<tr><td>A/B 投资、运维、残值、排放</td><td>折旧按“投资 − 残值”直线摊销；排放单位是万吨/年</td></tr>' +
+  '<tr><td>B 的补贴与到账年份</td><td>补贴放第 0 年还是第 1 年，会影响约 0.015 亿，必须写明</td></tr></table></div>' +
+  '<h3>结果怎么读</h3>' +
+  '<ul>' +
+  '<li><b>先看排序再看数值</b>：A 与 B 谁高、差多少，比单看一个 NPV 有意义。</li>' +
+  '<li><b>再算临界值</b>：碳价改到多少，两者相等？这就是报告里最值钱的一句话。</li>' +
+  '<li><b>回收期只作参考</b>：本案例两方案都不到 0.6 年回本，回收期区分不出优劣，别拿它当决策依据。</li></ul>' +
+  '<p class="tip">提示：本计算器用于复核思路，不是官方答案。作品里仍要写清折旧口径、补贴时点、税务处理和你自己的假设。</p>' +
+  '</div>';
+}
+
 function bindDcfNew(){
  var fieldIds=['d_rev','d_vcr','d_r','d_t','d_p','d_n','d_a','d_a2','d_a3','d_a4','d_b','d_b2','d_b3','d_b4','d_sub','d_subyear'];
  function read(id){var s=$(id).value;return s.trim()===''?NaN:Number(s);}
@@ -1428,12 +1652,269 @@ function bindPersonal(){
 }
 var oldCases=pageCases,oldModels=pageModels;
 function casesWithSources(){return oldCases()+'<h2>资料来源与数字的使用边界</h2><p>案例原文、参赛队伍方案和本站教学推导需要分别核对。上方“关键数”属于学习笔记，不能直接视为官方标准答案；涉及本届的数字以实验室所列假设和可复算结果为准。</p><ul>'+[[12,117],[13,125],[14,135],[15,134],[16,104]].map(function(x){return '<li>'+external('https://casecompetition.imachina.org.cn/details/'+x[1]+'.html','第'+x[0]+'届官方案例及公开资料入口')+'</li>';}).join('')+'</ul>'+sourceNote();}
-PAGES[''].fn=pageHomeNew;PAGES.plan={title:'学习路线',fn:pagePlan};PAGES.training={title:'Forage 训练',fn:pageTraining};PAGES.ai={title:'AI 使用记录',fn:pageAi};PAGES.library={title:'工具资料',fn:function(){return '<div class="route-intro"><h1>需要时查，带着问题学。</h1><p class="lead">本届必学：现金流、折现、NPV、静态回收期、折旧与所得税。其他工具按题目需要选用。</p></div><div class="library-links"><a href="#/storyline">问题拆解</a><a href="#/glossary">名词解释</a><a href="#/models">模型库</a><a href="#/cases">历届案例与来源</a><a href="#/quiz">找错练习</a><a href="#/deep">进阶选读</a><a href="#/cheat">表达速查</a></div>';}};
+
+
+/* ================= B 计划：模型地图 ================= */
+function pageModelMap(){
+  var steps=[
+   ['表1','收入预测','产能 × 利用率 = 出货量；出货量 × 单价 = 收入','设计产能 20GWh；利用率 50%/75%/90%；单价 0.45 元/Wh','年收入','→ 表2 的变动成本基数'],
+   ['表2','成本费用','收入 × 90% = 变动成本；减运维；减碳成本（排放 × 碳价）','A 运维 1,200 万、B 700 万；排放 A 5.8 万吨、B 2.3 万吨','EBIT','→ 表3 的计税起点'],
+   ['表3','折旧与税','折旧 =（投资 − 残值）÷ 10；税前 = EBIT − 折旧；税 = 25%','A 投资 2.4 亿、B 3.9 亿；残值 A 1,200 万、B 1,950 万','净利润＋折旧','→ 表4 的经营现金流'],
+   ['表4','自由现金流','净利润 + 折旧；第 0 年减投资；第 10 年加残值','补贴 2,000 万按到账年份计入','FCF','→ 表5 的折现对象'],
+   ['表5','NPV / IRR','FCF × 折现因子，加总得 NPV；反推 IRR','折现率 8%；年金系数 6.7101','NPV / IRR','→ A vs B 的决策']
+  ];
+  return '<div class="doc-label">补充资料 · 模型地图</div>' +
+   '<div class="route-intro"><h1>五张表，一条链</h1><p class="lead">这是财务模型的结构图：上一张表的输出就是下一张表的输入。看懂它，再回实验室改数字就不会迷路。</p>' +
+   '<div class="hub-links"><a href="#/tools">工具矩阵</a><a href="#/assume">假设工作台</a><a href="#/lab">计算实验室</a></div></div>' +
+   '<div class="map-flow">' + steps.map(function(s){
+     return '<div class="map-step"><div class="no">'+s[0]+'</div><div><h3>'+s[1]+'</h3><p class="small" style="margin:0">'+s[2]+'</p>' +
+       '<p class="io"><b>关键参数：</b>'+s[3]+'</p></div>' +
+       '<div class="io"><b>输出：</b>'+s[4]+'<br>'+s[5]+'</div></div>';
+   }).join('') + '</div>' +
+   '<h2>五条勾稽要点</h2><ol class="steps">' +
+   '<li>收入是从产能 × 利用率 × 单价一步步搭出来的，不是拍脑袋。</li>' +
+   '<li>变动成本跟着收入走：收入变，成本自动变。</li>' +
+   '<li>碳成本是独立一条线：排放量 × 碳价。</li>' +
+   '<li>折旧只影响税，不影响现金流，所以要在 FCF 里加回来。</li>' +
+   '<li>所有表最后都汇到自由现金流，再折现成 NPV。</li></ol>' +
+   '<h2>与实验室对账</h2>' +
+   '<div class="table-scroll"><table><tr><th>项目</th><th class="n">理论/手算</th><th class="n">实验室输出</th><th>说明</th></tr>' +
+   '<tr><td>A 十年 NPV（无碳）</td><td class="n">45.2435 亿</td><td class="n">45.2435</td><td>一致</td></tr>' +
+   '<tr><td>B 十年 NPV（无碳）</td><td class="n">44.4541 亿</td><td class="n">44.4541</td><td>一致</td></tr>' +
+   '<tr><td>差额 A−B</td><td class="n">0.7894 亿</td><td class="n">0.7894</td><td>一致</td></tr>' +
+   '<tr><td>A 十年 NPV（碳 100）</td><td class="n">44.9516 亿</td><td class="n">44.9516</td><td>一致</td></tr>' +
+   '<tr><td>B 十年 NPV（碳 100）</td><td class="n">44.3383 亿</td><td class="n">44.3383</td><td>一致</td></tr>' +
+   '<tr><td>差额 A−B（含碳）</td><td class="n">0.6133 亿</td><td class="n">0.6133</td><td>碳价把优势吃掉 22%</td></tr></table></div>' +
+   '<p class="quote">结论句：模型没错，差的是假设与口径——所以下一步先做假设表。</p>' +
+   '<div class="source-note">参数来自第 16 届案例原文；折旧、补贴时点、税务处理见实验室“先看假设”折叠区。</div>';
+}
+
+/* ================= 工具矩阵 ================= */
+function pageTools(){
+  var rows=[
+   ['情景与敏感性','主动','碳价 100/300、补贴落空、客户流失、运维 ±20%；找出最致命变量','先知道什么会杀死项目'],
+   ['实物期权','主动','先试运行部分 B，验证后再全量；A 预留加装接口；保留放弃权','把一次性豪赌变成可撤退'],
+   ['TCO / LCC','主动','十年运维 + 能耗 + 碳成本 + 残值全算','揭示“便宜买贵用”'],
+   ['碳会计与税务','主动','碳成本能否税前扣除；补贴税务处理；折旧基数','税后 NPV 才是真的'],
+   ['蒙特卡洛','主动','给碳价、运维、补贴设分布，输出“不亏的概率”','从点数变成概率'],
+   ['合同碳价转嫁','主动','欧洲客户合同加碳价调价条款；低碳支撑 2%—3% 溢价','把风险转给客户'],
+   ['LCA / 碳标签','主动','降低化成环节碳足迹，满足 2027 披露','合规即准入'],
+   ['WACC / APV','被动','统一 8%；讨论 B 技术风险溢价 9%—10%；APV 单列补贴与税盾','改折现率，不改方案'],
+   ['绿色金融','被动','绿色信贷、碳减排支持工具、地方补贴','压低融资成本'],
+   ['ESG 评级与准入期权','半主动','把“保住欧洲市场”当期权估值；出口流失 4.6% 就翻盘','把尾部风险量化']
+  ];
+  return '<div class="doc-label">补充资料 · 工具矩阵</div>' +
+   '<div class="route-intro"><h1>十个工具：主动改项目，被动管融资</h1>' +
+   '<p class="lead">评委问“韧性从哪来”，答案不在口号里：结构上可撤退、风险上可转嫁、融资上可锁定。</p>' +
+   '<div class="chips" id="toolchips">' +
+   ['全部','主动','被动','碳相关'].map(function(c,i){return '<button class="chip'+(i===0?' on':'')+'" data-tool="'+c+'" onclick="window.__filterTools(this)">'+c+'</button>';}).join('') +
+   '</div></div>' +
+   '<div id="toolrows">' + rows.map(function(r){
+     var carbon = /碳|LCA|ESG/.test(r[0]+r[2]);
+     return '<div class="map-step tool-row" data-type="'+r[1]+'" data-carbon="'+(carbon?1:0)+'">' +
+       '<div class="no"></div><div><h3>'+r[0]+'<span class="tool-tag '+(r[1]==='被动'?'passive':'active')+'">'+r[1]+'</span></h3>' +
+       '<p class="small" style="margin:0">'+r[2]+'</p></div><div class="io">'+r[3]+'</div></div>';
+   }).join('') + '</div>' +
+   '<div class="hint">分类口径：<b>主动</b>=能在决策前改变项目结构或现金流；<b>被动</b>=主要改变融资条件与折现率；<b>半主动</b>=用估值把外部准入风险量化。</div>' +
+   '<div class="source-note">整理自《第十六届工具》与补充资料页；每条的案例用法见 #/playbook。</div>';
+}
+
+/* ================= 价值链两端 ================= */
+function pageValueChain(){
+  return '<div class="doc-label">补充资料 · 价值链</div>' +
+   '<div class="route-intro"><h1>客户与供应商：价值链的两端</h1>' +
+   '<p class="lead">设备选型不只看设备：上游看供应商韧性，下游看客户盈利与准入。这一页把两份讲义压成能用的框架。</p></div>' +
+   '<div class="two-col">' +
+   '<div class="card"><h3>客户侧：谁在赚钱，谁在耗成本</h3>' +
+   '<p class="small"><b>客户成本层级（五层）：</b>订单级、批次级、客户维持、渠道、分部。用来判断“高收入客户”是不是“低利润客户”。</p>' +
+   '<p class="small"><b>鲸鱼曲线：</b>通常 20%—40% 的客户贡献 150%—250% 的利润，另一头在毁灭利润。本题里欧洲客户占收入 28%，丢 4.6% 就抹平 A 的优势。</p>' +
+   '<p class="small"><b>定价瀑布：</b>标价 → 折扣 → 返利 → 运费 → 服务成本，一层层看利润漏在哪。</p>' +
+   '<p class="small"><b>销售差异分析：</b>拆成价格差、数量差、结构差；碳成本上升时，先看能不能通过结构（高毛利产品）而不是涨价消化。</p></div>' +
+   '<div class="card"><h3>供应商侧：总成本与韧性</h3>' +
+   '<p class="small"><b>TCO：</b>报价之外算质量、交期、资金占用、缺货。A 便宜但故障率高，B 贵但能耗低——同一套逻辑。</p>' +
+   '<p class="small"><b>供应商评分卡：</b>质量、交期、价格、服务四维加权；B 是德国进口，交期与关税就是评分项。</p>' +
+   '<p class="small"><b>JIT 与 EOQ：</b>JIT 降库存但抬高断供风险；EOQ 找订货成本与持有成本的平衡。本题对应备件库存与停机损失。</p>' +
+   '<p class="small"><b>供应链韧性：</b>单一供应商 vs 双源；长交期 vs 本地化。设备国产化就是韧性变量。</p></div></div>' +
+   '<h2>落到本题的三个动作</h2><ol class="steps">' +
+   '<li>把“欧洲客户流失 4.6%”写进客户侧风险，并量化成 NPV 损失。</li>' +
+   '<li>把 B 的德国进口交期写进供应商侧风险，给出双源或备件方案。</li>' +
+   '<li>用定价瀑布解释：为什么碳成本上升不一定能靠涨价转嫁（价格战 + CR2 下滑）。</li></ol>' +
+   '<div class="source-note">框架来自 Analyzing Customers and Sales 与 Managing Suppliers, Inventory, and JIT System 两份讲义；数字取自第 16 届案例。</div>';
+}
+
+/* ================= 假设工作台 ================= */
+function pageAssume(){
+  return '<div class="doc-label">补充资料 · 假设工作台</div>' +
+   '<div class="route-intro"><h1>假设从哪来：市场信号 → 模型参数</h1>' +
+   '<p class="lead">评委第一个问题永远是“你这个增长率凭什么”。这一页把行业信号翻译成六行假设，并给出三情景方向。</p></div>' +
+   '<div class="lab"><div class="assume-grid">' +
+   '<label>储能行业 CAGR<select id="a_cagr"><option value="15">15%（保守）</option><option value="21" selected>21%（基准）</option><option value="25">25%（乐观）</option></select></label>' +
+   '<label>稳态产能利用率<select id="a_util"><option value="80">80%</option><option value="85">85%</option><option value="90" selected>90%</option><option value="95">95%</option></select></label>' +
+   '<label>碳价年涨幅<select id="a_carbon"><option value="0">0%</option><option value="5" selected>5%</option><option value="10">10%</option></select></label>' +
+   '<label>残值折扣<select id="a_salv"><option value="1">不打折</option><option value="0.8" selected>8 折</option><option value="0.5">5 折</option></select></label>' +
+   '</div><div id="assumeOut"></div><div id="npvOut"></div></div>' +
+   '<h2>三情景怎么设</h2><div class="scenario" id="scen"></div>' +
+   '<p class="hint">情景不是“多算几个数”，而是给决策留余地：基准用于推荐，悲观用于设红线，乐观用于讲空间。</p>' +
+   '<div class="source-note">规则来自《市场数据向财务建模因子应用流程》；具体 NPV 请到计算实验室验证。</div>';
+}
+
+
+function initPlaybookPages(){
+  window.__filterTools=function(btn){
+    document.querySelectorAll('#toolchips .chip').forEach(function(c){c.classList.remove('on');});
+    btn.classList.add('on');
+    var t=btn.dataset.tool;
+    document.querySelectorAll('#toolrows .tool-row').forEach(function(r){
+      var ok = t==='全部' || (t==='碳相关' ? r.dataset.carbon==='1' : r.dataset.type===t);
+      r.style.display = ok ? '' : 'none';
+    });
+  };
+  var cagr=$('a_cagr');
+  if(!cagr) return;
+  function val(id){var e=$(id);return e?e.value:'';}
+  var R=0.08, TAX=0.25, N=10, REV=95, VCR=0.9;
+  var A={capex:2.4,om:0.12,salv:0.12,emis:5.8,sub:0};
+  var B={capex:3.9,om:0.07,salv:0.195,emis:2.3,sub:0.2};
+  function one(o,u,g,carbonG,salvF){
+    var dep=(o.capex-o.salv)/N, npv=-o.capex;
+    for(var t=1;t<=N;t++){
+      var k = Math.max(0.3, Math.min(0.9, 0.625*(g/0.21)));
+      var util = t===1 ? 0.5 : (t===2 ? 0.5+(u-0.5)*k : u);
+      var revenue = REV*util;
+      var price = 100*Math.pow(1+carbonG,t-1);
+      var carbon = o.emis*price/10000;
+      var ebit = revenue*(1-VCR) - o.om - carbon - dep;
+      var ocf = ebit*(1-TAX) + dep;
+      npv += ocf/Math.pow(1+R,t);
+      if(t===N) npv += o.salv*salvF/Math.pow(1+R,t);
+    }
+    if(o.sub) npv += o.sub/(1+R);
+    return npv;
+  }
+  function calc(u,g,carbonG,salvF){
+    var a=one(A,u,g,carbonG,salvF), b=one(B,u,g,carbonG,salvF);
+    return {a:a,b:b,d:a-b};
+  }
+  function render(){
+    var g=+val('a_cagr')/100, u=+val('a_util')/100, c=+val('a_carbon')/100, s=+val('a_salv');
+    var rows=[
+      ['行业 CAGR',''+(g*100).toFixed(0)+'%','决定爬坡速度：CAGR 越高，第 2 年爬得越快'],
+      ['产能利用率','第 1 年 50%、第 2 年 '+(Math.round((0.5+(u-0.5)*Math.max(0.3,Math.min(0.9,0.625*(g/0.21))))*100))+'%、第 3 年起 '+(u*100).toFixed(0)+'%','头部接近满产，留调试与订单波动'],
+      ['单价','0.45 元/Wh（满产收入 95 亿）','案例给定口径'],
+      ['变动成本率','90%','价格战下的保守假设'],
+      ['碳价','100 元/吨，年涨 '+(c*100).toFixed(0)+'%','全国碳市场纳入，长期上行'],
+      ['残值','账面 × '+s,'技术迭代（固态 2030）下打折'],
+      ['折现率','8%','董事会要求；风险溢价另议']
+    ];
+    $('assumeOut').innerHTML='<div class="table-scroll"><table><tr><th style="width:18%">参数</th><th style="width:30%">取值</th><th>依据</th></tr>' +
+      rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="small">'+r[2]+'</td></tr>';}).join('') + '</table></div>';
+
+    var base=calc(u,g,c,s);
+    var opt=calc(Math.min(0.95,u+0.05), g+0.03, Math.min(0.2,c+0.05), Math.min(1,s+0.1));
+    var pes=calc(Math.max(0.5,u-0.10), Math.max(0.03,g-0.06), Math.max(0,c-0.05), Math.max(0.3,s-0.2));
+    var list=[['基准',u,g,c,s,base],['乐观',Math.min(0.95,u+0.05),g+0.03,Math.min(0.2,c+0.05),Math.min(1,s+0.1),opt],['悲观',Math.max(0.5,u-0.1),Math.max(0.03,g-0.06),Math.max(0,c-0.05),Math.max(0.3,s-0.2),pes]];
+    var html='<h3 style="margin:18px 0 8px">爬坡口径下的十年 NPV（亿元）</h3>' +
+      '<div class="table-scroll"><table><tr><th>情景</th><th class="n">稳态利用率</th><th class="n">行业 CAGR</th><th class="n">碳价年涨</th><th class="n">A NPV</th><th class="n">B NPV</th><th class="n">差额 A−B</th><th>谁更优</th></tr>' +
+      list.map(function(x){
+        var w=x[5].a>=x[5].b?'A':'B';
+        return '<tr><td>'+x[0]+'</td><td class="n">'+(x[1]*100).toFixed(0)+'%</td><td class="n">'+(x[2]*100).toFixed(0)+'%</td><td class="n">'+(x[3]*100).toFixed(0)+'%</td>' +
+          '<td class="n">'+x[5].a.toFixed(2)+'</td><td class="n">'+x[5].b.toFixed(2)+'</td><td class="n">'+x[5].d.toFixed(2)+'</td><td>'+w+'</td></tr>';
+      }).join('') + '</table></div>' +
+      '<p class="small muted">对照：满产口径（第 3 年起 100%）在实验室默认值下是 A 44.95 / B 44.34。爬坡口径更低，是因为前两年只用了 50% 和 75% 的产能——这就是“别第一年就按满产算”的量化代价。</p>' +
+      '<div class="button-row"><a class="btn primary" href="#/lab">用实验室核对</a><a class="btn" href="#/model-map">看五表链条</a></div>';
+    $('npvOut').innerHTML=html;
+
+    $('scen').innerHTML=list.map(function(x){
+      var w=x[5].a>=x[5].b?'A':'B';
+      return '<div class="card"><h3>'+x[0]+'情景</h3><p class="small">利用率 '+(x[1]*100).toFixed(0)+'%、增长 '+(x[2]*100).toFixed(0)+'%、碳价年涨 '+(x[3]*100).toFixed(0)+'%</p>' +
+        '<p class="small" style="margin-top:6px">A '+x[5].a.toFixed(2)+' / B '+x[5].b.toFixed(2)+'，<b>'+w+' 更优</b></p></div>';
+    }).join('');
+  }
+  ['a_cagr','a_util','a_carbon','a_salv'].forEach(function(id){
+    var e=$(id); if(e) e.addEventListener('change',render);
+  });
+  render();
+}
+
+function pagePlaybook(){
+  return '<div class="doc-label">补充资料 · 市场 / 模型 / 工具</div>' +
+  '<div class="route-intro"><h1>把新给的资料，接回本届决策</h1>' +
+  '<p class="lead">这一页把四份材料和两组幻灯片压缩成“能直接用在作品里”的版本：市场依据、假设链条、五表勾稽、十个工具、客户与供应商视角。原文只看要点，细节回原文件。</p>' +
+  '<div class="button-row"><a class="btn primary" href="#/assume">假设工作台</a><a class="btn" href="#/model-map">模型地图</a><a class="btn" href="#/tools">工具矩阵</a><a class="btn" href="#/value-chain">价值链</a></div></div>' +
+
+  '<h2>一、市场依据：先回答“增长率凭什么”</h2>' +
+  '<div class="table-scroll"><table><tr><th>细分</th><th class="n">2025 基数</th><th class="n">2030 预期</th><th class="n">CAGR</th><th>怎么用在模型里</th></tr>' +
+  '<tr><td>锂电池总产量</td><td class="n">1,800 GWh</td><td class="n">约 3,500</td><td class="n">约 14%</td><td>行业上限，别假设超过它</td></tr>' +
+  '<tr><td>储能电池出货</td><td class="n">500 GWh</td><td class="n">约 1,300</td><td class="n">约 21%</td><td>锂航主赛道，收入增速取 20%—25%</td></tr>' +
+  '<tr><td>动力电池装车</td><td class="n">770 GWh</td><td class="n">约 1,400</td><td class="n">约 13%</td><td>非主力，取 12%—15%</td></tr>' +
+  '<tr><td>电池出口</td><td class="n">305 GWh</td><td class="n">约 600</td><td class="n">约 15%</td><td>出口占 28%，受贸易壁垒影响</td></tr>' +
+  '<tr><td>储能电池出口</td><td class="n">115 GWh</td><td class="n">约 300</td><td class="n">约 21%</td><td>欧洲需求旺，但 2027 要碳足迹</td></tr></table></div>' +
+  '<p><b>三条政策事实（决定 B 的战略价值）：</b>① 2025 年锂航被纳入全国碳市场重点排放单位，碳价是法定义务不是“政策风险”；② 2026 年 5 月起国内暂缓新建电池项目审批，低端产能出清；③ 欧盟电池法规 2027 年强制披露碳足迹，出口 28% 收入直接受影响。</p>' +
+  '<p class="quote">结论句：行业 CAGR 14%—21%，但“能不能卖出去”取决于 2027 年的碳足迹门槛——这就是 B 的准入价值。</p>' +
+
+  '<h2>二、从市场数据到模型假设：七步法</h2>' +
+  '<ol class="steps">' +
+  '<li><b>采集</b>：CAGR、产能利用率、CR 集中度、碳价、政策文件，全部用官方口径。</li>' +
+  '<li><b>解读信号</b>：储能 +101.3% 说明需求井喷；产能利用率 <40% 说明价格战；CR2 降到 65% 说明二线在抢份额。</li>' +
+  '<li><b>映射变量</b>：需求→利用率与收入；供需→毛利率；碳政策→碳成本；技术迭代→残值折扣；补贴→初始投资抵减。</li>' +
+  '<li><b>三情景</b>：基准 / 乐观 / 悲观，每个都算一遍 NPV。</li>' +
+  '<li><b>代入模型</b>：收入×90% 变动成本、碳价逐年涨、折旧抵税。</li>' +
+  '<li><b>敏感性</b>：找出“最致命变量”，即碳价与客户流失。</li>' +
+  '<li><b>给建议</b>：综合三情景，说清推荐方案和成立条件。</li></ol>' +
+  '<p><b>示例链：</b>储能 +101.3% → 利用率 50%/75%/90% → 出货量 → 收入（第 3 年约 81 亿元）→ 变动成本 90% → 碳成本 → EBIT → 税后 → FCF → NPV。</p>' +
+  '<p><b>两个容易拍错的数：</b>残值别按账面净值，技术迭代下打 8 折（基准）/5 折（悲观）；永续增长率 g 不超过 GDP 增速，取 3.5% 而不是 5%。</p>' +
+
+  '<h2>三、五张表怎么勾稽（模型地图）</h2>' +
+  '<div class="table-scroll"><table><tr><th style="width:22%">表</th><th>核心动作</th><th>流到下一张表</th></tr>' +
+  '<tr><td>表1 收入预测</td><td>产能 × 利用率 = 出货量；出货量 × 单价 = 收入</td><td>收入 → 表2</td></tr>' +
+  '<tr><td>表2 成本费用</td><td>收入 × 90% 变动成本；减运维；减碳成本（排放 × 碳价）</td><td>EBIT → 表3</td></tr>' +
+  '<tr><td>表3 折旧与税</td><td>折旧 =（投资 − 残值）÷ 10；税前利润 = EBIT − 折旧；税 = 25%</td><td>净利润与折旧 → 表4</td></tr>' +
+  '<tr><td>表4 自由现金流</td><td>净利润 + 折旧；第 0 年减投资；第 10 年加残值</td><td>FCF → 表5</td></tr>' +
+  '<tr><td>表5 NPV/IRR</td><td>FCF × 折现因子，加总得 NPV；反推 IRR</td><td>对比 A/B</td></tr></table></div>' +
+  '<p class="small muted">五条要点：收入由产能×利用率×单价搭出来；变动成本跟着收入走；碳成本是独立一条线；折旧只影响税，要在 FCF 里加回；所有表最后汇到 FCF。</p>' +
+
+  '<h2>四、十个工具：哪些主动改项目，哪些被动管融资</h2>' +
+  '<div class="table-scroll"><table><tr><th style="width:26%">工具</th><th style="width:10%">类型</th><th>在本案例怎么用</th></tr>' +
+  '<tr><td>情景与敏感性</td><td>主动</td><td>碳价 100/300、补贴落空、欧洲客户流失、运维 ±20%；找出最致命变量</td></tr>' +
+  '<tr><td>实物期权</td><td>主动</td><td>先试运行一部分 B，验证后再全量；A 预留加装能量回馈接口；保留放弃权</td></tr>' +
+  '<tr><td>TCO / LCC</td><td>主动</td><td>把十年运维、能耗、碳成本、残值全算进去，揭示“便宜买贵用”</td></tr>' +
+  '<tr><td>碳会计与税务</td><td>主动</td><td>碳成本能否税前扣除；2,000 万补贴的税务处理；折旧基数是否被补贴冲减</td></tr>' +
+  '<tr><td>蒙特卡洛</td><td>主动</td><td>给碳价、运维、补贴设分布，输出 NPV 分布与“不亏的概率”</td></tr>' +
+  '<tr><td>合同碳价转嫁</td><td>主动</td><td>与欧洲客户约定碳价上涨调价条款；低碳属性支撑 2%—3% 绿色溢价</td></tr>' +
+  '<tr><td>LCA / 碳标签</td><td>主动</td><td>降低化成环节碳足迹，满足 2027 披露；碳标签支撑溢价</td></tr>' +
+  '<tr><td>WACC / APV</td><td>被动</td><td>案例统一 8%；可讨论 B 的技术风险溢价 9%—10%；APV 单独估补贴与税盾</td></tr>' +
+  '<tr><td>绿色金融</td><td>被动</td><td>绿色信贷、碳减排支持工具、地方补贴，直接压低融资成本</td></tr>' +
+  '<tr><td>ESG 评级与准入期权</td><td>半主动</td><td>把“保住欧洲市场”当成期权估值：出口流失 4.6% 就抹平 A 的优势</td></tr></table></div>' +
+  '<p class="small muted">一句话：主动工具改现金流和项目结构，被动工具改折现率与融资条件；评委问“韧性从哪来”，答“结构上可撤退、风险上可转嫁、融资上可锁定”。</p>' +
+
+  '<h2>五、客户与供应商：价值链的两端</h2>' +
+  '<div class="two-col">' +
+  '<div class="card"><h3>客户侧（Analyzing Customers and Sales）</h3>' +
+  '<p class="small"><b>客户盈利分析：</b>按客户算收入与服务成本，识别“高收入低利润”客户。案例里欧洲客户收入占 28%，但碳足迹要求最高——典型的“高服务成本客户”。</p>' +
+  '<p class="small"><b>鲸鱼曲线：</b>通常 20%—40% 的客户贡献 150%—250% 的利润，另一头在毁灭利润。对应到本题：少数欧洲大客户决定成败，丢 4.6% 订单就翻盘。</p>' +
+  '<p class="small"><b>定价瀑布：</b>标价→折扣→返利→运费→服务成本，一层层看利润漏在哪。用来解释“为什么收入涨、利润不涨”。</p></div>' +
+  '<div class="card"><h3>供应商侧（Managing Suppliers, Inventory, and JIT）</h3>' +
+  '<p class="small"><b>TCO 与供应商评分：</b>不只看报价，算质量、交期、资金占用；设备采购同样适用（A 便宜但故障率高）。</p>' +
+  '<p class="small"><b>JIT 与 EOQ：</b>JIT 降库存但抬高断供风险；EOQ 找订货成本与持有成本的平衡。本题对应备件库存与停机损失。</p>' +
+  '<p class="small"><b>供应链韧性：</b>单一供应商 vs 双源；B 是德国进口，交期与关税就是韧性变量。</p></div></div>' +
+
+  '<h2>六、外部教程（自学用）</h2>' +
+  '<p><b>Power BI Desktop（免费）：</b><a href="https://apps.microsoft.com/detail/9ntxr16hnw1t" target="_blank" rel="noopener">Microsoft Store 下载</a></p>' +
+  '<p><b>Power BI 教程：</b><a href="https://www.bilibili.com/video/BV1dH4y1B7kM/" target="_blank" rel="noopener">BV1dH4y1B7kM</a> · <a href="https://www.bilibili.com/video/BV1qSVUznErP/" target="_blank" rel="noopener">BV1qSVUznErP</a></p>' +
+  '<p><b>Python 可视化：</b><a href="https://www.bilibili.com/video/BV1jTxC6mEtb/" target="_blank" rel="noopener">BV1jTxC6mEtb</a> · <a href="https://www.bilibili.com/video/BV1Ak4y167pR/" target="_blank" rel="noopener">BV1Ak4y167pR</a> · <a href="https://www.bilibili.com/video/BV1W54y1o7vN/" target="_blank" rel="noopener">BV1W54y1o7vN</a></p>' +
+  '<p class="small muted">用法建议：比赛只用得上“一页仪表盘 + 一页分布图”。先把 Excel 模型跑通，再考虑可视化；现场不要跑代码。</p>' +
+
+  '<div class="hint"><b>怎么用这一页：</b>先抄“市场依据”里的 CAGR 和三条政策事实进假设表；再用七步法把每个假设写出处；最后用十个工具检查“我们有没有漏掉主动或被动的手段”。</div>' +
+  '<div class="source-note">内容整理自：国内动力及储能锂电池行业市场环境调查报告、市场数据向财务建模因子应用流程、财务模型表格勾稽关系框架、第十六届工具，以及 Analyzing Customers and Sales / Managing Suppliers, Inventory, and JIT System 两份讲义。数据口径以原文件为准。</div>';
+}
+
+PAGES[''].fn=pageHomeNew;PAGES.plan={title:'学习路线',fn:pagePlan};PAGES.training={title:'Forage 训练',fn:pageTraining};PAGES.ai={title:'AI 使用记录',fn:pageAi};PAGES.playbook={title:'补充资料',fn:pagePlaybook};PAGES.modelmap=PAGES['model-map']={title:'模型地图',fn:pageModelMap};PAGES.tools={title:'工具矩阵',fn:pageTools};PAGES.valuechain=PAGES['value-chain']={title:'价值链',fn:pageValueChain};PAGES.assume={title:'假设工作台',fn:pageAssume};PAGES.library={title:'工具资料',fn:function(){return '<div class="route-intro"><h1>需要时查，带着问题学。</h1><p class="lead">本届必学：现金流、折现、NPV、静态回收期、折旧与所得税。其他工具按题目需要选用。</p></div><div class="library-links"><a href="#/storyline">问题拆解</a><a href="#/glossary">名词解释</a><a href="#/models">模型库</a><a href="#/cases">历届案例与来源</a><a href="#/quiz">找错练习</a><a href="#/deep">进阶选读</a><a href="#/cheat">表达速查</a></div>';}};
 PAGES.lab.fn=pageLabNew;PAGES.cases.fn=casesWithSources;PAGES.models.fn=function(){return '<p class="source-note">本页为教学归纳。模型数量不决定作品质量，例子中的数字与判断须回到具体案例、队伍方案或测算口径核对，不能当作通用结论或官方答案。</p>'+oldModels();};delete PAGES.team;
 NAV=[['','首页'],['plan','学习路线'],['training','Forage 训练'],['lab','计算实验室'],['ai','AI 记录'],['library','工具资料']];
 renderNav=function(h){var group=['storyline','models','cases','quiz','deep','glossary','cheat'].includes(h)?'library':h;$('nav').innerHTML=NAV.map(function(n){return '<a href="#/'+n[0]+'" '+(group===n[0]?'aria-current="page"':'')+'>'+n[1]+'</a>';}).join('');};
 refreshProg=function(){$('pn').textContent=Object.keys(done.models).length;$('qn').textContent=Object.keys(done.answers).length;};
-route=function(){var raw=(location.hash||'').replace(/^#\/?/,''),q='',parts=raw.split('/');if(parts[0]==='glossary'&&parts[1]==='t'&&parts[2]){q='t='+parts[2];raw='glossary';}var seg=raw.split('?'),h=seg[0]||'';if(seg[1])q=seg[1];var page=PAGES[h]||PAGES[''];$('app').innerHTML=page.fn(q);renderNav(h);document.title=page.title+' · IMA 训练站';window.scrollTo(0,0);if(h==='lab'){initDupont();initTco();initBep();initCarbon();bindDcfNew();}if(h==='quiz')initQuizNew();if(h==='deep')initDeep();if(h==='models')bindModels();if(h==='glossary')initGlossary();else if(!['','plan','training','ai','lab'].includes(h))linkTerms($('app'));bindPersonal();document.querySelectorAll('table').forEach(function(table){if(!table.closest('.table-scroll')){var wrap=document.createElement('div');wrap.className='table-scroll';wrap.tabIndex=0;wrap.setAttribute('aria-label','表格，小屏可横向滚动');table.parentNode.insertBefore(wrap,table);wrap.appendChild(table);}});document.querySelectorAll('h1')[0]?.setAttribute('tabindex','-1');document.querySelector('h1')?.focus({preventScroll:true});refreshProg();};
+route=function(){var raw=(location.hash||'').replace(/^#\/?/,''),q='',parts=raw.split('/');if(parts[0]==='glossary'&&parts[1]==='t'&&parts[2]){q='t='+parts[2];raw='glossary';}var seg=raw.split('?'),h=seg[0]||'';if(seg[1])q=seg[1];var page=PAGES[h]||PAGES[''];$('app').innerHTML=page.fn(q);renderNav(h);document.title=page.title+' · IMA 训练站';window.scrollTo(0,0);if(['playbook','tools','assume'].includes(h)) initPlaybookPages();
+  if(h==='lab'){try{if($('p1'))initDupont();if($('a1'))initTco();if($('s1'))initBep();if($('c1'))initCarbon();}catch(e){}bindDcfNew();}if(h==='quiz')initQuizNew();if(h==='deep')initDeep();if(h==='models')bindModels();if(h==='glossary')initGlossary();else if(!['','plan','training','ai','lab'].includes(h))linkTerms($('app'));bindPersonal();document.querySelectorAll('table').forEach(function(table){if(!table.closest('.table-scroll')){var wrap=document.createElement('div');wrap.className='table-scroll';wrap.tabIndex=0;wrap.setAttribute('aria-label','表格，小屏可横向滚动');table.parentNode.insertBefore(wrap,table);wrap.appendChild(table);}});document.querySelectorAll('h1')[0]?.setAttribute('tabindex','-1');document.querySelector('h1')?.focus({preventScroll:true});refreshProg();};
 var initialFilterModels=window.__filterModels;window.__filterModels=function(q){initialFilterModels(q);emptySearch('mlist','[data-name]');};
 function emptySearch(id,selector){var list=$(id);if(!list)return;var cards=Array.from(list.querySelectorAll(selector));var old=list.querySelector('.empty-search');if(old)old.remove();if(cards.length&&!cards.some(function(el){return el.style.display!=='none';})){var p=document.createElement('p');p.className='empty-search';p.setAttribute('role','status');p.textContent='没有找到匹配内容。请换一个词，或清空搜索条件。';list.appendChild(p);}}
 
@@ -1451,6 +1932,7 @@ PAGES.basics={title:'从零理解',fn:renderFoundations};
 var foundationHome=PAGES[''].fn;
 PAGES[''].fn=function(){var markup=foundationHome();var hero='<div class="start-layout"><div class="route-intro"><h1>先弄懂为什么，<br>再动手算。</h1><p class="lead">零会计基础也可以开始。先借一家校园咖啡店，理解钱、投资与经营选择，再把原理用到本届案例里。</p><div class="button-row"><a class="btn primary" href="'+foundationUrl('business')+'">从财务第一课开始</a><a class="btn" href="'+foundationUrl('strategy')+'">先理解战略是什么</a></div><p class="small-label">一次只读一节：问题 → 原理 → 例子 → 用途 → 边界。公式在最后，按需展开。</p></div><aside class="today-note"><h2>先能解释，再说会用</h2><p>利润与现金流为什么不同？未来的钱为什么要折回今天？有好设备为什么不一定有优势？</p><p>先把这些问题说清楚，再打开计算器。无需先背完术语。</p><a href="#/basics">查看全部基础课程 →</a></aside></div><h2>学懂以后，再完成本届三件事</h2>';return markup.replace(/<div class="start-layout">[\s\S]*?<h2>先抓住本届三件事<\/h2>/,hero);};
 LESSONS.splice(0,0,{id:'principles',title:'先理解财务和战略为什么存在',time:'分次阅读，每次一节',why:'先理解收入、利润、现金流，再看等待的代价、NPV与战略取舍。每节都从问题和例子出发。',out:'能用自己的话说明概念解决什么问题、何时有用、哪里容易误用。',route:'basics',action:'从零理解原理与用途'});
+LESSONS.splice(2,0,{id:'precedent',title:'拆解第15届案例与获奖作品',time:'2—3 小时',why:'用一套完整的往届案例走完“诊断—方案—落地”，再看三支决赛队怎么把同一道题讲出差异；随后对照第 16 届题目，明确今年要交什么。',out:'一页第 15 届拆解＋三条可复用打法＋第 16 届三问的答题要点。',route:'case15',action:'打开案例拆解'});
 var basicLesson=LESSONS.find(function(x){return x.id==='basics';});Object.assign(basicLesson,{title:'把原理接到本届问题',time:'按需要回看，不要求一次学完',why:'读懂利润与现金流、时间价值、NPV、回收期、折旧和税务的关系；遇到战略问题再选对应视角。',out:'能解释本届每项输入为什么进入模型，哪些只是明确列出的假设。',route:'basics',action:'回看基础课程'});
 var termTopics={npv:'npv',irr:'npv',dcf:'npv',payback:'payback',depreciation:'depreciation',taxshield:'tax',carbon:'carbon',sensitivity:'carbon',incremental:'incremental',opportunity:'incremental',sunk:'incremental',dupont:'diagnosis',valuechain:'diagnosis',pestel:'environment',fiveforces:'environment',vrio:'resources',generic:'strategy',canvas:'businessmodel',ansoff:'businessmodel',bcg:'portfolio',lifecycle:'portfolio',bsc:'execution'};
 var foundationGlossary=PAGES.glossary.fn;
@@ -1470,3 +1952,4 @@ route();
 </body>
 </html>
 
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="42bc6b57-f64d-4b04-acdc-fc2c3a5f48a6" data-app-host="app.netlify.com" data-account-tier="free"></script>
